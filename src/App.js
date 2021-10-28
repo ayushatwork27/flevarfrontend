@@ -1,20 +1,19 @@
-import { BrowserRouter, Switch, Route, Router } from "react-router-dom";
-
-// components
-
-import Home from "./components/Home/Index";
-import About from "./components/About/Index";
+import "./style.scss";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./Home/Index";
+import About from "./About/Index";
+import Contact from "./Contact/Index";
 
 function App() {
   return (
-    <BrowserRouter>
-      {/* <Router> */}
+    <Router>
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/about" component={About} />
+        <Route exact path="/" component={Home}></Route>
+        <Route exact path="/about" component={About}></Route>
+        <Route exact path="/contact" component={Contact}></Route>
       </Switch>
-      {/* </Router> */}
-    </BrowserRouter>
+    </Router>
   );
 }
 
