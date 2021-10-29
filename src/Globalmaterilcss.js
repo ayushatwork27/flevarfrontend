@@ -12,6 +12,9 @@ const theme = createTheme({
         },
       },
     },
+    MuiButton: {
+      padding: "20px 30px",
+    },
   },
   palette: {
     primary: {
