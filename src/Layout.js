@@ -19,12 +19,10 @@ function Layout({ children }) {
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
-      <Container className={classes.root}>
-        <CssBaseline />
-        <Header />
-        {children}
-        <Footer />
-      </Container>
+      <CssBaseline />
+      <Header />
+      <Container className={classes.root}>{children}</Container>
+      <Footer />
     </ThemeProvider>
   );
 }

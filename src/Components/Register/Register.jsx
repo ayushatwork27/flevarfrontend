@@ -47,7 +47,7 @@ function Register() {
               />
             </Box>
             <Grid container spacing={2}>
-              <Grid item sm={12} md={6}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   label="Full Name"
                   variant="filled"
@@ -55,21 +55,21 @@ function Register() {
                   disableUnderline={false}
                 />
               </Grid>
-              <Grid item sm={12} md={6}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   label="Mobile Number"
                   variant="filled"
                   className="single-formbox"
                 />
               </Grid>
-              <Grid item sm={12} md={6}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   label="Email Id"
                   variant="filled"
                   className="single-formbox"
                 />
               </Grid>
-              <Grid item sm={12} md={6}>
+              <Grid item xs={12} md={6}>
                 <FormControl
                   className={classes.formControl}
                   className="single-formbox"

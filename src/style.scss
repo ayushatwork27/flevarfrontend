@@ -4,13 +4,18 @@
   box-sizing: border-box;
 }
 $form-lable: grey !important;
+$form-bottom-color: #e8656bcf;
 body {
   font-family: "Roboto", sans-serif;
   background-color: #fff !important;
 }
 .active_link {
-  color: #e8656b !important;
+  color: #222222 !important;
   font-weight: 800;
+}
+.header-wrapper {
+  background-color: #e8656bcf !important;
+  color: #fff !important;
 }
 //  home arrow
 .home-slider-arrow {
@@ -35,6 +40,11 @@ body {
 }
 .home-pre-arrow {
   left: 1px;
+}
+.cmn-main-container {
+  max-width: 1598px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .cmn-btncolor {
@@ -147,6 +157,9 @@ body {
   justify-content: center;
   align-items: center;
   margin-bottom: 3%;
+}
+.MuiFilledInput-underline:after {
+  border-bottom-color: $form-bottom-color !important;
 }
 /* register pagen end */
 

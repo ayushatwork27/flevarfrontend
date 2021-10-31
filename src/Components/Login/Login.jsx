@@ -35,7 +35,7 @@ function Login() {
               />
             </Box>
             <Grid container spacing={2} justifyContent="center">
-              <Grid item sm={12} md={6}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   label="Mobile Number"
                   variant="filled"

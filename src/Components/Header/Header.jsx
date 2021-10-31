@@ -23,6 +23,11 @@ const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
+  main_header: {
+    [theme.breakpoints.up("md")]: {
+      padding: "0px",
+    },
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -89,19 +94,26 @@ const useStyles = makeStyles((theme) => ({
   },
   location_title: {
     padding: "10px",
+    fontWeight: 800,
+    letterSpacing: "1px",
+    fontSize: "16px",
   },
   menu_link: {
-    color: "#222222",
+    color: "#fff",
     padding: "10px",
     textTransform: "uppercase",
     transition: "all 0.3s ease",
+    fontWeight: 800,
+    letterSpacing: "1px",
+    textDecoration: "none",
     "&:hover": {
-      color: "#E8656B",
+      color: "#222222",
     },
   },
   mobilemenulink: {
     display: "flex",
     flexFlow: "column",
+    backgroundColor: "#e8656bcf",
   },
   desktop_link_wrapper: {
     display: "flex",
@@ -147,7 +159,7 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        <Link to="/register">Register</Link>
+        <Link to="/register">SignUp</Link>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
         <Link to="/login">LogIn</Link>
@@ -206,6 +218,14 @@ export default function PrimarySearchAppBar() {
         LOCATION
       </Typography>
       <NavLink
+        exact
+        to="/"
+        className={classes.menu_link}
+        activeClassName="active_link"
+      >
+        Home
+      </NavLink>
+      <NavLink
         to="/about"
         className={classes.menu_link}
         activeClassName="active_link"
@@ -224,8 +244,8 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" elevation={1}>
-        <Toolbar>
+      <AppBar position="static" elevation={1} className={`header-wrapper `}>
+        <Toolbar className={`cmn-main-container  ${classes.main_header}`}>
           <Hidden mdUp>
             <IconButton
               edge="start"
@@ -240,7 +260,11 @@ export default function PrimarySearchAppBar() {
 
           <Link to="/" className={classes.logo}>
             <Typography className={classes.title} variant="h6" noWrap>
-              FLEVAR
+              <img
+                src="/assets/images/flevarlogo.png"
+                alt=""
+                style={{ maxWidth: "100px" }}
+              />
             </Typography>
           </Link>
 
@@ -300,7 +324,7 @@ export default function PrimarySearchAppBar() {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
       >
-        <Hidden smUp>
+        <Hidden mdUp>
           <Box className={classes.mobilemenulink}>{menuputtertop}</Box>
         </Hidden>
       </SwipeableDrawer>
