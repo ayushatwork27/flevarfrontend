@@ -1,10 +1,11 @@
 import React from "react";
-import Layout from "../Layout";
-import About from "./About";
+import Layout from "../../Layout";
+import Home from "./Home";
+
 function Index() {
   return (
     <Layout>
-      <About />
+      <Home />
     </Layout>
   );
 }

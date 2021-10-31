@@ -47,7 +47,7 @@ function FeaturesPrducts() {
       </Grid>
       <Box>
         <Grid container>
-          <Grid item sm={12} md={3}>
+          <Grid item sm={12} md={4}>
             <Box>
               <Button variant="contained">Order Now</Button>
               <Typography variant="body1">
@@ -55,7 +55,7 @@ function FeaturesPrducts() {
               </Typography>
             </Box>
           </Grid>
-          <Grid item sm={12} md={3}>
+          <Grid item sm={12} md={4}>
             <Box>
               <Typography variant="h5">travelxp</Typography>
               <Typography variant="body1">
@@ -63,7 +63,7 @@ function FeaturesPrducts() {
               </Typography>
             </Box>
           </Grid>
-          <Grid item sm={12} md={3}>
+          <Grid item sm={12} md={4}>
             <Box>
               <Typography variant="body1">The celegraph</Typography>
               <Typography variant="body1">

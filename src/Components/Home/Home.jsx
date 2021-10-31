@@ -8,6 +8,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Typography from "@material-ui/core/Typography";
 import OocassionButton from "./OocassionButton";
 import FeaturesPrducts from "./FeaturesPrducts";
+import ShopByCategory from "./ShopByCategory";
 function Home() {
   return (
     <div>
@@ -43,7 +44,9 @@ function Home() {
           </Button>
         </Box>
 
-        <Typography variant="bosy">card gallery component hear</Typography>
+        <Box>
+          <ShopByCategory />
+        </Box>
       </Box>
       <Box>
         <Box className="title_with_btn">

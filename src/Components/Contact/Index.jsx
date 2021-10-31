@@ -1,11 +1,10 @@
 import React from "react";
-import Layout from "../Layout";
-import Home from "./Home";
-
+import Layout from "../../Layout";
+import Contact from "../Contact/Contact";
 function Index() {
   return (
     <Layout>
-      <Home />
+      <Contact />
     </Layout>
   );
 }

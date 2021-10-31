@@ -1,6 +1,6 @@
 import React from "react";
-import Footer from "./Footer/Footer";
-import Header from "./Header/Header";
+import Footer from "./Components/Footer/Footer";
+import Header from "./Components/Header/Header";
 import { Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/core/styles";
