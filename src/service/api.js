@@ -4,7 +4,9 @@ const url = 'http://3.140.144.29/api';
 
 const options = {
     headers: {
-        'Content-Type': 'application/json'
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
     }
 };
 
