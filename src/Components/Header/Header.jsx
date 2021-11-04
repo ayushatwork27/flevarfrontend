@@ -24,9 +24,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   main_header: {
-    [theme.breakpoints.up("md")]: {
-      padding: "0px",
-    },
+    padding: "0px 15px",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -114,6 +112,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexFlow: "column",
     backgroundColor: "#e8656bcf",
+
+    height: "100%",
   },
   desktop_link_wrapper: {
     display: "flex",
@@ -246,7 +246,7 @@ export default function PrimarySearchAppBar() {
     <div className={classes.grow}>
       <AppBar position="static" elevation={1} className={`header-wrapper `}>
         <Toolbar className={`cmn-main-container  ${classes.main_header}`}>
-          <Hidden mdUp>
+          <Hidden lgUp>
             <IconButton
               edge="start"
               className={classes.menuButton}
@@ -324,7 +324,7 @@ export default function PrimarySearchAppBar() {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
       >
-        <Hidden mdUp>
+        <Hidden lgUp>
           <Box className={classes.mobilemenulink}>{menuputtertop}</Box>
         </Hidden>
       </SwipeableDrawer>

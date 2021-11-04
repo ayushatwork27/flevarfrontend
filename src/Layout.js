@@ -21,7 +21,7 @@ function Layout({ children }) {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header />
-      <Container className={classes.root}>{children}</Container>
+      {children}
       <Footer />
     </ThemeProvider>
   );

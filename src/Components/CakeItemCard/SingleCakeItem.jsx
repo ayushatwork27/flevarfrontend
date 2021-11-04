@@ -12,13 +12,26 @@ const useStyles = makeStyles({
   root: {
     maxWidth: 345,
   },
+  popolarcakepricing: {
+    display: "flex",
+    alignItems: "center",
+  },
+  sellingprice: {
+    marginRight: "5px",
+    color: "#e8656b ",
+    fontWeight: 600,
+  },
+  originalprice: {
+    textDecoration: "line-through",
+    color: "#C6C6C6",
+  },
 });
 
 function SingleCakeItem(props) {
   const classes = useStyles();
 
   return (
-    <Grid item sm={12} md={3} lg={2}>
+    <Grid item xs={12} sm={6} md={3} lg={2}>
       <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
@@ -34,11 +47,21 @@ function SingleCakeItem(props) {
             <Typography variant="body2" color="textSecondary" component="p">
               {props.category}
             </Typography>
-            <Box>
-              <Typography variant="h5" color="textSecondary" component="p">
+            <Box className={classes.popolarcakepricing}>
+              <Typography
+                variant="h5"
+                color="textSecondary"
+                component="p"
+                className={classes.sellingprice}
+              >
                 Rs.{props.sellingprice}
               </Typography>
-              <Typography variant="body1" color="textSecondary" component="p">
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                component="p"
+                className={classes.originalprice}
+              >
                 Rs.{props.originalprice}
               </Typography>
             </Box>

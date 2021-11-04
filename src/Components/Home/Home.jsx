@@ -9,56 +9,79 @@ import Typography from "@material-ui/core/Typography";
 import OocassionButton from "./OocassionButton";
 import FeaturesPrducts from "./FeaturesPrducts";
 import ShopByCategory from "./ShopByCategory";
+import homesliderData from "../Data/homesliderData";
+import CmnButton from "../CmnButton/CmnButton";
+import CustomeContainer from "../CustomeContainer/CustomeContainer";
+import DataCustomerReviewSlider from "../Data/DataCustomerReviewSlider";
 function Home() {
+  const settings = {
+    className: "home-slider-wrapper",
+    fade: true,
+    slidesToScroll: 1,
+    slidesToShow: 1,
+    dots: true,
+  };
   return (
     <div>
-      <SimpleSlider />
-      <Box p={2}>
-        <Box className="title_with_btn">
-          <Typography variant="h5">POPULAR CAKES</Typography>
-          <Button
-            variant="contained"
-            color="default"
-            className="cmn_titlebtn"
-            endIcon={<ChevronRightIcon></ChevronRightIcon>}
-          >
-            View All
-          </Button>
-        </Box>
+      <CustomeContainer>
+        <SimpleSlider sliderData={homesliderData} settings={settings} />
 
-        <Grid container spacing={3}>
-          <CakesItems />
-        </Grid>
-      </Box>
-
-      <Box>
-        <Box className="title_with_btn">
-          <Typography variant="h5">SHOP BY CATEGORY</Typography>
-          <Button
-            variant="contained"
-            color="default"
-            className="cmn_titlebtn"
-            endIcon={<ChevronRightIcon></ChevronRightIcon>}
-          >
-            View All
-          </Button>
+        <Box>
+          <Box className="title_with_btn">
+            <Typography variant="h5">POPULAR CAKES</Typography>
+            <CmnButton
+              variant="contained"
+              className="cmn_btn_with-title"
+              endIcon={<ChevronRightIcon />}
+              btntitle="view All"
+            >
+              View All
+            </CmnButton>
+          </Box>
+          <Grid container spacing={3}>
+            <CakesItems />
+          </Grid>
         </Box>
 
         <Box>
-          <ShopByCategory />
+          <Box className="title_with_btn">
+            <Typography variant="h5">SHOP BY CATEGORY</Typography>
+
+            <CmnButton
+              variant="contained"
+              className="cmn_btn_with-title"
+              endIcon={<ChevronRightIcon />}
+              btntitle="view All"
+            >
+              View All
+            </CmnButton>
+          </Box>
+
+          <Box>
+            <ShopByCategory />
+          </Box>
         </Box>
-      </Box>
-      <Box>
-        <Box className="title_with_btn">
-          <Typography variant="h5">SHOP BY CATEGORY</Typography>
+        <Box>
+          <Box className="title_with_btn">
+            <Typography variant="h5">SHOP BY OCCASION</Typography>
+          </Box>
+          <Box>
+            <OocassionButton />
+          </Box>
         </Box>
-      </Box>
-      <Box>
-        <OocassionButton />
-      </Box>
+      </CustomeContainer>
       <Box>
         <FeaturesPrducts />
       </Box>
+
+      <CustomeContainer>
+        <Box className="review-slider-component-wrapper">
+          <SimpleSlider
+            sliderData={DataCustomerReviewSlider}
+            settings={settings}
+          />
+        </Box>
+      </CustomeContainer>
     </div>
   );
 }
