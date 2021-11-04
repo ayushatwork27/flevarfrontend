@@ -1,7 +1,7 @@
 const DataCustomerReviewSlider = [
   {
     review:
-      "levAR is an All-American bakery offering classic desserts made entirely from scratch using simple, natural ingredients",
+      "FlevAR is an All-American bakery offering classic desserts made entirely from scratch using simple, natural ingredients",
     reviewername: " AMIT KAPOOR, KOLKATA",
     revieSlider: true,
   },

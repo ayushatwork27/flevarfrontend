@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CloseIcon from "@material-ui/icons/Close";
 function MasonryGallary() {
   const data = [
@@ -80,7 +80,7 @@ function MasonryGallary() {
     <div>
       <div className={openModal ? "modal open" : "modal"}>
         <div className="blowupimage-container">
-          <img src={getimage} title="abv" />
+          <img src={getimage} alt={getimage} />
           <CloseIcon
             className="close-icon"
             onClick={() => setopenModal(false)}
@@ -97,7 +97,7 @@ function MasonryGallary() {
               key={i}
               onClick={() => getImage(val.img)}
             >
-              <img src={val.img} title="abv" />
+              <img src={val.img} alt={val.img} />
             </div>
           );
         })}

@@ -5,12 +5,12 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import MenuItem from "@material-ui/core/MenuItem";
 import Container from "@material-ui/core/Container";
 
 import Select from "@material-ui/core/Select";
 import { Link } from "react-router-dom";
+import CmnButton from "../CmnButton/CmnButton";
 const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
@@ -94,8 +94,12 @@ function Register() {
           </Container>
         </Box>
         <Box className="cmn-bottom-profile-guide-direction">
-          <Button variant="contained">Register</Button>
-          <Box className="">
+          <CmnButton
+            btntitle="Register"
+            variant="contained"
+            className="profile-cmn-btn"
+          />
+          <Box className="profile-diretion">
             <Typography>Already a member ?</Typography>
             <Link to="login">Login</Link>
           </Box>

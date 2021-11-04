@@ -3,7 +3,7 @@ import SimpleSlider from "../ProductSlider/SimpleSlider";
 import CakesItems from "../CakeItemCard/CakesItems";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
+
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Typography from "@material-ui/core/Typography";
 import OocassionButton from "./OocassionButton";
@@ -13,18 +13,69 @@ import homesliderData from "../Data/homesliderData";
 import CmnButton from "../CmnButton/CmnButton";
 import CustomeContainer from "../CustomeContainer/CustomeContainer";
 import DataCustomerReviewSlider from "../Data/DataCustomerReviewSlider";
+import DataInstaFameSlider from "../Data/DataInstaFameSlider";
 function Home() {
   const settings = {
     className: "home-slider-wrapper",
     fade: true,
     slidesToScroll: 1,
     slidesToShow: 1,
-    dots: true,
+    responsive: [
+      {
+        breakpoint: 1900,
+        settings: {
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          dots: true,
+        },
+      },
+    ],
+  };
+  const CustomerReviewSliderSetting = {
+    dots: false,
+    className: "customer-review-slidersetting",
+  };
+  const InstaFameSetting = {
+    className: "instaFame-wrapper",
+    dots: false,
+    responsive: [
+      {
+        breakpoint: 1900,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 5,
+          infinite: true,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+
+          dots: true,
+        },
+      },
+    ],
   };
   return (
     <div>
       <CustomeContainer>
-        <SimpleSlider sliderData={homesliderData} settings={settings} />
+        <Box className="slider-wrapper-home">
+          <SimpleSlider sliderData={homesliderData} settings={settings} />
+        </Box>
 
         <Box>
           <Box className="title_with_btn">
@@ -56,11 +107,11 @@ function Home() {
               View All
             </CmnButton>
           </Box>
-
           <Box>
             <ShopByCategory />
           </Box>
         </Box>
+
         <Box>
           <Box className="title_with_btn">
             <Typography variant="h5">SHOP BY OCCASION</Typography>
@@ -78,9 +129,20 @@ function Home() {
         <Box className="review-slider-component-wrapper">
           <SimpleSlider
             sliderData={DataCustomerReviewSlider}
-            settings={settings}
+            settings={CustomerReviewSliderSetting}
           />
         </Box>
+      </CustomeContainer>
+
+      <CustomeContainer>
+        <Box className="title_with_btn">
+          <Typography variant="h5">JOIN OUR INSTA FAM</Typography>
+        </Box>
+
+        <SimpleSlider
+          sliderData={DataInstaFameSlider}
+          settings={InstaFameSetting}
+        />
       </CustomeContainer>
     </div>
   );

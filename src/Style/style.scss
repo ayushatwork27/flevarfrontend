@@ -3,9 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 $form-lable: grey !important;
 $form-bottom-color: #e8656bcf;
 $theme-btn-bg: #e8656b;
+$theme-btn-text: #fff;
 body {
   font-family: "Roboto", sans-serif;
   background-color: #fff !important;
@@ -182,7 +184,7 @@ body {
   }
 }
 /* Home page start */
-.slider-wrapper {
+.slider-wrapper-home {
   margin-top: 80px;
 }
 .home-main-slider-small-titile {
@@ -250,9 +252,91 @@ body {
 
 /* review slider start */
 .review-slider-component-wrapper {
-  padding: 10% 10%;
+  padding: 5% 10%;
+}
+.customer-review-slidersetting {
+  text-align: center;
+  padding-bottom: 50px;
+  .slick-arrow {
+    position: absolute;
+    bottom: 0px;
+    top: auto;
+  }
+  .slick-prev,
+  .slick-next {
+    width: 70px;
+    z-index: 5;
+    height: auto;
+  }
+  .slick-next {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .slick-prev {
+    left: auto;
+    right: 50%;
+    transform: translateX(-50%);
+  }
+}
+.review-title-slider {
+  font-weight: bold !important;
+  font-size: 46px !important;
+  line-height: 46px !important;
+}
+.reviewe-name-slider {
+  font-size: 27px !important;
+  line-height: 46px !important;
+  letter-spacing: 8px !important;
+  color: #4b462e !important;
+  margin-top: 25px !important;
 }
 /* review slider end */
+
+/* profile start  */
+.profile-cmn-btn {
+  background-color: $theme-btn-bg !important ;
+  color: $theme-btn-text !important;
+  padding: 10px 100px !important;
+  margin-top: 30px !important;
+  margin-bottom: 10px !important;
+}
+.profile-diretion {
+  color: #222222;
+  a {
+    color: $theme-btn-bg;
+    margin-left: 5px;
+  }
+}
+/* profile end  */
+
+/* insta fame slider start */
+.instafamslider {
+  cursor: pointer;
+}
+.instaFame-wrapper {
+  padding-bottom: 50px;
+  position: relative;
+  .slick-arrow {
+    position: absolute;
+    bottom: -20px;
+    top: auto;
+  }
+  .slick-prev,
+  .slick-next {
+    width: 70px;
+    z-index: 5;
+    height: auto;
+  }
+  .slick-next {
+    right: 30px;
+    left: auto;
+  }
+  .slick-prev {
+    left: auto;
+    right: 110px;
+  }
+}
+/* insta fame slider end */
 
 /* responsive */
 @import "responsive";
