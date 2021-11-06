@@ -1,19 +1,20 @@
 import React from "react";
-import SimpleSlider from "../ProductSlider/SimpleSlider";
-import CakesItems from "../CakeItemCard/CakesItems";
+import SimpleSlider from "../../Components/ProductSlider/SimpleSlider";
+import CakesItems from "../../Components/CakeItemCard/CakesItems";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
-
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Typography from "@material-ui/core/Typography";
 import OocassionButton from "./OocassionButton";
 import FeaturesPrducts from "./FeaturesPrducts";
 import ShopByCategory from "./ShopByCategory";
-import homesliderData from "../Data/homesliderData";
-import CmnButton from "../CmnButton/CmnButton";
-import CustomeContainer from "../CustomeContainer/CustomeContainer";
-import DataCustomerReviewSlider from "../Data/DataCustomerReviewSlider";
-import DataInstaFameSlider from "../Data/DataInstaFameSlider";
+import homesliderData from "../../Components/Data/homesliderData";
+import CmnButton from "../../Components/CmnButton/CmnButton";
+import CustomeContainer from "../../Components/CustomeContainer/CustomeContainer";
+import DataCustomerReviewSlider from "../../Components/Data/DataCustomerReviewSlider";
+import DataInstaFameSlider from "../../Components/Data/DataInstaFameSlider";
+import Service from "./Service";
+
 function Home() {
   const settings = {
     className: "home-slider-wrapper",
@@ -75,6 +76,9 @@ function Home() {
       <CustomeContainer>
         <Box className="slider-wrapper-home">
           <SimpleSlider sliderData={homesliderData} settings={settings} />
+        </Box>
+        <Box className="servicesBox">
+          <Service />
         </Box>
 
         <Box>

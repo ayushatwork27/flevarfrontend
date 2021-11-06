@@ -1,9 +1,9 @@
 import "./Style/style.scss";
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./Components/Home/Index";
-import About from "./Components/About/Index";
-import Contact from "./Components/Contact/Index";
+import Home from "./Pages/Home/Index";
+import About from "./Pages/About/Index";
+import Contact from "./Pages/Contact/Index";
 import Register from "./Components/Register/Index";
 import Login from "./Components/Login/Index";
 import LoginViaOTP from "./Components/LoginViaOTP/Index";

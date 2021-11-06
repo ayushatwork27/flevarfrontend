@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../../Layout";
-import Contact from "../Contact/Contact";
+import Contact from "./Contact";
 function Index() {
   return (
     <Layout>

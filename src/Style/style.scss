@@ -53,7 +53,12 @@ body {
     border: 1px solid #e8656b !important;
   }
 }
-
+.flex-wraper {
+  flex-wrap: wrap;
+}
+.servicesBox {
+  margin: 4% 0px 8% 0px;
+}
 // .cmn-main-container {
 //   max-width: 1598px;
 //   margin: 0 auto;
@@ -335,6 +340,9 @@ body {
     left: auto;
     right: 110px;
   }
+}
+.MuiInput-underline:after {
+  border-bottom-color: #e8656b !important;
 }
 /* insta fame slider end */
 

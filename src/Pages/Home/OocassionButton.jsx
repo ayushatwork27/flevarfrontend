@@ -1,6 +1,6 @@
 import React from "react";
 
-import CmnButton from "../CmnButton/CmnButton";
+import CmnButton from "../../Components/CmnButton/CmnButton";
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   cmnOccasionBtn: {

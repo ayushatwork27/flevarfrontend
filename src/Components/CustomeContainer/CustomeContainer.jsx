@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "1598px",
-    padding: "15px !important",
+    padding: "0px 15px !important",
   },
 }));
 function CustomeContainer({ children }) {

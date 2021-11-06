@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { Box, Typography } from "@material-ui/core";
-import CmnButton from "../CmnButton/CmnButton";
+import CmnButton from "../../Components/CmnButton/CmnButton";
 
 const useStyles = makeStyles((theme) => ({
   featuresproductright_wrapper: {
