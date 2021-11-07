@@ -15,6 +15,9 @@ const theme = createTheme({
     MuiButton: {
       padding: "20px 30px",
     },
+    MuiTypography: {
+      fontFamily: "Montserrat, sans-serif",
+    },
   },
   // palette: {
   //   primary: {

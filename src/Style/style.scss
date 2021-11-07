@@ -9,12 +9,12 @@ $form-bottom-color: #e8656bcf;
 $theme-btn-bg: #e8656b;
 $theme-btn-text: #fff;
 body {
-  font-family: "Roboto", sans-serif;
   background-color: #fff !important;
+  font-family: "Montserrat", sans-serif !important;
 }
 .active_link {
   color: #222222 !important;
-  font-weight: 800;
+  font-weight: 500;
 }
 .header-wrapper {
   background-color: #e8656bcf !important;
@@ -345,6 +345,11 @@ body {
   border-bottom-color: #e8656b !important;
 }
 /* insta fame slider end */
+
+/* poroduct desscriptio */
+.MuiRating-root {
+  color: #ff9a9a !important;
+}
 
 /* responsive */
 @import "responsive";

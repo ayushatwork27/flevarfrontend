@@ -7,6 +7,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -31,7 +32,7 @@ function SingleCakeItem(props) {
 
   return (
     <Grid item xs={12} sm={6} md={3} lg={2}>
-      <Card className={classes.root}>
+      <Card className={classes.root} component={Link} to="/procductdescription">
         <CardActionArea>
           <CardMedia
             component="img"

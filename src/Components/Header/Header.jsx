@@ -91,7 +91,6 @@ const useStyles = makeStyles((theme) => ({
   },
   location_title: {
     padding: "10px",
-    fontWeight: 800,
     letterSpacing: "1px",
     fontSize: "16px",
   },
@@ -100,7 +99,6 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
     textTransform: "uppercase",
     transition: "all 0.3s ease",
-    fontWeight: 800,
     letterSpacing: "1px",
     textDecoration: "none",
     "&:hover": {
