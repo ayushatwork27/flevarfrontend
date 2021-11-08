@@ -8,6 +8,9 @@ import Register from "./Components/Register/Index";
 import Login from "./Components/Login/Index";
 import LoginViaOTP from "./Components/LoginViaOTP/Index";
 import ProductDescription from "./Pages/ProductDescription/Index";
+import MyCart from "./Pages/MyCart/Index";
+import Delivering from "./Pages/Delivering/Index";
+import Order from "./Pages/Orders/Index";
 function App() {
   return (
     <Router>
@@ -17,12 +20,15 @@ function App() {
         <Route exact path="/contact" component={Contact}></Route>
         <Route exact path="/register" component={Register}></Route>
         <Route exact path="/login" component={Login}></Route>
+        <Route exact path="/order" component={Order}></Route>
         <Route exact path="/loginviaotp" component={LoginViaOTP}></Route>
         <Route
           exact
           path="/procductdescription"
           component={ProductDescription}
         ></Route>
+        <Route exact path="/mycart" component={MyCart}></Route>
+        <Route exact path="/delevering" component={Delivering}></Route>
       </Switch>
     </Router>
   );
