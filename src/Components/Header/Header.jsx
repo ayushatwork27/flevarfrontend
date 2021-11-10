@@ -161,6 +161,9 @@ export default function PrimarySearchAppBar() {
       <MenuItem onClick={handleMenuClose}>
         <Link to="/login">LogIn</Link>
       </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link to="/order">Orders</Link>
+      </MenuItem>
       {/*<MenuItem onClick={handleMenuClose}>
         <Link to="/logout">LogOut</Link>
       </MenuItem>
@@ -169,9 +172,6 @@ export default function PrimarySearchAppBar() {
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
         <Link to="/account">Account</Link>
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
-        <Link to="/orderrs">Orders</Link>
       </MenuItem> */}
     </Menu>
   );
@@ -188,7 +188,12 @@ export default function PrimarySearchAppBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
+        <IconButton
+          aria-label="show 4 new mails"
+          color="inherit"
+          component={Link}
+          to="/mycart"
+        >
           <Badge badgeContent={4} color="secondary">
             <LocalMallIcon />
           </Badge>
@@ -284,7 +289,12 @@ export default function PrimarySearchAppBar() {
           </div>
 
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
+            <IconButton
+              aria-label="show 4 new mails"
+              color="inherit"
+              component={Link}
+              to="/mycart"
+            >
               <Badge badgeContent={4} color="secondary">
                 <LocalMallIcon />
               </Badge>

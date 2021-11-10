@@ -41,6 +41,12 @@ const useStyles = makeStyles((theme) => ({
     padding: "8px 5px",
     maxWidth: "486px",
     borderRadius: "5px",
+    "& .MuiInput-underline:before": {
+      display: "none",
+    },
+    "& .MuiInput-underline:after": {
+      display: "none",
+    },
   },
   subscribeInput: {
     color: "#000",

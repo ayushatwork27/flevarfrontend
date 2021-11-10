@@ -19,6 +19,9 @@ const theme = createTheme({
       fontFamily: "Montserrat, sans-serif",
     },
   },
+  typography: {
+    fontFamily: ['"Montserrat"', "sans-serif"].join(","),
+  },
   // palette: {
   //   primary: {
   //     main: "#fff",

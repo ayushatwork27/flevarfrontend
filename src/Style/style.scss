@@ -350,6 +350,49 @@ body {
 .MuiRating-root {
   color: #ff9a9a !important;
 }
+/* tabs commmon setting */
+.order-tabs {
+  background-color: #fff !important;
+  color: #222222 !important;
+  box-shadow: none !important;
 
+  .MuiTabs-indicator {
+    background-color: #ec8287 !important;
+  }
+  .MuiTab-textColorInherit {
+    font-weight: 600 !important;
+  }
+}
+.cmn-tabs_wrapper {
+  margin-left: 50px;
+}
+/* order page start */
+.delivery_dates_dots {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  &::after {
+    position: absolute;
+    content: " ";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #4b462e;
+    left: 6px;
+  }
+}
+.cmn-profile_bottom_btn {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  a {
+    width: 100%;
+    text-align: center;
+  }
+}
+/* order page end */
 /* responsive */
 @import "responsive";
