@@ -7,9 +7,9 @@ import CmnButton from "../../Components/CmnButton/CmnButton";
 import PromocodePriceDetails from "./PromocodePriceDetails";
 import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
-  mycart_wrapper: {
-    marginTop: "3%",
-  },
+  // mycart_wrapper: {
+  //   marginTop: "3%",
+  // },
   cart_main_title: {
     fontSize: "26px",
     letterSpacing: "0px",

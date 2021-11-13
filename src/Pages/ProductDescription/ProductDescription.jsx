@@ -107,7 +107,7 @@ function ProductDescription(props) {
   };
   const [value, setValue] = React.useState(4);
   return (
-    <CustomeContainer>
+    <>
       <Box className={classes.Product_description_wrapper}>
         <Grid container>
           <Grid item sm={12} md={6}>
@@ -204,7 +204,7 @@ function ProductDescription(props) {
           <CakesItems />
         </Grid>
       </Box>
-    </CustomeContainer>
+    </>
   );
 }
 

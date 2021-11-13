@@ -189,9 +189,9 @@ body {
   }
 }
 /* Home page start */
-.slider-wrapper-home {
-  margin-top: 80px;
-}
+// .slider-wrapper-home {
+//   margin-top: 80px;
+// }
 .home-main-slider-small-titile {
   color: #7e7e7e;
   font-size: 19px !important;
@@ -392,6 +392,10 @@ body {
     width: 100%;
     text-align: center;
   }
+}
+.spacer {
+  height: 80px !important;
+  width: 100% !important;
 }
 /* order page end */
 /* responsive */

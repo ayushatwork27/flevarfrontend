@@ -13,6 +13,8 @@ import OrderTabs from "./OrderTabs";
 import WishlistTabs from "./WishlistTabs";
 import CmnButton from "../../Components/CmnButton/CmnButton";
 import { Link } from "react-router-dom";
+import MyCart from "../MyCart/MyCart";
+import HelpTabs from "./HelpTabs";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -64,7 +66,7 @@ function Order() {
   return (
     <CustomeContainer>
       <Grid container>
-        <Grid sm={12} md={3}>
+        <Grid sm={12} md={3} item>
           <Box>
             <Profile />
             <Box className="cmn-profile_bottom_btn">
@@ -77,7 +79,7 @@ function Order() {
             </Box>
           </Box>
         </Grid>
-        <Grid sm={12} md={9}>
+        <Grid sm={12} md={9} item>
           <Box className="cmn-tabs_wrapper">
             <AppBar position="static" className="order-tabs">
               <Tabs
@@ -97,7 +99,7 @@ function Order() {
               <WishlistTabs />
             </TabPanel>
             <TabPanel value={value} index={2}>
-              Item Three
+              <HelpTabs />
             </TabPanel>
           </Box>
         </Grid>

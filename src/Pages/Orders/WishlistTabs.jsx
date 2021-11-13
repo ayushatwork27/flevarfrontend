@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-function Wishlist() {
+function WishlistTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(5);
   return (
@@ -137,4 +137,4 @@ function Wishlist() {
   );
 }
 
-export default Wishlist;
+export default WishlistTabs;
