@@ -34,9 +34,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#C6C6C6",
     fontSize: "30px",
   },
-  Product_description_wrapper: {
-    marginTop: "50px",
-  },
+
   Product_description_details_wrapper: {
     marginTop: "20px",
   },
@@ -107,7 +105,7 @@ function ProductDescription(props) {
   };
   const [value, setValue] = React.useState(4);
   return (
-    <>
+    <CustomeContainer>
       <Box className={classes.Product_description_wrapper}>
         <Grid container>
           <Grid item sm={12} md={6}>
@@ -204,7 +202,7 @@ function ProductDescription(props) {
           <CakesItems />
         </Grid>
       </Box>
-    </>
+    </CustomeContainer>
   );
 }
 

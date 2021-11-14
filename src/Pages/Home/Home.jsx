@@ -14,7 +14,7 @@ import CustomeContainer from "../../Components/CustomeContainer/CustomeContainer
 import DataCustomerReviewSlider from "../../Components/Data/DataCustomerReviewSlider";
 import DataInstaFameSlider from "../../Components/Data/DataInstaFameSlider";
 import Service from "./Service";
-
+import { Link } from "react-router-dom";
 function Home() {
   const settings = {
     className: "home-slider-wrapper",
@@ -89,6 +89,8 @@ function Home() {
               className="cmn_btn_with-title"
               endIcon={<ChevronRightIcon />}
               btntitle="view All"
+              component={Link}
+              to="/categories_details"
             >
               View All
             </CmnButton>
@@ -107,6 +109,8 @@ function Home() {
               className="cmn_btn_with-title"
               endIcon={<ChevronRightIcon />}
               btntitle="view All"
+              component={Link}
+              to="/categories"
             >
               View All
             </CmnButton>

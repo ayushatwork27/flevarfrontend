@@ -1,0 +1,22 @@
+.wrapper {
+  position: relative;
+}
+
+.wrapper h1 {
+  font-size: 20px;
+  text-align: center;
+  position: absolute;
+  font-weight: 500;
+  left: 9%;
+  /* I think this works for centering? */
+  top: calc(20% - 64px);
+  -webkit-transform: translate(-50%, calc(-50% - 64px));
+  -ms-transform: translate(-50%, calc(-50% - 64px));
+  transform: translate(-50%, calc(-50% - 64px));
+  color: #e8656bcf;
+}
+
+.wrapper h1 span {
+  position: absolute;
+  z-index: 55;
+}

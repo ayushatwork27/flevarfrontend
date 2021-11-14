@@ -4,6 +4,7 @@ import CmnButton from "../../Components/CmnButton/CmnButton";
 import Box from "@material-ui/core/Box";
 import { Typography } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   d_flex: {
     display: "flex",
@@ -41,6 +42,12 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "20px",
     "& h5": {
       paddingLeft: "4px",
+
+      [theme.breakpoints.down("xs")]: {
+        marginBottom: "10px",
+        marginTop: "10px",
+        paddingLeft: "0px",
+      },
     },
     [theme.breakpoints.down("xs")]: {
       marginLeft: "0px",
@@ -119,6 +126,8 @@ function OrderTabs() {
                   btntitle="Review"
                   variant="outlined"
                   className={` ${classes.mr_2}`}
+                  component={Link}
+                  to="order_details"
                 />
                 <CmnButton
                   btntitle="Re-Order"
