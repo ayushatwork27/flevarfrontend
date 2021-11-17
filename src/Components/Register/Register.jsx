@@ -52,7 +52,7 @@ function Register() {
                   label="Full Name"
                   variant="filled"
                   className="single-formbox"
-                  disableUnderline={false}
+                  disableunderline={false}
                 />
               </Grid>
               <Grid item xs={12} md={6}>

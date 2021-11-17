@@ -1,7 +1,8 @@
 import React from "react";
 import CakeData from "./CakeData";
 import SingleCakeItem from "./SingleCakeItem";
-function CakesItems() {
+function CakesItems(products) {
+  console.log("products", products);
   return (
     <>
       {CakeData.map((val, i) => {

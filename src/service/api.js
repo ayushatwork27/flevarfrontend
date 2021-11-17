@@ -17,3 +17,11 @@ export const authenticateLogin = async (login) => {
         console.log('error while calling login API: ', error);
     }
 }
+
+export const getProductsList = async () => {
+    try {
+        return await axios.post(`${url}/customer/product_list`, { filterkey: '', location_id: 2}, options)
+    } catch (error) {
+        console.log('error while calling product_list API: ', error);
+    }
+}

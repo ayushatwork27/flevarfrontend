@@ -110,7 +110,7 @@ function PromocodePriceDetails() {
             <form noValidate autoComplete="off">
               <TextField
                 className={classes.promocode_input}
-                disableUnderline="true"
+                disableunderline="true"
               />
             </form>
             <CmnButton className={classes.applybtn} btntitle="apply" />

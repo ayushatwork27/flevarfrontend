@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SimpleSlider from "../../Components/ProductSlider/SimpleSlider";
 import CakesItems from "../../Components/CakeItemCard/CakesItems";
 import Box from "@material-ui/core/Box";
@@ -14,6 +14,7 @@ import CustomeContainer from "../../Components/CustomeContainer/CustomeContainer
 import DataCustomerReviewSlider from "../../Components/Data/DataCustomerReviewSlider";
 import DataInstaFameSlider from "../../Components/Data/DataInstaFameSlider";
 import Service from "./Service";
+import { getProductsList } from "../../service/api";
 import { Link } from "react-router-dom";
 function Home() {
   const settings = {
@@ -71,6 +72,17 @@ function Home() {
       },
     ],
   };
+
+  const [products, setProducts] = useState([]);
+
+  const getProducts = async () => {
+    let response = await getProductsList(products);
+    if (response && response.data && response.data.success) setProducts(response && response.data && response.data.data.data);
+    else console.log("beg one");
+  };
+
+  useEffect(() => getProducts(), []);
+
   return (
     <div>
       <CustomeContainer>
@@ -96,7 +108,7 @@ function Home() {
             </CmnButton>
           </Box>
           <Grid container spacing={3}>
-            <CakesItems />
+            <CakesItems products={products}/>
           </Grid>
         </Box>
 
