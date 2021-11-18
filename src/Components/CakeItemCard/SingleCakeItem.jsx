@@ -32,7 +32,11 @@ function SingleCakeItem(props) {
 
   return (
     <Grid item xs={12} sm={6} md={3} lg={2}>
-      <Card className={classes.root} component={Link} to="/productdescription">
+      <Card
+        className={classes.root}
+        component={Link}
+        to={"/productdescription/" + props.id}
+      >
         <CardActionArea>
           <CardMedia
             component="img"

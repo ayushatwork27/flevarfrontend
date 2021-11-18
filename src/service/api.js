@@ -29,3 +29,20 @@ export const getProductsList = async () => {
     console.log("error while calling product_list API: ", error);
   }
 };
+
+export const getProductDetails = async (id) => {
+  try {
+    return await axios.get(`${url}/customer/product_details/${id}`, options);
+  } catch (error) {
+    console.log("error while calling product_details API: ", error);
+  }
+};
+
+export const verifyOtpOnServer = async (loginData) => {
+  try {
+    console.log(loginData);
+    return await axios.post(`${url}/customer/verifyotp`, loginData, options);
+  } catch (error) {
+    console.log("error while calling login API: ", error);
+  }
+};

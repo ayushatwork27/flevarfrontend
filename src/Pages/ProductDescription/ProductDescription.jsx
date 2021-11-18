@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Box, Grid, Typography } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import CmnButton from "../../Components/CmnButton/CmnButton";
@@ -9,6 +9,9 @@ import { Rating } from "@material-ui/lab";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import DescriptionTabs from "./DescriptionTabs";
 import CakesItems from "../../Components/CakeItemCard/CakesItems";
+import { ProductListContext } from "../../Contexts/ProductListContext";
+import { useParams } from "react-router-dom";
+import { getProductDetails } from "../../service/api";
 const useStyles = makeStyles((theme) => ({
   Product_description_main_title: {
     fontSize: "40px",
@@ -103,7 +106,24 @@ function ProductDescription(props) {
       setCount((prevCount) => prevCount - 1);
     }
   };
+
   const [value, setValue] = React.useState(4);
+  const { id } = useParams();
+  const [product, setProduct] = useState({});
+
+  const productDetails = async () => {
+    let response = await getProductDetails(id);
+
+    if (response && response.data && response.data.success) {
+      setProduct(response && response.data && response.data.data.data);
+      console.log(response.data.data.data);
+    } else {
+      console.log("beg one");
+    }
+  };
+  useEffect(() => productDetails(), []);
+
+  const { products } = useContext(ProductListContext);
   return (
     <CustomeContainer>
       <Box className={classes.Product_description_wrapper}>
@@ -123,7 +143,8 @@ function ProductDescription(props) {
                 variant="h5"
                 className={classes.Product_description_main_title}
               >
-                Mango Delight Cake
+                {product.name}
+                {/* Mango Delight Cake */}
               </Typography>
               <Box
                 component="fieldset"
@@ -140,7 +161,7 @@ function ProductDescription(props) {
                   component="p"
                   className={classes.sellingprice}
                 >
-                  Rs.999
+                  Rs.{product.mrp}
                 </Typography>
                 <Typography
                   variant="body1"
@@ -148,7 +169,7 @@ function ProductDescription(props) {
                   component="p"
                   className={classes.originalprice}
                 >
-                  Rs.1079
+                  Rs.{product.mrp}
                 </Typography>
               </Box>
               <Box className={classes.counter_box}>
@@ -188,7 +209,7 @@ function ProductDescription(props) {
                 </form>
               </Box>
               <Box>
-                <DescriptionTabs />
+                <DescriptionTabs product={product} />
               </Box>
             </Box>
           </Grid>
@@ -199,7 +220,7 @@ function ProductDescription(props) {
           <Typography variant="h5">MORE CAKES FOR YOU</Typography>
         </Box>
         <Grid container spacing={3}>
-          <CakesItems />
+          <CakesItems products={products} />
         </Grid>
       </Box>
     </CustomeContainer>

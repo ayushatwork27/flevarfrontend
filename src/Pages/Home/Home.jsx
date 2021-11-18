@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import SimpleSlider from "../../Components/ProductSlider/SimpleSlider";
 import CakesItems from "../../Components/CakeItemCard/CakesItems";
 import Box from "@material-ui/core/Box";
@@ -14,8 +14,9 @@ import CustomeContainer from "../../Components/CustomeContainer/CustomeContainer
 import DataCustomerReviewSlider from "../../Components/Data/DataCustomerReviewSlider";
 import DataInstaFameSlider from "../../Components/Data/DataInstaFameSlider";
 import Service from "./Service";
-import { getProductsList } from "../../service/api";
 import { Link } from "react-router-dom";
+import { ProductListContext } from "../../Contexts/ProductListContext";
+
 function Home() {
   const settings = {
     className: "home-slider-wrapper",
@@ -73,16 +74,7 @@ function Home() {
     ],
   };
 
-  const [products, setProducts] = useState([]);
-
-  const getProducts = async () => {
-    let response = await getProductsList(products);
-    if (response && response.data && response.data.success) setProducts(response && response.data && response.data.data.data);
-    else console.log("beg one");
-  };
-
-  useEffect(() => getProducts(), []);
-
+  const { products } = useContext(ProductListContext);
   return (
     <div>
       <CustomeContainer>
@@ -108,7 +100,7 @@ function Home() {
             </CmnButton>
           </Box>
           <Grid container spacing={3}>
-            <CakesItems products={products}/>
+            <CakesItems products={products} />
           </Grid>
         </Box>
 

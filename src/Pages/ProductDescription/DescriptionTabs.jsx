@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function DescriptionTabs() {
+function DescriptionTabs({ product }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -162,9 +162,10 @@ function DescriptionTabs() {
             variant="body1"
             className={classes.image_with_bottom_details}
           >
-            This mango cake is bursting with fresh mango flavor! It has
+            {/* This mango cake is bursting with fresh mango flavor! It has
             surprisingly simple ingredients (ONLY 9 TOTAL!) but it is a show
-            stopper – and truly tastes as good as it looks.
+            stopper – and truly tastes as good as it looks. */}
+            {product.description}
           </Typography>
         </Box>
       </TabPanel>
