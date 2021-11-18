@@ -1,19 +1,19 @@
 import React from "react";
 import CakeData from "./CakeData";
 import SingleCakeItem from "./SingleCakeItem";
+
 function CakesItems(products) {
-  console.log("products", products);
   return (
     <>
-      {CakeData.map((val, i) => {
+      {products.products.map((val, i) => {
         return (
           <SingleCakeItem
             key={i}
-            imageurl={val.imageurl}
-            productname={val.productname}
-            category={val.category}
-            sellingprice={val.sellingprice}
-            originalprice={val.originalprice}
+            imageurl={val.product_png_images[0].url}
+            productname={val.name}
+            category={val.product_category.name}
+            sellingprice={val.mrp}
+            originalprice={val.mrp}
           />
         );
       })}

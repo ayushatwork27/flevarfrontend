@@ -27,7 +27,7 @@ function App() {
         <Route exact path="/loginviaotp" component={LoginViaOTP}></Route>
         <Route
           exact
-          path="/procductdescription"
+          path="/productdescription"
           component={ProductDescription}
         ></Route>
         <Route exact path="/mycart" component={MyCart}></Route>
