@@ -1,10 +1,10 @@
 import React from "react";
 import Layout from "../../Layout";
-import LoginViaOTP from "./LoginViaOTP";
+import VerifyOTP from "./VerifyOTP";
 function Index() {
   return (
     <Layout>
-      <LoginViaOTP />
+      <VerifyOTP />
     </Layout>
   );
 }

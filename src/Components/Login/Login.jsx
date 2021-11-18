@@ -1,21 +1,19 @@
 import { Box, Typography } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
 import { authenticateLogin } from "../../service/api";
-
-const loginInitialValues = {
-  mobile: "",
-};
+import { LoginContext } from "../../Contexts/LoginContext";
 
 function Login() {
-  const [login, setLogin] = useState(loginInitialValues);
+  const { login, setLogin } = useContext(LoginContext);
 
   const loginViaOTP = async () => {
     let response = await authenticateLogin(login);
+    console.log(response);
     if (!response) console.log("beg one");
     else console.log("beg two");
   };
@@ -28,7 +26,7 @@ function Login() {
     <>
       <Box>
         <Box className="cmn-formbox-wraapper">
-          <Container md p={1}>
+          <Container p={1}>
             <Box className="cmn-profile-main-title">
               <Typography variant="h5">Register To </Typography>
               <img
@@ -51,7 +49,12 @@ function Login() {
           </Container>
         </Box>
         <Box className="cmn-bottom-profile-guide-direction">
-          <Link to="/loginviaotp">
+          <Link
+            to={{
+              pathname: "/verifyotp",
+              state: [{ mobile: login }],
+            }}
+          >
             <Button
               variant="contained"
               onClick={() => loginViaOTP()}

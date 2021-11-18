@@ -1,18 +1,28 @@
 import { Box, Typography } from "@material-ui/core";
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
+import { LoginContext } from "../../Contexts/LoginContext";
+import { verifyOtpOnServer } from "../../service/api";
 
-function LoginViaOTP() {
+function VerifyOTP() {
+  const [otp, setOtp] = useState(null);
+  const { login } = useContext(LoginContext);
+
+  const verifyOtpApiCall = async () => {
+    let response = await verifyOtpOnServer({ mobile: login.mobile, otp: otp });
+    console.log(response);
+  };
+
   return (
     <>
       <Box>
         <Box className="cmn-formbox-wraapper">
-          <Container md p={1}>
+          <Container p={1}>
             <Box className="cmn-profile-main-title">
               <Typography variant="h5">Register To </Typography>
               <img
@@ -22,19 +32,29 @@ function LoginViaOTP() {
               />
             </Box>
             <Grid container spacing={2} justifyContent="center">
-              <Grid item sm={12} md={3}>
+              <Grid item sm={12} md={12}>
                 <Box className="otp-enter-wrapper">
+                  <TextField
+                    variant="filled"
+                    className="single-formbox"
+                    placeholder="Enter OTP"
+                    onChange={(e) => setOtp(e.target.value)}
+                    name="otp"
+                  />
+                  {/* <TextField variant="filled" className="single-formbox" />
                   <TextField variant="filled" className="single-formbox" />
-                  <TextField variant="filled" className="single-formbox" />
-                  <TextField variant="filled" className="single-formbox" />
-                  <TextField variant="filled" className="single-formbox" />
+                  <TextField variant="filled" className="single-formbox" /> */}
                 </Box>
               </Grid>
             </Grid>
           </Container>
         </Box>
         <Box className="cmn-bottom-profile-guide-direction">
-          <Button variant="contained" className="profile-cmn-btn">
+          <Button
+            variant="contained"
+            className="profile-cmn-btn"
+            onClick={() => verifyOtpApiCall()}
+          >
             Verify & Login
           </Button>
           <Box className="profile-diretion">
@@ -47,4 +67,4 @@ function LoginViaOTP() {
   );
 }
 
-export default LoginViaOTP;
+export default VerifyOTP;
