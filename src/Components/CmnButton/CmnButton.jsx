@@ -9,6 +9,8 @@ function CmnButton(props) {
       onClick={props.onClick}
       endIcon={props.endIcon}
       disabled={props.disabled}
+      component={props.component}
+      to={props.to}
     >
       {props.btntitle}
     </Button>

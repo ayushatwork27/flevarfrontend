@@ -14,6 +14,9 @@ import Order from "./Pages/Orders/Index";
 import { LoginContext } from "./Contexts/LoginContext";
 import { useState } from "react";
 
+import Categories from "./Pages/Categories/Index";
+import CategoriesDetails from "./Pages/CategoriesDetails/Index";
+import OrderDetails from "./Pages/OrderDetails/Index";
 function App() {
   const [login, setLogin] = useState({ mobile: "" });
 
@@ -37,6 +40,13 @@ function App() {
         ></Route>
         <Route exact path="/mycart" component={MyCart}></Route>
         <Route exact path="/delevering" component={Delivering}></Route>
+        <Route exact path="/categories" component={Categories}></Route>
+        <Route
+          exact
+          path="/categories_details"
+          component={CategoriesDetails}
+        ></Route>
+        <Route exact path="/order_details" component={OrderDetails}></Route>
       </Switch>
     </Router>
   );

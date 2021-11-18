@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CmnButton from "../CmnButton/CmnButton";
+import Circle from "../CircularText/CircularText";
 const useStyles = makeStyles((theme) => ({
   homemainsliderimage: {
     marginLeft: "auto",
@@ -105,11 +106,26 @@ export default function SimpleSlider(props) {
                     </Grid>
 
                     <Grid item xs={12} md={6} lg={6} className="order-md-1">
-                      <img
-                        src={val.imagesrc}
-                        alt="sliderpicture"
-                        className={classes.homemainsliderimage}
-                      />
+                      <Box>
+                        <Box className="wrapper">
+                          <img
+                            src={val.imagesrc}
+                            alt="sliderpicture"
+                            className={classes.homemainsliderimage}
+                          />
+                          <img
+                            src="/assets/images/icons/left-slider-arrow.svg"
+                            alt="sliderpicture"
+                            className="home_circular_arrow"
+                          />
+
+                          <Circle
+                            text="Loremipsumsliderpicture"
+                            arc={360}
+                            radius={100}
+                          />
+                        </Box>
+                      </Box>
                     </Grid>
                   </>
                 )}

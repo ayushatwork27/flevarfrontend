@@ -130,7 +130,7 @@ function DescriptionTabs() {
       <TabPanel value={value} index={0}>
         <Box>
           <Grid container>
-            <Grid sm={4} md={4}>
+            <Grid sm={4} md={4} item>
               <Box className={classes.image_with_description}>
                 <img
                   src="/assets/images/description_tabs.png"
@@ -139,7 +139,7 @@ function DescriptionTabs() {
                 <Typography variant="body2">Freshly sourced</Typography>
               </Box>
             </Grid>
-            <Grid sm={4} md={4}>
+            <Grid sm={4} md={4} item>
               <Box className={classes.image_with_description}>
                 <img
                   src="/assets/images/description_tabs.png"
