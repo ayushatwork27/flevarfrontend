@@ -11,9 +11,9 @@ function CakesItems(products) {
           <SingleCakeItem
             key={val.id}
             id={val.id}
-            imageurl={val.product_png_images[0].url}
+            imageurl={val.product_png_images && val.product_png_images[0] && val.product_png_images[0].url}
             productname={val.name}
-            category={val.product_category.name}
+            category={val.product_category && val.product_category.name}
             sellingprice={val.mrp}
             originalprice={val.mrp}
           />

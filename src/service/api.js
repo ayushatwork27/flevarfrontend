@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://127.0.0.1:8000/api";
+const url = "http://3.140.144.29/api";
 
 const options = {
   headers: {
