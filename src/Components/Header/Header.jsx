@@ -220,14 +220,6 @@ export default function PrimarySearchAppBar() {
         LOCATION
       </Typography>
       <NavLink
-        exact
-        to="/"
-        className={classes.menu_link}
-        activeClassName="active_link"
-      >
-        Home
-      </NavLink>
-      <NavLink
         to="/about"
         className={classes.menu_link}
         activeClassName="active_link"
