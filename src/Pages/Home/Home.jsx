@@ -77,60 +77,64 @@ function Home() {
 
     return (
         <div>
-
-            <Box className="slider-wrapper-home">
-                <SimpleSlider sliderData={homesliderData} settings={settings} />
-            </Box>
-            <Box className="servicesBox">
-                <Service />
-            </Box>
-
-            <Box>
-                <Box className="title_with_btn">
-                    <Typography variant="h5">POPULAR CAKES</Typography>
-                    <CmnButton
-                        variant="contained"
-                        className="cmn_btn_with-title"
-                        endIcon={<ChevronRightIcon />}
-                        btntitle="view All"
-                        component={Link}
-                        to="/categories_details"
-                    >
-                        View All
-                    </CmnButton>
-                </Box>
-                <Grid container spacing={3}>
-                    <CakesItems products={products && products.data && products.data.data} />
-                </Grid>
-            </Box>
-
-            <Box>
-                <Box className="title_with_btn">
-                    <Typography variant="h5">SHOP BY CATEGORY</Typography>
-
-                    <CmnButton
-                        variant="contained"
-                        className="cmn_btn_with-title"
-                        endIcon={<ChevronRightIcon />}
-                        btntitle="view All"
-                        component={Link}
-                        to="/categories"
-                    >
-                        View All
-                    </CmnButton>
-                </Box>
-                <Box>
-                    <ShopByCategory />
-                </Box>
-            </Box>
-
             <CustomeContainer>
-                <SpecialRequest />
+                <Box className="slider-wrapper-home">
+                    <SimpleSlider sliderData={homesliderData} settings={settings} />
+                </Box>
+                <Box className="servicesBox">
+                    <Service />
+                </Box>
+
+                <Box>
+                    <Box className="title_with_btn">
+                        <Typography variant="h5">POPULAR CAKES</Typography>
+                        <CmnButton
+                            variant="contained"
+                            className="cmn_btn_with-title"
+                            endIcon={<ChevronRightIcon />}
+                            btntitle="view All"
+                            component={Link}
+                            to="/categories_details"
+                        >
+                            View All
+                        </CmnButton>
+                    </Box>
+                    <Grid container spacing={3}>
+                        <CakesItems products={products && products.data && products.data.data} />
+                    </Grid>
+                </Box>
+
+                <Box>
+                    <Box className="title_with_btn">
+                        <Typography variant="h5">SHOP BY CATEGORY</Typography>
+
+                        <CmnButton
+                            variant="contained"
+                            className="cmn_btn_with-title"
+                            endIcon={<ChevronRightIcon />}
+                            btntitle="view All"
+                            component={Link}
+                            to="/categories"
+                        >
+                            View All
+                        </CmnButton>
+                    </Box>
+                    <Box>
+                        <ShopByCategory />
+                    </Box>
+                </Box>
+
+                <Box>
+                    <Box className="title_with_btn">
+                        <Typography variant="h5">SHOP BY OCCASION</Typography>
+                    </Box>
+                    <Box>
+                        <OocassionButton />
+                    </Box>
+                </Box>
             </CustomeContainer>
-
-
-            <Box className="title_with_btn">
-                <Typography variant="h5">JOIN OUR INSTA FAM</Typography>
+            <Box>
+                <FeaturesPrducts />
             </Box>
 
             <CustomeContainer>
@@ -142,6 +146,10 @@ function Home() {
                 </Box>
             </CustomeContainer>
 
+            <CustomeContainer>
+                <SpecialRequest />
+            </CustomeContainer>
+            
             <CustomeContainer>
                 <Box className="title_with_btn">
                     <Typography variant="h5">JOIN OUR INSTA FAM</Typography>
