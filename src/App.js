@@ -6,20 +6,18 @@ import About from "./Pages/About/Index";
 import Contact from "./Pages/Contact/Index";
 import Register from "./Components/Register/Index";
 import Login from "./Components/Login/Index";
-import VerifyOTP from "./Components/VerifyOTP/Index";
+import LoginViaOTP from "./Components/LoginViaOTP/Index";
 import ProductDescription from "./Pages/ProductDescription/Index";
 import MyCart from "./Pages/MyCart/Index";
 import Delivering from "./Pages/Delivering/Index";
 import Order from "./Pages/Orders/Index";
-import { LoginContext } from "./Contexts/LoginContext";
-import { useState } from "react";
-
 import Categories from "./Pages/Categories/Index";
 import CategoriesDetails from "./Pages/CategoriesDetails/Index";
 import OrderDetails from "./Pages/OrderDetails/Index";
-function App() {
-  const [login, setLogin] = useState({ mobile: "" });
+import AddNewAdderess from "./Pages/AddNewAdderess/Index";
+import ProfileUpdate from "./Pages/ProfileUpdate/Index";
 
+function App() {
   return (
     <Router>
       <Switch>
@@ -27,15 +25,12 @@ function App() {
         <Route exact path="/about" component={About}></Route>
         <Route exact path="/contact" component={Contact}></Route>
         <Route exact path="/register" component={Register}></Route>
-        <LoginContext.Provider value={{ login, setLogin }}>
-          <Route exact path="/login" component={Login}></Route>
-          <Route exact path="/verifyotp" component={VerifyOTP}></Route>
-        </LoginContext.Provider>
+        <Route exact path="/login" component={Login}></Route>
         <Route exact path="/order" component={Order}></Route>
-
+        <Route exact path="/loginviaotp" component={LoginViaOTP}></Route>
         <Route
           exact
-          path="/productdescription"
+          path="/procductdescription"
           component={ProductDescription}
         ></Route>
         <Route exact path="/mycart" component={MyCart}></Route>
@@ -47,6 +42,8 @@ function App() {
           component={CategoriesDetails}
         ></Route>
         <Route exact path="/order_details" component={OrderDetails}></Route>
+           <Route exact path="/add_new_address" component={AddNewAdderess}></Route>
+             <Route exact path="/profile_update" component={ProfileUpdate}></Route>
       </Switch>
     </Router>
   );
