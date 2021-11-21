@@ -15,6 +15,7 @@ import CmnButton from "../../Components/CmnButton/CmnButton";
 import { Link } from "react-router-dom";
 import MyCart from "../MyCart/MyCart";
 import HelpTabs from "./HelpTabs";
+import LogoutButton from "../../Components/LogOutButton/LogoutButton";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
 }));
+
 function Order() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -70,12 +72,10 @@ function Order() {
           <Box>
             <Profile />
             <Box className="cmn-profile_bottom_btn">
-              <Box component={Link} to="/">
+              <Box component={Link} to="/add_new_address">
                 <CmnButton btntitle="Edit Details" variant="outlined" />
               </Box>
-              <Box component={Link} to="/">
-                <CmnButton btntitle="Log Out" />
-              </Box>
+              <LogoutButton />
             </Box>
           </Box>
         </Grid>

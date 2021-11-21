@@ -5,7 +5,7 @@ import clsx from "clsx";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import SettingsIcon from "@material-ui/icons/Settings";
+
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import VideoLabelIcon from "@material-ui/icons/VideoLabel";
 import StepConnector from "@material-ui/core/StepConnector";

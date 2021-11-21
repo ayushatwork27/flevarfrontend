@@ -44,7 +44,7 @@ const DataInstaFameSlider = [
     intafamSlider: true,
   },
   {
-    imagesrc: "/assets/images/Screenshot_4.png",
+     imagesrc: "/assets/images/Screenshot_4.png",
     intafamSlider: true,
   },
 ];

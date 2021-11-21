@@ -20,3 +20,44 @@
   position: absolute;
   z-index: 55;
 }
+
+/* contact page circle start */
+
+.contact_circle_wrapper {
+  position: relative;
+}
+
+.contact_circle_wrapper h1 {
+  font-size: 20px;
+  text-align: center;
+  position: absolute;
+  font-weight: 500;
+  left: 0%;
+  /* I think this works for centering? */
+  top: calc(11% - 64px);
+  -webkit-transform: translate(-50%, calc(-50% - 64px));
+  -ms-transform: translate(-50%, calc(-50% - 64px));
+  transform: translate(-50%, calc(-50% - 64px));
+  color: #fff;
+}
+
+.contact_circle_wrapper h1 span {
+  position: absolute;
+  z-index: 55;
+}
+
+@media(max-width:800px) {
+  .contact_circle_wrapper h1 {
+    left: 0%;
+    top: calc(20% - 64px);
+  }
+}
+
+@media(max-width:600px) {
+  .contact_circle_wrapper h1 {
+    left: 17%;
+    top: calc(22% - 64px);
+  }
+}
+
+/* contact page circle end */

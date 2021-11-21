@@ -137,7 +137,7 @@ export default function SimpleSlider(props) {
                         {val.review}
                       </Typography>
                       <Typography
-                        variant="body"
+                        variant="body1"
                         className="reviewe-name-slider"
                       >
                         - {val.reviewername}
