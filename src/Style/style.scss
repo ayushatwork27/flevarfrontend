@@ -563,5 +563,52 @@ input::-webkit-inner-spin-button {
   }
 }
 
+/* contact us page start */
+.contactus-hero-small-titile {
+  color: #E8656B;
+  font-size: 22px !important;
+  line-height: 20px !important;
+  letter-spacing: 6.6px !important;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 60px !important;
+  margin-top: 10% !important;
+
+  &::after {
+    position: absolute;
+    content: "";
+    background-color: #E8656B;
+    width: 51px;
+    height: 2px;
+    left: 0;
+  }
+}
+
+.contactus-address_small_titile {
+  color: #fff;
+  font-size: 22px !important;
+  line-height: 25px !important;
+  letter-spacing: 6.6px !important;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 60px !important;
+  margin-top: 10% !important;
+
+  &::after {
+    position: absolute;
+    content: "";
+    background-color: #fff;
+    width: 51px;
+    height: 2px;
+    left: 0;
+  }
+}
+
+
+/* contact us  page end */
+
+
 /* responsive */
 @import "responsive";

@@ -52,12 +52,11 @@ function AddNewAdderess() {
                         </Box>
                     </Box>
                 </Grid>
-
                 <Grid sm={12} md={9} item>
                     <Box className={`cmn-left-profile-with-right-content  ${classes.add_new_address_container}`}>
                         <Typography className={` ${classes.add_new_address_title}`}> ADD NEW ADDRESS</Typography>
                         <Grid container justifyContent="space-between">
-                            <Grid xs={12} md={6}>
+                            <Grid xs={12} md={6} item>
                                 <TextField
                                     label="Address Name"
                                     variant="filled"
@@ -65,7 +64,7 @@ function AddNewAdderess() {
                                     {`single-formbox cmn-form-box-mb  ${classes.w_50}`}
                                     name="name" />
                             </Grid>
-                            <Grid xs={12} md={6}>
+                            <Grid xs={12} md={6} item>
                                 <TextField
                                     label="Pin Code"
                                     variant="filled"
@@ -99,7 +98,7 @@ function AddNewAdderess() {
                             </Grid>
                         </Grid>
                         <Box className="cmn-tabs-black-btn-wrapper">
-                            <CmnButton btntitle="Add" className={`cmn-tabs-black-btn `} />
+                            <CmnButton btntitle="Add" className={`cmn-tabs-black-btn`} />
                         </Box>
                     </Box>
                 </Grid>
