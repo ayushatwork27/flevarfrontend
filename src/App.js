@@ -16,6 +16,7 @@ import CategoriesDetails from "./Pages/CategoriesDetails/Index";
 import OrderDetails from "./Pages/OrderDetails/Index";
 import AddNewAdderess from "./Pages/AddNewAdderess/Index";
 import ProfileUpdate from "./Pages/ProfileUpdate/Index";
+import EmptyCart from "./Components/EmptyCart/Index"
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
         <Route exact path="/order_details" component={OrderDetails}></Route>
            <Route exact path="/add_new_address" component={AddNewAdderess}></Route>
              <Route exact path="/profile_update" component={ProfileUpdate}></Route>
+               <Route exact path="/emptycart" component={EmptyCart}></Route>
       </Switch>
     </Router>
   );

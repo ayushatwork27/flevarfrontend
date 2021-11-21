@@ -15,6 +15,7 @@ import DataCustomerReviewSlider from "../../Components/Data/DataCustomerReviewSl
 import DataInstaFameSlider from "../../Components/Data/DataInstaFameSlider";
 import Service from "./Service";
 import { Link } from "react-router-dom";
+import SpecialRequest from "./SpecialRequest";
 function Home() {
   const settings = {
     className: "home-slider-wrapper",
@@ -141,6 +142,11 @@ function Home() {
           />
         </Box>
       </CustomeContainer>
+
+      <CustomeContainer>
+        <SpecialRequest />
+      </CustomeContainer>
+
 
       <CustomeContainer>
         <Box className="title_with_btn">

@@ -9,6 +9,13 @@ import { Rating } from "@material-ui/lab";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import DescriptionTabs from "./DescriptionTabs";
 import CakesItems from "../../Components/CakeItemCard/CakesItems";
+import DateTimeModal from "./DateTimeStepper";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DateTimeStepper from "./DateTimeStepper";
 const useStyles = makeStyles((theme) => ({
   Product_description_main_title: {
     fontSize: "40px",
@@ -104,6 +111,17 @@ function ProductDescription(props) {
     }
   };
   const [value, setValue] = React.useState(4);
+
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
   return (
     <CustomeContainer>
       <Box className={classes.Product_description_wrapper}>
@@ -161,6 +179,7 @@ function ProductDescription(props) {
                   btntitle="Buy Now"
                   variant="contained"
                   className="theme-contained-btn"
+                  onClick={handleClickOpen}
                 />
                 <CmnButton
                   variant="outlined"
@@ -188,7 +207,7 @@ function ProductDescription(props) {
                 </form>
               </Box>
               <Box>
-                <DescriptionTabs />
+                <DescriptionTabs onClose={handleClose} open={open} />
               </Box>
             </Box>
           </Grid>
@@ -202,7 +221,30 @@ function ProductDescription(props) {
           <CakesItems />
         </Grid>
       </Box>
+      {/* Dialg modal */}
+      <Box>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          maxWidth="sm"
+          fullWidth
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              <DateTimeStepper />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary" autoFocus>
+              Done
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Box>
     </CustomeContainer>
+
   );
 }
 

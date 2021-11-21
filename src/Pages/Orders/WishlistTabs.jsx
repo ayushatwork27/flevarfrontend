@@ -70,6 +70,23 @@ const useStyles = makeStyles((theme) => ({
       paddingRight: "0px",
     },
   },
+  empty_wish_list: {
+    textAlign: "center",
+    "& h2": {
+      color: "#222",
+      fontSize: "33px",
+      letterSpacing: "-0.4px",
+      margin: "50px 0px 15px 0px",
+      fontWeight: "600"
+    },
+    "& p": {
+      color: "rgba(34, 34, 34, 0.65)",
+      fontSize: "18px",
+      letterSpacing: "-0.25px",
+      margin: "0px 0px 30px 0px",
+      fontWeight: "500"
+    }
+  }
 }));
 function WishlistTabs() {
   const classes = useStyles();
@@ -131,6 +148,13 @@ function WishlistTabs() {
               </Box>
             </Box>
           </Box>
+        </Box>
+
+        <Box className={classes.empty_wish_list}>
+          <img src="assets/images/wishlist_empty.png" alt="error_image" />
+          <Typography variant="h2">Your Wishlist is Empty</Typography>
+          <Typography variant="body1">Add Delicious Cakes to your cart now</Typography>
+          <CmnButton btntitle="Shop Now" className="cmnBtn theme-contained-btn" />
         </Box>
       </Box>
     </>
