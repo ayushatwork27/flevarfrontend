@@ -61,3 +61,29 @@
 }
 
 /* contact page circle end */
+
+/* Home special request circle start */
+.home_special_request_circle_wrapper {
+  position: relative;
+}
+
+.home_special_request_circle_wrapper h1 {
+  font-size: 20px;
+  text-align: center;
+  position: absolute;
+  font-weight: 500;
+  left: 246px;
+  /* I think this works for centering? */
+  top: calc(11% - 64px);
+  -webkit-transform: translate(-50%, calc(-50% - 64px));
+  -ms-transform: translate(-50%, calc(-50% - 64px));
+  transform: translate(-50%, calc(-50% - 64px));
+  color: rgba(232, 101, 107, 1);
+}
+
+.home_special_request_circle_wrapper h1 span {
+  position: absolute;
+  z-index: 55;
+}
+
+/* Home special request circle start */

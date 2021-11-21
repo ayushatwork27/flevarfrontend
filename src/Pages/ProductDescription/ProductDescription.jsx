@@ -14,6 +14,13 @@ import { useParams } from "react-router-dom";
 import { getProductDetail as detailProduct } from '../../redux/actions/productActions';
 import { addToCart } from '../../redux/actions/cartActions';
 import { useHistory } from "react-router-dom";
+import DateTimeModal from "./DateTimeStepper";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DateTimeStepper from "./DateTimeStepper";
 
 const useStyles = makeStyles((theme) => ({
     Product_description_main_title: {
@@ -109,6 +116,13 @@ function ProductDescription(props) {
             setCount((prevCount) => prevCount - 1);
         }
     };
+    const [open, setOpen] = useState(false);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
     const { id } = useParams();
     const dispatch = useDispatch();
     useEffect(() => {
@@ -121,6 +135,7 @@ function ProductDescription(props) {
     const { products } = getProducts;
 
     const buyNow = () => {
+        setOpen(true);
         const productObj = {
             product_id: product.id,
             cake_message: 'New Deewali',
@@ -223,7 +238,7 @@ function ProductDescription(props) {
                                 </form>
                             </Box>
                             <Box>
-                                <DescriptionTabs product={product} />
+                                <DescriptionTabs onClose={handleClose} open={open} product={product} />
                             </Box>
                         </Box>
                     </Grid>
@@ -236,6 +251,27 @@ function ProductDescription(props) {
                 <Grid container spacing={3}>
                     <CakesItems products={products && products.data && products.data.data} />
                 </Grid>
+            </Box>
+            <Box>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    maxWidth="sm"
+                    fullWidth
+                >
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            <DateTimeStepper />
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} color="primary" autoFocus>
+                            Done
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </Box>
         </CustomeContainer>
     );

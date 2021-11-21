@@ -15,6 +15,7 @@ import DataCustomerReviewSlider from "../../Components/Data/DataCustomerReviewSl
 import DataInstaFameSlider from "../../Components/Data/DataInstaFameSlider";
 import Service from "./Service";
 import { Link } from "react-router-dom";
+import SpecialRequest from "./SpecialRequest";
 function Home() {
     const settings = {
         className: "home-slider-wrapper",
@@ -76,64 +77,60 @@ function Home() {
 
     return (
         <div>
-            <CustomeContainer>
-                <Box className="slider-wrapper-home">
-                    <SimpleSlider sliderData={homesliderData} settings={settings} />
-                </Box>
-                <Box className="servicesBox">
-                    <Service />
-                </Box>
 
-                <Box>
-                    <Box className="title_with_btn">
-                        <Typography variant="h5">POPULAR CAKES</Typography>
-                        <CmnButton
-                            variant="contained"
-                            className="cmn_btn_with-title"
-                            endIcon={<ChevronRightIcon />}
-                            btntitle="view All"
-                            component={Link}
-                            to="/categories_details"
-                        >
-                            View All
-                        </CmnButton>
-                    </Box>
-                    <Grid container spacing={3}>
-                        <CakesItems products={products && products.data && products.data.data} />
-                    </Grid>
-                </Box>
+            <Box className="slider-wrapper-home">
+                <SimpleSlider sliderData={homesliderData} settings={settings} />
+            </Box>
+            <Box className="servicesBox">
+                <Service />
+            </Box>
 
-                <Box>
-                    <Box className="title_with_btn">
-                        <Typography variant="h5">SHOP BY CATEGORY</Typography>
-
-                        <CmnButton
-                            variant="contained"
-                            className="cmn_btn_with-title"
-                            endIcon={<ChevronRightIcon />}
-                            btntitle="view All"
-                            component={Link}
-                            to="/categories"
-                        >
-                            View All
-                        </CmnButton>
-                    </Box>
-                    <Box>
-                        <ShopByCategory />
-                    </Box>
-                </Box>
-
-                <Box>
-                    <Box className="title_with_btn">
-                        <Typography variant="h5">SHOP BY OCCASION</Typography>
-                    </Box>
-                    <Box>
-                        <OocassionButton />
-                    </Box>
-                </Box>
-            </CustomeContainer>
             <Box>
-                <FeaturesPrducts />
+                <Box className="title_with_btn">
+                    <Typography variant="h5">POPULAR CAKES</Typography>
+                    <CmnButton
+                        variant="contained"
+                        className="cmn_btn_with-title"
+                        endIcon={<ChevronRightIcon />}
+                        btntitle="view All"
+                        component={Link}
+                        to="/categories_details"
+                    >
+                        View All
+                    </CmnButton>
+                </Box>
+                <Grid container spacing={3}>
+                    <CakesItems products={products && products.data && products.data.data} />
+                </Grid>
+            </Box>
+
+            <Box>
+                <Box className="title_with_btn">
+                    <Typography variant="h5">SHOP BY CATEGORY</Typography>
+
+                    <CmnButton
+                        variant="contained"
+                        className="cmn_btn_with-title"
+                        endIcon={<ChevronRightIcon />}
+                        btntitle="view All"
+                        component={Link}
+                        to="/categories"
+                    >
+                        View All
+                    </CmnButton>
+                </Box>
+                <Box>
+                    <ShopByCategory />
+                </Box>
+            </Box>
+
+            <CustomeContainer>
+                <SpecialRequest />
+            </CustomeContainer>
+
+
+            <Box className="title_with_btn">
+                <Typography variant="h5">JOIN OUR INSTA FAM</Typography>
             </Box>
 
             <CustomeContainer>
