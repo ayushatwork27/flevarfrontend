@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid, Typography } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import CmnButton from "../../Components/CmnButton/CmnButton";
@@ -10,7 +11,9 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import DescriptionTabs from "./DescriptionTabs";
 import CakesItems from "../../Components/CakeItemCard/CakesItems";
 import { useParams } from "react-router-dom";
-import { getProductDetails } from "../../service/api";
+import { getProductDetail as detailProduct } from '../../redux/actions/productActions';
+import { addToCart } from '../../redux/actions/cartActions';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     Product_description_main_title: {
@@ -92,30 +95,48 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ProductDescription(props) {
+    let defaultCount = 1;
+    const history = useHistory();
     const classes = useStyles();
-    const [count, setCount] = useState(1);
+    const [value, setValue] = useState(4);
     const handleIncrement = () => {
         setCount((prevCount) => prevCount + 1);
     };
     const handleDecrement = () => {
-        if (count < 1) {
-            setCount(0);
+        if (count < 2) {
+            setCount(1);
         } else {
             setCount((prevCount) => prevCount - 1);
         }
     };
-    const [value, setValue] = React.useState(4);
     const { id } = useParams();
-    const [product, setProduct] = useState({});
-    const productDetails = async () => {
-        let response = await getProductDetails(id);
-        if (response && response.data && response.data.success) {
-            setProduct(response && response.data && response.data.data.data);
-        } else {
-            console.log("beg one");
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(detailProduct(id))
+    }, [id]);
+    const productDetail = useSelector(state => state.getProductDetail);
+    const { product } = productDetail;
+
+    const getProducts = useSelector(state => state.getProducts);
+    const { products } = getProducts;
+
+    const buyNow = () => {
+        const productObj = {
+            product_id: product.id,
+            cake_message: 'New Deewali',
+            cake_weight: 1,
+            quantity: count,
+            mrp: product.mrp,
+            pincode: 495689
         }
-    };
-    useEffect(() => productDetails(), []);
+        dispatch(addToCart(productObj));
+        history.push('/mycart');
+    }
+
+    const { cartItems } = useSelector(state => state.getCart);
+    let itemIndex = cartItems.findIndex(item => item.product_id === product.id);
+    if (itemIndex > -1) defaultCount = cartItems[itemIndex]['quantity'];
+    const [count, setCount] = useState(defaultCount);
 
     return (
         <CustomeContainer>
@@ -137,7 +158,6 @@ function ProductDescription(props) {
                                 className={classes.Product_description_main_title}
                             >
                                 {product.name}
-                                {/* Mango Delight Cake */}
                             </Typography>
                             <Box
                                 component="fieldset"
@@ -175,6 +195,7 @@ function ProductDescription(props) {
                                     btntitle="Buy Now"
                                     variant="contained"
                                     className="theme-contained-btn"
+                                    onClick={buyNow}
                                 />
                                 <CmnButton
                                     variant="outlined"
@@ -213,7 +234,7 @@ function ProductDescription(props) {
                     <Typography variant="h5">MORE CAKES FOR YOU</Typography>
                 </Box>
                 <Grid container spacing={3}>
-                    <CakesItems products={[]} />
+                    <CakesItems products={products && products.data && products.data.data} />
                 </Grid>
             </Box>
         </CustomeContainer>

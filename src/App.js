@@ -1,5 +1,6 @@
 import "./Style/style.scss";
-import React from "react";
+import { useEffect } from "react";
+import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./Pages/Home/Index";
 import About from "./Pages/About/Index";
@@ -14,8 +15,14 @@ import Order from "./Pages/Orders/Index";
 import Categories from "./Pages/Categories/Index";
 import CategoriesDetails from "./Pages/CategoriesDetails/Index";
 import OrderDetails from "./Pages/OrderDetails/Index";
+import { getProducts as listProducts } from './redux/actions/productActions';
 
 function App() {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(listProducts())
+    }, [dispatch]);
+
     return (
         <Router>
             <Switch>
