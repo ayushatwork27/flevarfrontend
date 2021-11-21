@@ -8,6 +8,7 @@ import CmnButton from "../../Components/CmnButton/CmnButton";
 import PromocodePriceDetails from "./PromocodePriceDetails";
 import { Link } from "react-router-dom";
 import { removeFromCart } from "../../redux/actions/cartActions"
+import EmptyCart from "../../Components/EmptyCart/EmptyCart";
 
 const useStyles = makeStyles((theme) => ({
     cart_main_title: {
@@ -216,7 +217,7 @@ function MyCart() {
                                     </Box>
                                 </Box>
                             </Box>
-                        </Grid> : null }
+                        </Grid> : <EmptyCart /> }
                     </Grid>
                 </Box>
             </Box>
