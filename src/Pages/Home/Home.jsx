@@ -16,6 +16,8 @@ import DataInstaFameSlider from "../../Components/Data/DataInstaFameSlider";
 import Service from "./Service";
 import { Link } from "react-router-dom";
 import { ProductListContext } from "../../Contexts/ProductListContext";
+import InstagramFeed from "react-ig-feed"
+import {token} from "../../service/api"
 
 function Home() {
   const settings = {
@@ -42,37 +44,37 @@ function Home() {
     dots: false,
     className: "customer-review-slidersetting",
   };
-  const InstaFameSetting = {
-    className: "instaFame-wrapper",
-    dots: false,
-    responsive: [
-      {
-        breakpoint: 1900,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 5,
-          infinite: true,
-          dots: false,
-        },
-      },
-      {
-        breakpoint: 1200,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 4,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+  // const InstaFameSetting = {
+  //   className: "instaFame-wrapper",
+  //   dots: false,
+  //   responsive: [
+  //     {
+  //       breakpoint: 1900,
+  //       settings: {
+  //         slidesToShow: 5,
+  //         slidesToScroll: 5,
+  //         infinite: true,
+  //         dots: false,
+  //       },
+  //     },
+  //     {
+  //       breakpoint: 1200,
+  //       settings: {
+  //         slidesToShow: 4,
+  //         slidesToScroll: 4,
+  //       },
+  //     },
+  //     {
+  //       breakpoint: 600,
+  //       settings: {
+  //         slidesToShow: 2,
+  //         slidesToScroll: 2,
 
-          dots: true,
-        },
-      },
-    ],
-  };
+  //         dots: true,
+  //       },
+  //     },
+  //   ],
+  // };
 
   const { products } = useContext(ProductListContext);
   return (
@@ -151,10 +153,11 @@ function Home() {
           <Typography variant="h5">JOIN OUR INSTA FAM</Typography>
         </Box>
 
-        <SimpleSlider
+        {/* <SimpleSlider
           sliderData={DataInstaFameSlider}
           settings={InstaFameSetting}
-        />
+        />*/}
+        <InstagramFeed token= {token}  counter="5" /> 
       </CustomeContainer>
     </div>
   );

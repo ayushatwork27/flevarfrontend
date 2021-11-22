@@ -46,3 +46,5 @@ export const verifyOtpOnServer = async (loginData) => {
     console.log("error while calling login API: ", error);
   }
 };
+
+export const token = "IGQVJWSm5fcTdjNkx3b1Fjcl9tdExlU0hQcTRiMWR5aXdEalNOclRDMFU3ellPMHZA3RzM1RXBQQXkzTUZAfTy1SQkE0b3JDUE5PdC11dTZArOFlmdEF0MzFYSFlhSVlQenpSOEJLX3BsUTVvb2IwdDRBbAZDZD"
