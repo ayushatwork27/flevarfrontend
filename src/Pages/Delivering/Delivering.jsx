@@ -1,5 +1,5 @@
 import { Typography, Box, Grid } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import CustomeContainer from "../../Components/CustomeContainer/CustomeContainer";
 import { makeStyles } from "@material-ui/core/styles";
 import CmnButton from "../../Components/CmnButton/CmnButton";
@@ -58,6 +58,47 @@ const useStyles = makeStyles((theme) => ({
 function Delivering() {
   const classes = useStyles();
 
+  const user = {
+    name: "Gaurav Kumar",
+    email: "gaurav.kumar@example.com",
+    contact: "+917007706496",
+    address: ""
+  };
+
+  const loadScript = (src) => new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+
+  useEffect(() => {
+    loadScript("https://checkout.razorpay.com/v1/checkout.js");
+  });
+
+  const payNow = () => {
+    var options = {
+      key: "rzp_test_hAVuEDTOKZ8ST0", // Key ID generated from the Dashboard
+      amount: "10000", // Amount is in currency sub units. Hence, 50000 refers to 50000 paise.
+      currency: "INR", // Default currency is INR.
+      name: "Flevar", // 
+      // "order_id": "order_9A33XWu170gUtm", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      handler: function (response) {
+        console.log(response.razorpay_payment_id);
+        console.log(response.razorpay_order_id);
+        console.log(response.razorpay_signature)
+      },
+      prefill: user,
+      notes: {
+        address: user.address
+      }
+    };
+    var rzp1 = new window.Razorpay(options);
+    rzp1.on('payment.failed', response => { });
+    rzp1.open();
+  }
+
   return (
     <CustomeContainer>
       <Box className={classes.mycart_wrapper}>
@@ -90,7 +131,7 @@ function Delivering() {
                 </Box>
                 <Box>
                   <CmnButton
-                    btntitle="Selectd"
+                    btntitle="Selected"
                     className={` ${classes.notselected_text}`}
                   />
                 </Box>
@@ -120,6 +161,7 @@ function Delivering() {
                       btntitle="pay now"
                       variant="contained"
                       className="theme-contained-btn"
+                      onClick={() => payNow()}
                     />
                   </Box>
                 </Box>
