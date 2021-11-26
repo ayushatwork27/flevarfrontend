@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Typography, Box, Grid } from "@material-ui/core";
+import { useSelector } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import CmnButton from "../../Components/CmnButton/CmnButton";
@@ -146,7 +147,7 @@ function PromocodePriceDetails() {
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
-
+    const { cartItems } = useSelector(state => state.getCart);
     return (
         <>
             <Box className={classes.promo_code_price_details_wrapper}>
