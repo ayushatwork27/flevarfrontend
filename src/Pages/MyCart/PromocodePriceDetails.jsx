@@ -1,9 +1,23 @@
-import { useSelector } from 'react-redux';
-import { Typography, Box } from "@material-ui/core";
+import React, { useState } from "react";
+import { Typography, Box, Grid } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import CmnButton from "../../Components/CmnButton/CmnButton";
-
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+import DateFnsUtils from '@date-io/date-fns';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import 'date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 const useStyles = makeStyles((theme) => ({
     promo_code_price_details_wrapper: {
         marginTop: "30px",
@@ -95,30 +109,96 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "auto",
         display: "inherit",
     },
+    date_shown_box: {
+        border: "1px solid #a59b9b",
+        position: "relative",
+        width: "350px",
+        height: "30px",
+        paddingLeft: "5px"
+    },
+    calender_icon: {
+        position: "absolute",
+        right: "5px",
+        top: "1px",
+        cursor: "pointer"
+    },
+    dialog_title: {
+        "& h2": {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+        },
+    }
 }));
 function PromocodePriceDetails() {
     const classes = useStyles();
-    const { cartItems } = useSelector(state => state.getCart);
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
+
     return (
         <>
             <Box className={classes.promo_code_price_details_wrapper}>
                 <Box className={classes.promo_code_wrapper}>
                     <Typography variant="h5" className={classes.promo_code_title}>
-                        Apply Promo Code
+                        Choose Date
                     </Typography>
                     <Box className={classes.promocode_wrapper}>
                         <form noValidate autoComplete="off">
-                            <TextField
-                                className={classes.promocode_input}
-                                disableunderline="true"
-                            />
+                            <Box
+                                className={classes.date_shown_box} onClick={handleClickOpen}>
+                                <Typography>abc</Typography>
+                                <DateRangeIcon className={classes.calender_icon} />
+                            </Box>
                         </form>
-                        <CmnButton className={classes.applybtn} btntitle="apply" />
                     </Box>
-                    <Typography variant="body2" className={classes.promo_helper_text}>
-                        NEW5000 Code has been applied.
-                    </Typography>
+                    {/* <Typography variant="body2" className={classes.promo_helper_text}>
+            NEW5000 Code has been applied.
+          </Typography> */}
                 </Box>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle className={classes.dialog_title} id="alert-dialog-title">{"Select Date"}  <HighlightOffIcon onClick={handleClose} /></DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            <Box>
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <Grid container justifyContent="space-around">
+                                        <KeyboardDatePicker
+                                            disableToolbar
+                                            variant="static"
+                                            format="MM/dd/yyyy"
+                                            margin="normal"
+                                            id="date-picker-inline"
+                                            label="Date picker inline"
+                                            value={selectedDate}
+                                            onChange={handleDateChange}
+                                            KeyboardButtonProps={{
+                                                'aria-label': 'change date',
+                                            }}
+                                        />
+
+                                    </Grid>
+                                </MuiPickersUtilsProvider>
+                            </Box>
+                        </DialogContentText>
+                    </DialogContent>
+                </Dialog>
 
                 <Box>
                     <Typography

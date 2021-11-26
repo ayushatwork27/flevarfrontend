@@ -9,6 +9,7 @@ import PromocodePriceDetails from "./PromocodePriceDetails";
 import { Link } from "react-router-dom";
 import { removeFromCart } from "../../redux/actions/cartActions"
 import EmptyCart from "../../Components/EmptyCart/EmptyCart";
+import SelectSlote from "../../Components/SelectSlote";
 
 const useStyles = makeStyles((theme) => ({
     cart_main_title: {
@@ -217,11 +218,14 @@ function MyCart() {
                                     </Box>
                                 </Box>
                             </Box>
-                        </Grid> : <EmptyCart /> }
+                        </Grid> : <EmptyCart />}
                     </Grid>
                 </Box>
             </Box>
-        </CustomeContainer>
+            <Box>
+                <SelectSlote />
+            </Box>
+        </CustomeContainer >
     );
 }
 
