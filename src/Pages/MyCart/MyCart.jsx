@@ -6,7 +6,7 @@ import { Rating } from "@material-ui/lab";
 import CmnButton from "../../Components/CmnButton/CmnButton";
 import PromocodePriceDetails from "./PromocodePriceDetails";
 import { Link } from "react-router-dom";
-import SelectSlote from "../../Components/SelectSlote";
+
 const useStyles = makeStyles((theme) => ({
   // mycart_wrapper: {
   //   marginTop: "3%",
@@ -206,9 +206,7 @@ function MyCart() {
             </Grid>
           </Grid>
         </Box>
-        <Box>
-          <SelectSlote />
-        </Box>
+
       </Box>
     </CustomeContainer>
   );

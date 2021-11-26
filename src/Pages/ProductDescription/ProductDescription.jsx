@@ -196,7 +196,7 @@ function ProductDescription(props) {
                       variant="filled"
                       label="Type Message on Cake Here"
                       className={classes.description_messages_input}
-                      disableUnderline="true"
+                      disableunderline="true"
                     />
                     <CmnButton
                       variant="outlined"

@@ -12,6 +12,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import DateFnsUtils from '@date-io/date-fns';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import SelectSlote from "../../Components/BuyNowDateTime/SelectSlote";
+import SelectTime from "../../Components/BuyNowDateTime/SelectTime"
 import 'date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -123,11 +125,35 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer"
   },
   dialog_title: {
+    padding: "10px 15px",
+    borderBottom: "1px solid #80808059",
     "& h2": {
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
     },
+    "& svg": {
+      cursor: "pointer",
+      paddingLeft: "5px"
+    }
+  },
+  // dialog_title: {
+  //   padding: "0px 5px",
+  // },
+  dialog_content: {
+    padding: "0px 0px"
+  },
+  popup_footer: {
+    padding: "15px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderTop: "1px solid #80808059",
+    "& p:nth-of-type(2)": {
+      color: "#cd4978",
+      fontWeight: 500,
+      cursor: "pointer"
+    }
   }
 }));
 function PromocodePriceDetails() {
@@ -140,12 +166,54 @@ function PromocodePriceDetails() {
 
   const handleClose = () => {
     setOpen(false);
-  };
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
 
+  };
+
+  const [openSloat, setSloat] = React.useState(false);
+  const handleCloseSlot = () => {
+    setSloat(false)
+  }
+
+  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    setSloat(true)
+    setOpen(false);
+
   };
+
+
+  const [value, setValue] = React.useState('"Standard Delivery');
+
+  const selectedSloat = (event) => {
+    setValue(event.target.value);
+    setTime(true)
+  };
+
+
+  const [openTime, setTime] = React.useState(false);
+  const handleCloseTime = () => {
+    setTime(false)
+    setSloat(false)
+  }
+
+
+  const backToDate = () => {
+    setSloat(false)
+    setOpen(true);
+  }
+  const backToSloat = () => {
+    setSloat(true)
+    setTime(false)
+  }
+
+
+  const [deliverytime, setdeliveryTime] = React.useState('');
+  const getTime = (event) => {
+    setdeliveryTime(event.target.value)
+    setTime(false)
+    setSloat(false)
+  }
 
   return (
     <>
@@ -158,7 +226,7 @@ function PromocodePriceDetails() {
             <form noValidate autoComplete="off">
               <Box
                 className={classes.date_shown_box} onClick={handleClickOpen}>
-                <Typography>abc</Typography>
+                <Typography>{deliverytime}</Typography>
                 <DateRangeIcon className={classes.calender_icon} />
               </Box>
             </form>
@@ -167,13 +235,15 @@ function PromocodePriceDetails() {
             NEW5000 Code has been applied.
           </Typography> */}
         </Box>
+
         <Dialog
           open={open}
           onClose={handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle className={classes.dialog_title} id="alert-dialog-title">{"Select Date"}  <HighlightOffIcon onClick={handleClose} /></DialogTitle>
+          <DialogTitle className={classes.dialog_title} id="alert-dialog-title">{"Select Date"}
+            <HighlightOffIcon onClick={handleClose} /></DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               <Box>
@@ -188,6 +258,7 @@ function PromocodePriceDetails() {
                       label="Date picker inline"
                       value={selectedDate}
                       onChange={handleDateChange}
+
                       KeyboardButtonProps={{
                         'aria-label': 'change date',
                       }}
@@ -199,6 +270,45 @@ function PromocodePriceDetails() {
             </DialogContentText>
           </DialogContent>
         </Dialog>
+
+        {/*Select Select Slot Type */}
+        <Dialog
+          open={openSloat}
+          onClose={handleCloseSlot}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle className={classes.dialog_title} >{"Select Slot Type"}
+            <HighlightOffIcon onClick={handleCloseSlot} /></DialogTitle>
+          <DialogContent className={classes.dialog_content}>
+
+            <SelectSlote onChange={selectedSloat} value={value} />
+            <Box className={classes.popup_footer}>
+              <Typography variant="body1">Nov 28 2021</Typography>
+              <Typography variant="body2" onClick={backToDate}>Change Date</Typography>
+            </Box>
+            {/* <SelectTime/> */}
+
+          </DialogContent>
+        </Dialog>
+        {/*Select Select Slot Type */}
+        <Dialog
+          open={openTime}
+          onClose={handleCloseTime}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle className={classes.dialog_title} >{"Select Time"}
+            <HighlightOffIcon onClick={handleCloseTime} /></DialogTitle>
+          <DialogContent className={classes.dialog_content}>
+            <SelectTime time={deliverytime} timeChange={getTime} />
+            <Box className={classes.popup_footer}>
+              <Typography variant="body1">{value}</Typography>
+              <Typography variant="body2" onClick={backToSloat}>Change Slot</Typography>
+            </Box>
+          </DialogContent>
+        </Dialog>
+        {/*  */}
 
         <Box>
           <Typography

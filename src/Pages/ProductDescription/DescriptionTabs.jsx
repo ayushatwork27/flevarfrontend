@@ -183,7 +183,7 @@ function DescriptionTabs() {
             variant="filled"
             label="Type your review here"
             className={classes.description_messages_input}
-            disableUnderline="true"
+            disableunderline="true"
           />
           <CmnButton
             variant="conatained"
