@@ -16,6 +16,7 @@ import Categories from "./Pages/Categories/Index";
 import CategoriesDetails from "./Pages/CategoriesDetails/Index";
 import OrderDetails from "./Pages/OrderDetails/Index";
 import { getProducts as listProducts } from './redux/actions/productActions';
+import { loadUserDetail as userDetail } from './redux/actions/userActions';
 import AddNewAdderess from "./Pages/AddNewAdderess/Index";
 import ProfileUpdate from "./Pages/ProfileUpdate/Index";
 import EmptyCart from "./Components/EmptyCart/Index"
@@ -24,6 +25,7 @@ function App() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(listProducts())
+        dispatch(userDetail())
     }, [dispatch]);
 
     return (
@@ -34,7 +36,7 @@ function App() {
                 <Route exact path="/contact" component={Contact}></Route>
                 <Route exact path="/register" component={Register}></Route>
                 <Route exact path="/login" component={Login}></Route>
-                <Route exact path="/verifyotp" component={LoginViaOTP}></Route>
+                <Route exact path="/loginviaotp" component={LoginViaOTP}></Route>
                 <Route exact path="/order" component={Order}></Route>
                 <Route exact path="/productdescription/:id" component={ProductDescription}></Route>
                 <Route exact path="/mycart" component={MyCart}></Route>
@@ -43,6 +45,7 @@ function App() {
                 <Route exact path="/categories_details" component={CategoriesDetails}></Route>
                 <Route exact path="/order_details" component={OrderDetails}></Route>
                 <Route exact path="/add_new_address" component={AddNewAdderess}></Route>
+                <Route exact path="/add_new_address/:id" component={AddNewAdderess}></Route>
                 <Route exact path="/profile_update" component={ProfileUpdate}></Route>
                 <Route exact path="/emptycart" component={EmptyCart}></Route>
             </Switch>

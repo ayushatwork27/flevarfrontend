@@ -1,11 +1,13 @@
 import { Box, Typography } from "@material-ui/core";
-import React, { useState } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
 import { authenticateLogin } from "../../service/api";
+import { userLoginMobile } from "../../redux/actions/userActions";
 
 const loginInitialValues = {
     mobile: "",
@@ -13,11 +15,13 @@ const loginInitialValues = {
 
 function Login() {
     const [login, setLogin] = useState(loginInitialValues);
-
+    let dispatch = useDispatch();
     const loginViaOTP = async () => {
         let response = await authenticateLogin(login);
-        if (!response) console.log("beg one");
-        else console.log("beg two");
+        if (!response) console.log("erro while login");
+        else {
+            dispatch(userLoginMobile(login));
+        }
     };
 
     const onValueChange = (e) => {

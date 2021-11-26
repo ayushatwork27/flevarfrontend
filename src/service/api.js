@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://3.140.144.29/api';
+const url = 'http://3.140.144.29/api/customer';
 
 const options = {
     headers: {
@@ -12,49 +12,80 @@ const options = {
 
 export const authenticateLogin = async (login) => {
     try {
-        return await axios.post(`${url}/customer/sendotp`, login, options);
+        return await axios.post(`${url}/sendotp`, login, options);
     } catch (error) {
         console.log("error while calling login API: ", error);
+    }
+};
+
+export const authenticateOTP = async (otp, mobile) => {
+    try {
+        return await axios.post(`${url}/sendotp`, { otp, mobile }, options);
+    } catch (error) {
+        console.log("error while calling otp API: ", error);
     }
 };
 
 export const verifyOtpOnServer = async (loginData) => {
     try {
-        console.log(loginData);
-        return await axios.post(`${url}/customer/verifyotp`, loginData, options);
+        return await axios.post(`${url}/verifyotp`, loginData, options);
     } catch (error) {
-        console.log("error while calling login API: ", error);
+        console.log("error while calling verify otp API: ", error);
     }
 };
 
 export const getProductsList = async () => {
     try {
-        return await axios.post(
-            `${url}/customer/product_list`,
-            { filterkey: "", location_id: 2 },
-            options
-        );
+        return await axios.post(`${url}/product_list`, { filterkey: "", location_id: 2 }, options);
     } catch (error) {
-        console.log("error while calling product_list API: ", error);
+        console.log("error while calling product list API: ", error);
     }
 };
 
 export const getProductDetails = async (id) => {
     try {
-        return await axios.get(`${url}/customer/product_details/${id}`, options);
+        return await axios.get(`${url}/product_details/${id}`, options);
     } catch (error) {
-        console.log("error while calling product_details API: ", error);
+        console.log("error while calling product details API: ", error);
     }
 };
 
 export const cartSave = async (cart) => {
     try {
-        return await axios.post(
-            `${url}/customer/cart`,
-            cart,
-            options
-        );
+        return await axios.post(`${url}/cart`, cart, options);
     } catch (error) {
-        console.log("error while calling product_list API: ", error);
+        console.log("error while calling cart save API: ", error);
+    }
+};
+
+export const getUserAddresses = async (id) => {
+    try {
+        return await axios.get(`${url}/address_listing/${id}`, options);
+    } catch (error) {
+        console.log("error while calling addresses list API: ", error);
+    }
+};
+
+export const addressSave = async (address) => {
+    try {
+        return await axios.post(`${url}/address`, address, options);
+    } catch (error) {
+        console.log("error while calling address save API: ", error);
+    }
+};
+
+export const addressUpdate = async (address, id) => {
+    try {
+        return await axios.post(`${url}/address/${id}`, address, options);
+    } catch (error) {
+        console.log("error while calling address update API: ", error);
+    }
+};
+
+export const getAdress = async (id) => {
+    try {
+        return await axios.get(`${url}/address/${id}`, options);
+    } catch (error) {
+        console.log("error while calling adress API: ", error);
     }
 };

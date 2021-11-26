@@ -68,8 +68,8 @@ function CategoriesDetails() {
                 IconComponent={ExpandMoreIcon}
               >
                 <MenuItem value={10}>By Relevance</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={20}>By Value</MenuItem>
+                <MenuItem value={30}>By Date</MenuItem>
               </Select>
             </FormControl>
           </Box>

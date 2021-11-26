@@ -84,9 +84,9 @@ function Register() {
                     value={age}
                     onChange={handleChange}
                   >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                    <MenuItem value={10}>Delhi</MenuItem>
+                    <MenuItem value={20}>Mumbai</MenuItem>
+                    <MenuItem value={30}>Gurgaon</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>

@@ -5,6 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import CustomeContainer from '../CustomeContainer/CustomeContainer';
 import { Typography } from '@material-ui/core';
 import CmnButton from '../CmnButton/CmnButton';
+import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
     empty_cart_page: {
         textAlign: "center",
@@ -26,13 +28,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 function EmptyCart() {
     const classes = useStyles();
+    const history = useHistory();
+    const addItem = () => {
+        history.push('/');
+    }
     return (
         <CustomeContainer>
             <Box className={classes.empty_cart_page}>
                 <img src="assets/images/error_image.png" alt="error_image" />
                 <Typography variant="h2">Your cart is Empty</Typography>
                 <Typography variant="body1">Add Delicious Cakes to your cart now</Typography>
-                <CmnButton btntitle="Shop Now" className="cmnBtn theme-contained-btn" />
+                <CmnButton btntitle="Shop Now" className="cmnBtn theme-contained-btn" onClick={addItem} />
             </Box>
 
         </CustomeContainer>

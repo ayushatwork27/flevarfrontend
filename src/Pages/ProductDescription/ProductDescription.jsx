@@ -110,11 +110,7 @@ function ProductDescription(props) {
         setCount((prevCount) => prevCount + 1);
     };
     const handleDecrement = () => {
-        if (count < 2) {
-            setCount(1);
-        } else {
-            setCount((prevCount) => prevCount - 1);
-        }
+        setCount((prevCount) => prevCount - 1);
     };
     const [open, setOpen] = useState(false);
     
@@ -126,7 +122,7 @@ function ProductDescription(props) {
     useEffect(() => {
         dispatch(detailProduct(id))
     }, [id]);
-    const productDetail = useSelector(state => state.getProductDetail);
+    const productDetail = useSelector(state => state.getProducts);
     const { product } = productDetail;
 
     const getProducts = useSelector(state => state.getProducts);
@@ -199,7 +195,7 @@ function ProductDescription(props) {
                                 </Typography>
                             </Box>
                             <Box className={classes.counter_box}>
-                                <Button onClick={handleDecrement}>-</Button>
+                                <Button onClick={handleDecrement} disabled={count === 1}>-</Button>
                                 <Typography variant="h6">{count}</Typography>
                                 <Button onClick={handleIncrement}>+</Button>
                             </Box>
