@@ -2,28 +2,28 @@ import "./Style/style.scss";
 import { useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./Pages/Home/Index";
-import About from "./Pages/About/Index";
-import Contact from "./Pages/Contact/Index";
-import Register from "./Components/Register/Index";
-import Login from "./Components/Login/Index";
-import LoginViaOTP from "./Components/LoginViaOTP/Index";
-import ProductDescription from "./Pages/ProductDescription/Index";
-import MyCart from "./Pages/MyCart/Index";
-import Delivering from "./Pages/Delivering/Index";
-import Order from "./Pages/Orders/Index";
-import Categories from "./Pages/Categories/Index";
-import CategoriesDetails from "./Pages/CategoriesDetails/Index";
-import OrderDetails from "./Pages/OrderDetails/Index";
-import { getProducts as listProducts } from './redux/actions/productActions';
-import AddNewAdderess from "./Pages/AddNewAdderess/Index";
-import ProfileUpdate from "./Pages/ProfileUpdate/Index";
-import EmptyCart from "./Components/EmptyCart/Index"
+import Home from "./pages/Home/Index";
+import About from "./pages/About/Index";
+import Contact from "./pages/Contact/Index";
+import Register from "./components/Register/Index";
+import Login from "./components/Login/Index";
+import LoginViaOTP from "./components/LoginViaOTP/Index";
+import ProductDescription from "./pages/ProductDescription/Index";
+import MyCart from "./pages/MyCart/Index";
+import Delivering from "./pages/Delivering/Index";
+import Order from "./pages/Orders/Index";
+import Categories from "./pages/Categories/Index";
+import CategoriesDetails from "./pages/CategoriesDetails/Index";
+import OrderDetails from "./pages/OrderDetails/Index";
+import { getProductListAction } from './shared/store/actions/product.actions';
+import AddNewAdderess from "./pages/AddNewAdderess/Index";
+import ProfileUpdate from "./pages/ProfileUpdate/Index";
+import EmptyCart from "./components/EmptyCart/Index"
 
 function App() {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(listProducts())
+        dispatch(getProductListAction())
     }, [dispatch]);
 
     return (
