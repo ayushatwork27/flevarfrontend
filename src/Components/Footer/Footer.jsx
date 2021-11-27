@@ -145,7 +145,7 @@ function Footer() {
                       id="filled-basic"
                       fullWidth
                       className={classes.subscribe_input_wrapper}
-                      disableUnderline="true"
+                      disableunderline="true"
                     />
                   </form>
 

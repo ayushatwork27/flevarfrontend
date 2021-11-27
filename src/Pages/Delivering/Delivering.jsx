@@ -81,7 +81,7 @@ function Delivering() {
                         </Grid>
                         <Grid item xs={12} sm={12} md={5}>
                             <Box className={classes.promo_code_price_details_wrapper}>
-                                <PromocodePriceDetails />
+                                <PromocodePriceDetails deliveryDate={false}/>
                                 <Box>
                                     <Box
                                         className={classes.checkoutBtn}

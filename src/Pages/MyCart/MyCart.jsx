@@ -6,10 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Rating } from "@material-ui/lab";
 import CmnButton from "../../Components/CmnButton/CmnButton";
 import PromocodePriceDetails from "./PromocodePriceDetails";
-import { Link } from "react-router-dom";
-import { removeFromCart } from "../../redux/actions/cartActions"
 import EmptyCart from "../../Components/EmptyCart/EmptyCart";
-import SelectSlote from "../../Components/SelectSlote";
+import { Link } from "react-router-dom";
+import { removeFromCart } from "../../redux/actions/cartActions";
 
 const useStyles = makeStyles((theme) => ({
     cart_main_title: {
@@ -129,6 +128,7 @@ function MyCart() {
     const removeItemFromCart = (id) => {
         dispatch(removeFromCart(id))
     }
+
     return (
         <CustomeContainer>
             <Box className={classes.mycart_wrapper}>
@@ -203,7 +203,7 @@ function MyCart() {
                         }
                         {productLists && productLists.length ? <Grid item xs={12} sm={12} md={5}>
                             <Box className={classes.promo_code_price_details_wrapper}>
-                                <PromocodePriceDetails />
+                                <PromocodePriceDetails deliveryDate={true}/>
                                 <Box>
                                     <Box
                                         className={classes.checkoutBtn}
@@ -222,10 +222,7 @@ function MyCart() {
                     </Grid>
                 </Box>
             </Box>
-            <Box>
-                <SelectSlote />
-            </Box>
-        </CustomeContainer >
+        </CustomeContainer>
     );
 }
 

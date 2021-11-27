@@ -113,7 +113,7 @@ function ProductDescription(props) {
         setCount((prevCount) => prevCount - 1);
     };
     const [open, setOpen] = useState(false);
-    
+
     const handleClose = () => {
         setOpen(false);
     };
@@ -255,19 +255,50 @@ function ProductDescription(props) {
                     maxWidth="sm"
                     fullWidth
                 >
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            <DateTimeStepper />
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleClose} color="primary" autoFocus>
-                            Done
-                        </Button>
-                    </DialogActions>
+                    Rs.1079
                 </Dialog>
             </Box>
-        </CustomeContainer>
+            <Box className={classes.counter_box}>
+                <Button onClick={handleDecrement}>-</Button>
+                <Typography variant="h6">{count}</Typography>
+                <Button onClick={handleIncrement}>+</Button>
+            </Box>
+            <Box>
+                <CmnButton
+                    btntitle="Buy Now"
+                    variant="contained"
+                    className="theme-contained-btn"
+                    onClick={buyNow}
+                />
+                <CmnButton
+                    variant="outlined"
+                    btntitle="View in 3D"
+                    className={classes.view3d}
+                />
+            </Box>
+            <Box>
+                <form noValidate autoComplete="off">
+                    <Box className={classes.description_messages_wrapper}>
+                        <TextField
+                            id="filled-basic"
+                            fullWidth
+                            variant="filled"
+                            label="Type Message on Cake Here"
+                            className={classes.description_messages_input}
+                            disableunderline="true"
+                        />
+                        <CmnButton
+                            variant="outlined"
+                            className={classes.send_btn}
+                            startIcon={<ArrowForwardIcon />}
+                        />
+                    </Box>
+                </form>
+            </Box>
+            <Box>
+                <DescriptionTabs onClose={handleClose} open={open} />
+            </Box>
+        </CustomeContainer >
     );
 }
 
