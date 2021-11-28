@@ -1,5 +1,5 @@
 import * as actionTypes from '../constants/productConstant';
-import { getProductsList, getProductDetails } from "../../service/api";
+import { getProductsList, getCategoriesList, getProductDetails } from "../../service/api";
 
 export const getProducts = () => async (dispatch) => {
     try {
@@ -7,6 +7,15 @@ export const getProducts = () => async (dispatch) => {
         dispatch({ type: actionTypes.GET_PRODUCTS_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: actionTypes.GET_PRODUCTS_FAIL, payload: error.response });
+    }
+};
+
+export const getCategories = () => async (dispatch) => {
+    try {
+        const { data } = await getCategoriesList();
+        dispatch({ type: actionTypes.GET_CATEGORIES_SUCCESS, payload: data });
+    } catch (error) {
+        dispatch({ type: actionTypes.GET_CATEGORIES_FAIL, payload: error.response });
     }
 };
 

@@ -15,7 +15,7 @@ import Order from "./Pages/Orders/Index";
 import Categories from "./Pages/Categories/Index";
 import CategoriesDetails from "./Pages/CategoriesDetails/Index";
 import OrderDetails from "./Pages/OrderDetails/Index";
-import { getProducts as listProducts } from './redux/actions/productActions';
+import { getProducts as listProducts, getCategories as listCategories } from './redux/actions/productActions';
 import { loadUserDetail as userDetail } from './redux/actions/userActions';
 import AddNewAdderess from "./Pages/AddNewAdderess/Index";
 import ProfileUpdate from "./Pages/ProfileUpdate/Index";
@@ -25,6 +25,7 @@ function App() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(listProducts())
+        dispatch(listCategories())
         dispatch(userDetail())
     }, [dispatch]);
 

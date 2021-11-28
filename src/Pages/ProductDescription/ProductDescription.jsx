@@ -122,11 +122,7 @@ function ProductDescription(props) {
     useEffect(() => {
         dispatch(detailProduct(id))
     }, [id]);
-    const productDetail = useSelector(state => state.getProducts);
-    const { product } = productDetail;
-
-    const getProducts = useSelector(state => state.getProducts);
-    const { products } = getProducts;
+    const { product, products } = useSelector(state => state.getProducts);
 
     const buyNow = () => {
         setOpen(true);

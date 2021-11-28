@@ -1,4 +1,5 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import SimpleSlider from "../../Components/ProductSlider/SimpleSlider";
 import CakesItems from "../../Components/CakeItemCard/CakesItems";
 import Box from "@material-ui/core/Box";
@@ -16,6 +17,8 @@ import DataInstaFameSlider from "../../Components/Data/DataInstaFameSlider";
 import Service from "./Service";
 import { Link } from "react-router-dom";
 import SpecialRequest from "./SpecialRequest";
+import { loadUserProfile } from "../../redux/actions/userActions";
+
 function Home() {
     const settings = {
         className: "home-slider-wrapper",
@@ -72,8 +75,13 @@ function Home() {
             },
         ],
     };
+    const token = localStorage.getItem('token');
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (token) dispatch(loadUserProfile(token));
+    }, [token]);
 
-    const { products } = useSelector(state => state.getProducts);
+    const { products, categories } = useSelector(state => state.getProducts);
 
     return (
         <div>
@@ -120,7 +128,7 @@ function Home() {
                         </CmnButton>
                     </Box>
                     <Box>
-                        <ShopByCategory />
+                        <ShopByCategory categories={categories && categories.data && categories.data.data} />
                     </Box>
                 </Box>
 
@@ -149,7 +157,7 @@ function Home() {
             <CustomeContainer>
                 <SpecialRequest />
             </CustomeContainer>
-            
+
             <CustomeContainer>
                 <Box className="title_with_btn">
                     <Typography variant="h5">JOIN OUR INSTA FAM</Typography>

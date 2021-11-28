@@ -5,9 +5,8 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import { authenticateOTP } from "../../service/api";
+import { Link, useHistory } from "react-router-dom";
+import { verifyOtpOnServer } from "../../service/api";
 
 const otpInitialValues = {
     one: "",
@@ -26,9 +25,13 @@ function LoginViaOTP() {
     const { mobile } = useSelector(state => state.getUser)
     const history = useHistory();
     const submitOTP = async () => {
-        let response = await authenticateOTP(Object.values(otp).join(''), mobile.mobile);
-        if (!response) console.log("beg one");
-        else history.push('/');
+        let response = await verifyOtpOnServer(Object.values(otp).join(''), mobile.mobile);
+        if (!response) console.log("error while verify otp");
+        else {
+            const token = response && response.data && response.data.data && response.data.data.data && response.data.data.data.token;
+            localStorage.setItem('token', token);
+            history.push('/');
+        }
     };
 
     return (

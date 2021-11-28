@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -18,6 +18,7 @@ import { NavLink, Link } from "react-router-dom";
 import Box from "@material-ui/core//Box";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Hidden from "@material-ui/core/Hidden";
+import { resetUserProfile } from "../../redux/actions/userActions"
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -67,7 +68,6 @@ const useStyles = makeStyles((theme) => ({
     },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create("width"),
         width: "100%",
@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
 export default function PrimarySearchAppBar() {
 
     const { cartItems } = useSelector(state => state.getCart);
-
+    const { profiles } = useSelector(state => state.getUser);
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -147,6 +147,11 @@ export default function PrimarySearchAppBar() {
         setMobileMoreAnchorEl(event.currentTarget);
     };
     const [open, setOpen] = useState(false);
+    const dispatch = useDispatch();
+    const logOut = () => {
+        dispatch(resetUserProfile())
+        localStorage.clear();
+    }
 
     const menuId = "primary-search-account-menu";
     const renderMenu = (
@@ -159,24 +164,29 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>
-                <Link to="/register">SignUp</Link>
-            </MenuItem>
-            <MenuItem onClick={handleMenuClose}>
-                <Link to="/login">LogIn</Link>
-            </MenuItem>
-            <MenuItem onClick={handleMenuClose}>
-                <Link to="/order">Orders</Link>
-            </MenuItem>
-            {/*<MenuItem onClick={handleMenuClose}>
-        <Link to="/logout">LogOut</Link>
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
-        <Link to="/signup">SignUp</Link>
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
-        <Link to="/account">Account</Link>
-      </MenuItem> */}
+            {
+                profiles && profiles.success ?
+                    <>
+                        <MenuItem onClick={handleMenuClose}>
+                            <h4>{profiles?.data?.data?.name}</h4>
+                        </MenuItem>
+                        <MenuItem onClick={handleMenuClose}>
+                            <Link>Account</Link>
+                        </MenuItem>
+                        <MenuItem onClick={handleMenuClose}>
+                            <Link to="/" onClick={logOut}>LogOut</Link>
+                        </MenuItem>
+                    </>
+                    :
+                    <>
+                        <MenuItem onClick={handleMenuClose}>
+                            <Link to="/register">SignUp</Link>
+                        </MenuItem>
+                        <MenuItem onClick={handleMenuClose}>
+                            <Link to="/login">LogIn</Link>
+                        </MenuItem>
+                    </>
+            }
         </Menu>
     );
 

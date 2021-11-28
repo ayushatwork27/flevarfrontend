@@ -4,11 +4,23 @@ const url = 'http://3.140.144.29/api/customer';
 
 const options = {
     headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json",
         "X-Requested-With": "XMLHttpRequest",
     }
 };
+
+const getHeader = (token) => {
+    const options = {
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+        }
+    }
+    return options;
+}
 
 export const authenticateLogin = async (login) => {
     try {
@@ -18,17 +30,17 @@ export const authenticateLogin = async (login) => {
     }
 };
 
-export const authenticateOTP = async (otp, mobile) => {
+export const verifyOtpOnServer = async (otp, mobile) => {
     try {
-        return await axios.post(`${url}/sendotp`, { otp, mobile }, options);
+        return await axios.post(`${url}/verifyotp`, { otp, mobile }, options);
     } catch (error) {
         console.log("error while calling otp API: ", error);
     }
 };
 
-export const verifyOtpOnServer = async (loginData) => {
+export const authenticateOTP = async (loginData) => {
     try {
-        return await axios.post(`${url}/verifyotp`, loginData, options);
+        return await axios.post(`${url}/sendotp`, loginData, options);
     } catch (error) {
         console.log("error while calling verify otp API: ", error);
     }
@@ -39,6 +51,22 @@ export const getProductsList = async () => {
         return await axios.post(`${url}/product_list`, { filterkey: "", location_id: 2 }, options);
     } catch (error) {
         console.log("error while calling product list API: ", error);
+    }
+};
+
+export const getCategoriesList = async () => {
+    try {
+        return await axios.get(`${url}/product_categories`, options);
+    } catch (error) {
+        console.log("error while calling category list API: ", error);
+    }
+};
+
+export const getCustomerProfile = async (token) => {
+    try {
+        return await axios.get(`${url}/profile`, getHeader(token));
+    } catch (error) {
+        console.log("error while calling customer profile API: ", error);
     }
 };
 
