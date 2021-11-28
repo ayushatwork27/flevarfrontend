@@ -33,8 +33,14 @@ const useStyles = makeStyles((theme) => ({
       color: "#222",
     },
     "& .MuiOutlinedInput-input": {
-      padding: "15px 14px",
+      padding: "10px 14px",
     },
+    "& .MuiInputLabel-outlined ": {
+      transform: "translate(15px, 12px) scale(1)",
+    },
+    "& .MuiInputLabel-shrink": {
+      transform: " translate(11px, -4px) scale(0.75)",
+    }
   },
 }));
 function CategoriesDetails() {

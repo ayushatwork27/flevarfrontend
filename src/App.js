@@ -20,38 +20,46 @@ import { loadUserDetail as userDetail } from './redux/actions/userActions';
 import AddNewAdderess from "./Pages/AddNewAdderess/Index";
 import ProfileUpdate from "./Pages/ProfileUpdate/Index";
 import EmptyCart from "./Components/EmptyCart/Index"
+import SpecialOrderRequest from "./Pages/SpecialOrderRequest/Index";
+import PageNotFound from "./Pages/PageNotFound/Index";
+import SearchPage from "./Pages/SearchPage/Index"
 
 function App() {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(listProducts())
-        dispatch(listCategories())
-        dispatch(userDetail())
-    }, [dispatch]);
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Home}></Route>
+        <Route exact path="/about" component={About}></Route>
+        <Route exact path="/contact" component={Contact}></Route>
+        <Route exact path="/register" component={Register}></Route>
+        <Route exact path="/login" component={Login}></Route>
+        <Route exact path="/order" component={Order}></Route>
+        <Route exact path="/loginviaotp" component={LoginViaOTP}></Route>
+        <Route
+          exact
+          path="/procductdescription/:id"
+          component={ProductDescription}
+        ></Route>
+        <Route exact path="/mycart" component={MyCart}></Route>
+        <Route exact path="/delevering" component={Delivering}></Route>
+        <Route exact path="/categories" component={Categories}></Route>
+        <Route
+          exact
+          path="/categories_details"
+          component={CategoriesDetails}
+        ></Route>
+        <Route exact path="/order_details" component={OrderDetails}></Route>
+        <Route exact path="/add_new_address" component={AddNewAdderess}></Route>
+        <Route exact path="/add_new_address/:id" component={AddNewAdderess}></Route>
+        <Route exact path="/profile_update" component={ProfileUpdate}></Route>
+        <Route exact path="/emptycart" component={EmptyCart}></Route>
+        <Route exact path="/specail_order_request" component={SpecialOrderRequest}></Route>
+             <Route exact path="/pagenotfound" component={PageNotFound}></Route>
+                <Route exact path="/searchpage" component={SearchPage}></Route>
+      </Switch>
 
-    return (
-        <Router>
-            <Switch>
-                <Route exact path="/" component={Home}></Route>
-                <Route exact path="/about" component={About}></Route>
-                <Route exact path="/contact" component={Contact}></Route>
-                <Route exact path="/register" component={Register}></Route>
-                <Route exact path="/login" component={Login}></Route>
-                <Route exact path="/loginviaotp" component={LoginViaOTP}></Route>
-                <Route exact path="/order" component={Order}></Route>
-                <Route exact path="/productdescription/:id" component={ProductDescription}></Route>
-                <Route exact path="/mycart" component={MyCart}></Route>
-                <Route exact path="/delevering" component={Delivering}></Route>
-                <Route exact path="/categories" component={Categories}></Route>
-                <Route exact path="/categories_details" component={CategoriesDetails}></Route>
-                <Route exact path="/order_details" component={OrderDetails}></Route>
-                <Route exact path="/add_new_address" component={AddNewAdderess}></Route>
-                <Route exact path="/add_new_address/:id" component={AddNewAdderess}></Route>
-                <Route exact path="/profile_update" component={ProfileUpdate}></Route>
-                <Route exact path="/emptycart" component={EmptyCart}></Route>
-            </Switch>
-        </Router>
-    );
+    </Router>
+  );
 }
 
 export default App;

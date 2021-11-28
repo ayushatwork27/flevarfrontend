@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useHistory } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -18,34 +18,30 @@ import { NavLink, Link } from "react-router-dom";
 import Box from "@material-ui/core//Box";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Hidden from "@material-ui/core/Hidden";
+import OnHoverLocation from "../../Pages/OnHoverLocation/OnHoverLocation";
 import { resetUserProfile } from "../../redux/actions/userActions"
 
 const useStyles = makeStyles((theme) => ({
     grow: {
         flexGrow: 1,
     },
-    main_header: {
-        padding: "0px 15px",
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    title: {
-        display: "none",
-        fontSize: "29px",
-        letterSpacing: "5px",
-        [theme.breakpoints.up("sm")]: {
-            display: "block",
-        },
-    },
     search: {
         position: "relative",
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: "#00000008",
+        textDecoration: "none",
+        color: "inherit",
+        // backgroundColor: "#00000008",
         transition: "all 0.3s ease",
-        "&:hover": {
-            backgroundColor: "#0000001c",
+
+        [theme.breakpoints.up("sm")]: {
+            backgroundColor: "#00000008",
         },
+        // "&:hover": {
+        //   backgroundColor: "#0000001c",
+        // },
+        // "&:focus": {
+        //   backgroundColor: "#0000001c",
+        // },
         marginRight: theme.spacing(2),
         marginLeft: 0,
         width: "100%",
@@ -68,23 +64,36 @@ const useStyles = makeStyles((theme) => ({
     },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create("width"),
-        width: "100%",
-        [theme.breakpoints.up("md")]: {
+        width: "0ch",
+        "&:focus": {
             width: "20ch",
         },
+        [theme.breakpoints.down("sm")]: {
+            width: "0ch",
+            "&:focus": {
+                width: "15ch",
+                backgroundColor: "#0000001c",
+            }
+
+        },
+
     },
     sectionDesktop: {
         display: "none",
         [theme.breakpoints.up("md")]: {
             display: "flex",
         },
-    },
-    sectionMobile: {
-        display: "flex",
-        [theme.breakpoints.up("md")]: {
-            display: "none",
+        searchIcon: {
+            padding: theme.spacing(0, 2),
+            height: "100%",
+            position: "absolute",
+            pointerEvents: "none",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
         },
     },
     logo: {
@@ -96,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "16px",
     },
     menu_link: {
-        color: "#fff",
+        color: "#222",
         padding: "10px",
         textTransform: "uppercase",
         transition: "all 0.3s ease",
@@ -104,19 +113,27 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: "none",
         "&:hover": {
             color: "#222222",
+            fontWeight: "600"
         },
     },
     mobilemenulink: {
         display: "flex",
         flexFlow: "column",
-        backgroundColor: "#e8656bcf",
-
         height: "100%",
+        padding: "0px 35px 0px 4px"
     },
     desktop_link_wrapper: {
         display: "flex",
         alignItems: "center",
     },
+    mobile_logo: {
+        maxWidth: "121px",
+        marginTop: "10px",
+        textAlign: 'center',
+        [theme.breakpoints.up("sm")]: {
+            display: "none",
+        },
+    }
 }));
 
 export default function PrimarySearchAppBar() {
@@ -152,6 +169,41 @@ export default function PrimarySearchAppBar() {
         dispatch(resetUserProfile())
         localStorage.clear();
     }
+    // let history = useHistory();
+    // const routeChange = () => {
+    //   history.push("/searchpage");
+    // }
+    const menuId = "primary-search-account-menu";
+    const renderMenu = (
+        <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            id={menuId}
+            keepMounted
+            transformOrigin={{ vertical: "top", horizontal: "right" }}
+            open={isMenuOpen}
+            onClose={handleMenuClose}
+        >
+            <MenuItem onClick={handleMenuClose}>
+                <Link to="/register">SignUp</Link>
+            </MenuItem>
+            <MenuItem onClick={handleMenuClose}>
+                <Link to="/login">LogIn</Link>
+            </MenuItem>
+            <MenuItem onClick={handleMenuClose}>
+                <Link to="/order">Orders</Link>
+            </MenuItem>
+            {/*<MenuItem onClick={handleMenuClose}>
+        <Link to="/logout">LogOut</Link>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link to="/signup">SignUp</Link>
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link to="/account">Account</Link>
+      </MenuItem> */}
+        </Menu>
+    );
 
     const menuId = "primary-search-account-menu";
     const renderMenu = (
@@ -191,48 +243,45 @@ export default function PrimarySearchAppBar() {
     );
 
     const mobileMenuId = "primary-search-account-menu-mobile";
-    const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{ vertical: "top", horizontal: "right" }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
-            <MenuItem>
-                <IconButton
-                    aria-label="show 4 new mails"
-                    color="inherit"
-                    component={Link}
-                    to="/mycart"
-                >
-                    <Badge badgeContent={4} color="secondary">
-                        <LocalMallIcon />
-                    </Badge>
-                </IconButton>
-                <p>Cart Item</p>
-            </MenuItem>
-
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Profile</p>
-            </MenuItem>
-        </Menu>
-    );
+    // const renderMobileMenu = (
+    //       <Menu
+    //           anchorEl={mobileMoreAnchorEl}
+    //           anchorOrigin={{ vertical: "top", horizontal: "right" }}
+    //           id={mobileMenuId}
+    //           keepMounted
+    //           transformOrigin={{ vertical: "top", horizontal: "right" }}
+    //           open={isMobileMenuOpen}
+    //           onClose={handleMobileMenuClose}
+    //       >
+    //         <AccountCircle />
+    //       </IconButton>
+    //       <p>Profile</p>
+    //     </MenuItem >
+    //   </Menu >
+    // );
     const menuputtertop = (
         <>
-            <Typography variant="body2" className={classes.location_title}>
+
+            <Link to="/" className={classes.logo}>
+                <Typography className={classes.mobile_logo} variant="h6" noWrap>
+                    <img
+                        src="/assets/images/flevarlogo.png"
+                        alt=""
+                        style={{ maxWidth: "100px" }}
+                    />
+                </Typography>
+            </Link>
+            <Typography variant="body2" className={`header-location-link ${classes.location_title}`}>
                 LOCATION
             </Typography>
+            <NavLink
+                exact
+                to="/"
+                className={classes.menu_link}
+                activeClassName="active_link"
+            >
+                Home
+            </NavLink>
             <NavLink
                 to="/about"
                 className={classes.menu_link}
@@ -252,7 +301,7 @@ export default function PrimarySearchAppBar() {
 
     return (
         <div className={classes.grow}>
-            <AppBar position="static" elevation={1} className={`header-wrapper `}>
+            <AppBar position="static" elevation={0} className={`header-wrapper `}>
                 <Toolbar className={`cmn-main-container  ${classes.main_header}`}>
                     <Hidden lgUp>
                         <IconButton
@@ -280,10 +329,10 @@ export default function PrimarySearchAppBar() {
                     <Hidden mdDown>
                         <Box className={classes.desktop_link_wrapper}>{menuputtertop}</Box>
                     </Hidden>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
+                    <Box className={classes.search} component={Link} to="/searchpage">
+                        <Box className={classes.searchIcon} >
                             <SearchIcon />
-                        </div>
+                        </Box>
                         <InputBase
                             placeholder="Search…"
                             classes={{
@@ -292,6 +341,9 @@ export default function PrimarySearchAppBar() {
                             }}
                             inputProps={{ "aria-label": "search" }}
                         />
+                    </Box>
+                    <div className="onhover-location">
+                        <OnHoverLocation />
                     </div>
 
                     <div className={classes.sectionDesktop}>
@@ -301,7 +353,7 @@ export default function PrimarySearchAppBar() {
                             component={Link}
                             to="/mycart"
                         >
-                            <Badge badgeContent={cartItems.map(item => item.quantity).reduce((a, b) => a + b, 0)} color="secondary">
+                            <Badge badgeContent={4} color="secondary">
                                 <LocalMallIcon />
                             </Badge>
                         </IconButton>
