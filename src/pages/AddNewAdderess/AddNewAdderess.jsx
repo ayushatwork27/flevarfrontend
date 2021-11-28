@@ -87,7 +87,7 @@ function AddNewAdderess() {
         }
     }, [id]);
 
-    const { address } = useSelector(state => state.getAddress);
+    const address = useSelector(state => state.getAddress);
     
     const {
         customer_id,
