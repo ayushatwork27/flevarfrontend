@@ -50,14 +50,12 @@ function Location() {
             <Box marginTop={5} padding={1}>
                 <Grid container spacing={2}>
                     {
-                        locationData.map((val, i) => {
-                            return (
-                                <Grid item sm={6} md={4} className={classes.location_single_box} key={i}>
-                                    <img src={val.imgsrc} alt="cityimage" />
-                                    <CmnButton btntitle={val.btnlable} />
-                                </Grid>
-                            )
-                        })
+                        locationData.map((val, i) =>
+                            <Grid item sm={6} md={4} className={classes.location_single_box} key={i}>
+                                <img src={val.imgsrc} alt="cityimage" />
+                                <CmnButton btntitle={val.btnlable} />
+                            </Grid>
+                        )
                     }
                 </Grid>
             </Box>

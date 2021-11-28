@@ -74,7 +74,7 @@ function Home() {
         ],
     };
 
-    const { products } = useSelector(state => state.products);
+    const { productList } = useSelector(state => state.product);
 
     return (
         <div>
@@ -101,7 +101,7 @@ function Home() {
                         </CmnButton>
                     </Box>
                     <Grid container spacing={3}>
-                        <CakesItems products={products && products.data && products.data.data} />
+                        <CakesItems products={productList} />
                     </Grid>
                 </Box>
 

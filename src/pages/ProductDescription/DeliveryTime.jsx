@@ -4,8 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
-    KeyboardTimePicker,
-    KeyboardDatePicker,
+    KeyboardTimePicker
 } from '@material-ui/pickers';
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography"

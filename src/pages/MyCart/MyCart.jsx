@@ -118,15 +118,15 @@ function MyCart() {
     const productLists = [];
     const classes = useStyles();
     const [value, setValue] = useState(4);
-    const { products } = useSelector(state => state.products);
+    const { productList } = useSelector(state => state.product);
     const { cartItems } = useSelector(state => state.cart);
     cartItems.forEach(item => {
-        const prodIndex = products.findIndex(prod => prod.id === item['cart_items'][0]['product_id']);
-        if (prodIndex > -1) productLists.push(products[prodIndex]);
+        const prodIndex = item['cart_items'] && item['cart_items'].length && productList.findIndex(prod => prod.id === item['cart_items'][0]['product_id']);
+        if (prodIndex > -1 && item['cart_items'] && item['cart_items'].length) productLists.push(productList[prodIndex]);
     });
     const dispatch = useDispatch();
-    const removeItemFromCart = (id) => {
-        dispatch(deleteItemFromCartAction(id))
+    const removeItemFromCart = (product_id) => {
+        dispatch(deleteItemFromCartAction(product_id));
     }
 
     useEffect(() => {
@@ -142,8 +142,9 @@ function MyCart() {
                 <Box>
                     <Grid container>
                         {
-                            productLists.map(product => (
-                                <Grid item key={product.id} xs={12} sm={12} md={7}>
+                            cartItems.map(cartItem => (
+                                cartItem['cart_items'] && !cartItem['cart_items'].length ? null :
+                                <Grid item key={cartItem.id} xs={12} sm={12} md={7}>
                                     <Grid container className={classes.mycart_product}>
                                         <Grid item xs={12} sm={4} md={4}>
                                             <img src="/assets/images/description.png" alt="description" />
@@ -155,12 +156,12 @@ function MyCart() {
                                                         variant="h3"
                                                         className={classes.cart_product_tittle}
                                                     >
-                                                        {product.name}
+                                                        {cartItem['cart_items'] && cartItem['cart_items'].length && cartItem['cart_items'][0]['name']}
                                                     </Typography>
                                                     <CmnButton
                                                         btntitle="Remove"
                                                         className={classes.removeBtn}
-                                                        onClick={() => removeItemFromCart(product.id)}
+                                                        onClick={() => removeItemFromCart(cartItem['cart_items'][0]['id'])}
                                                     />
                                                 </Box>
                                                 <Box
@@ -180,7 +181,7 @@ function MyCart() {
                                                         component="p"
                                                         className={classes.sellingprice}
                                                     >
-                                                        Rs.{product.mrp}
+                                                        Rs.{cartItem['cart_items'] && cartItem['cart_items'].length && cartItem['cart_items'][0]['mrp']}
                                                     </Typography>
                                                     <Typography
                                                         variant="body1"
@@ -188,7 +189,7 @@ function MyCart() {
                                                         component="p"
                                                         className={classes.originalprice}
                                                     >
-                                                        Rs.{product.mrp}
+                                                        Rs.{cartItem['cart_items'] && cartItem['cart_items'].length && cartItem['cart_items'][0]['mrp']}
                                                     </Typography>
                                                     <Typography
                                                         variant="body1"
@@ -222,7 +223,7 @@ function MyCart() {
                                     </Box>
                                 </Box>
                             </Box>
-                        </Grid> : <EmptyCart /> }
+                        </Grid> : <EmptyCart />}
                     </Grid>
                 </Box>
             </Box>

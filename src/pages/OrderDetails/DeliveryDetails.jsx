@@ -6,10 +6,10 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 
-import GroupAddIcon from "@material-ui/icons/GroupAdd";
-import VideoLabelIcon from "@material-ui/icons/VideoLabel";
+// import GroupAddIcon from "@material-ui/icons/GroupAdd";
+// import VideoLabelIcon from "@material-ui/icons/VideoLabel";
 import StepConnector from "@material-ui/core/StepConnector";
-import Typography from "@material-ui/core/Typography";
+// import Typography from "@material-ui/core/Typography";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import DirectionsWalkIcon from "@material-ui/icons/DirectionsWalk";
 import HomeIcon from "@material-ui/icons/Home";

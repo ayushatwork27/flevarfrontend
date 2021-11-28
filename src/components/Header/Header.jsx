@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -18,6 +18,8 @@ import { NavLink, Link } from "react-router-dom";
 import Box from "@material-ui/core//Box";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Hidden from "@material-ui/core/Hidden";
+import { useDispatch } from "react-redux";
+import { getCartAction } from "../../shared/store/actions/cart.actions";
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -148,6 +150,8 @@ export default function PrimarySearchAppBar() {
     };
     const [open, setOpen] = useState(false);
 
+    const dispatch = useDispatch();
+    useEffect(() => dispatch(getCartAction()), []);
     const menuId = "primary-search-account-menu";
     const renderMenu = (
         <Menu
@@ -291,7 +295,7 @@ export default function PrimarySearchAppBar() {
                             component={Link}
                             to="/mycart"
                         >
-                            <Badge badgeContent={cartItems.map(item => item.quantity).reduce((a, b) => a + b, 0)} color="secondary">
+                            <Badge badgeContent={cartItems.map(item => item['cart_items'] && item['cart_items'].length ? item['cart_items'][0]['quantity'] : 0).reduce((a, b) => a + b, 0)} color="secondary">
                                 <LocalMallIcon />
                             </Badge>
                         </IconButton>

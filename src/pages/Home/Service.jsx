@@ -55,14 +55,12 @@ function Service() {
   const classes = useStyles();
   return (
     <Box className={`flex-wraper ${classes.root}`}>
-      {DataCustomerReviewSlider.map((val, i) => {
-        return (
-          <Box className={classes.single_services_box} key={i}>
-            <img src={val.imagesrc} alt={val.imagesrc} />
-            <Typography variant="body2">{val.imgetitle}</Typography>
-          </Box>
-        );
-      })}
+      {DataCustomerReviewSlider.map((val, i) =>
+        <Box className={classes.single_services_box} key={i}>
+          <img src={val.imagesrc} alt={val.imagesrc} />
+          <Typography variant="body2">{val.imgetitle}</Typography>
+        </Box>
+      )}
     </Box>
   );
 }

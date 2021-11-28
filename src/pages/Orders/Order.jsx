@@ -13,7 +13,6 @@ import OrderTabs from "./OrderTabs";
 import WishlistTabs from "./WishlistTabs";
 import CmnButton from "../../components/CmnButton/CmnButton";
 import { Link } from "react-router-dom";
-import MyCart from "../MyCart/MyCart";
 import HelpTabs from "./HelpTabs";
 import LogoutButton from "../../components/LogOutButton/LogoutButton";
 

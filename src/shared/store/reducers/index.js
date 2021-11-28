@@ -1,18 +1,17 @@
 import { combineReducers } from 'redux';
 
-import { LOGIN_SUCCESS, LOGOUT } from '../types/auth.types';
 
-import { productReducer, productDetailReducer } from './product.reducer';
+import { productReducer } from './product.reducer';
 import { cartReducer } from './cart.reducer';
 import { FLEVAR_USER } from '../../constants/app.constants';
+import { LOGIN_SUCCESS, LOGOUT } from '../types/app.types';
 
 const reducers = combineReducers({
-    products: productReducer,
-    productDetail: productDetailReducer,
+    product: productReducer,
     cart: cartReducer
 });
 
-export default (state, action) => {
+const rootReducers = (state, action) => {
     if (action.type === LOGOUT) {
         localStorage.removeItem(FLEVAR_USER);
         state = undefined;
@@ -27,3 +26,5 @@ export default (state, action) => {
     }
     return reducers(state, action);
 };
+
+export default rootReducers;

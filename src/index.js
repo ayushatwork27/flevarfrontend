@@ -7,9 +7,8 @@ import { applyMiddleware, createStore, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from "redux-thunk";
 import reducers from './shared/store/reducers';
-import flevarAPIMiddlware from './api/flevar.api';
 
-const middlewares = [thunk, flevarAPIMiddlware];
+const middlewares = [thunk];
 
 const composeEnhancer = typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})

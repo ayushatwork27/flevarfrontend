@@ -165,7 +165,7 @@ function DescriptionTabs({ product }) {
             {/* This mango cake is bursting with fresh mango flavor! It has
             surprisingly simple ingredients (ONLY 9 TOTAL!) but it is a show
             stopper – and truly tastes as good as it looks. */}
-            {product.description}
+            {product && product.description}
           </Typography>
         </Box>
       </TabPanel>

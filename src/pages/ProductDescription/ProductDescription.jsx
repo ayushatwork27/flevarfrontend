@@ -12,14 +12,14 @@ import DescriptionTabs from "./DescriptionTabs";
 import CakesItems from "../../components/CakeItemCard/CakesItems";
 import { useParams } from "react-router-dom";
 import { getProductDetailAction } from '../../shared/store/actions/product.actions';
-import { addToCartAction } from '../../shared/store/actions/cart.actions';
+import { addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
 import { useHistory } from "react-router-dom";
-import DateTimeModal from "./DateTimeStepper";
+// import DateTimeModal from "./DateTimeStepper";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+// import DialogTitle from '@material-ui/core/DialogTitle';
 import DateTimeStepper from "./DateTimeStepper";
 
 const useStyles = makeStyles((theme) => ({
@@ -105,7 +105,7 @@ function ProductDescription(props) {
     let defaultCount = 1;
     const history = useHistory();
     const classes = useStyles();
-    const [value, setValue] = useState(4);
+    const value = 4;
     const handleIncrement = () => setCount((prevCount) => prevCount + 1);
 
     const handleDecrement = () => {
@@ -120,30 +120,30 @@ function ProductDescription(props) {
     const { id } = useParams();
     const dispatch = useDispatch();
     useEffect(() => dispatch(getProductDetailAction(id)), [id]);
-    const productDetail = useSelector(state => state.productDetail);
-    const { product } = productDetail;
 
-    const getProducts = useSelector(state => state.products);
-    const { products } = getProducts;
+    const { productList, productDetail } = useSelector(state => state.product);
+    const { cartItems } = useSelector(state => state.cart);
+
+    let itemIndex = cartItems.findIndex(item => productDetail && item.product_id === productDetail.id);
+    if (itemIndex > -1) defaultCount = cartItems[itemIndex]['quantity'];
+    const [count, setCount] = useState(defaultCount);
 
     const buyNow = () => {
         setOpen(true);
         const productObj = {
-            product_id: product.id,
+            product_id: productDetail.id,
             cake_message: 'New Deewali',
             cake_weight: 1,
             quantity: count,
-            mrp: product.mrp,
+            mrp: productDetail.mrp,
             pincode: 495689
         }
-        dispatch(addToCartAction(productObj));
+        const isItemInCart = cartItems && cartItems.find(item => item['cart_items'] && item['cart_items'].length && item['cart_items'][0]['product_id'] === productDetail.id);
+        if (isItemInCart) dispatch(updateCartAction(productObj));
+        else dispatch(addToCartAction(productObj));
         history.push('/mycart');
     }
 
-    const { cartItems } = useSelector(state => state.cart);
-    let itemIndex = cartItems.findIndex(item => item.product_id === product.id);
-    if (itemIndex > -1) defaultCount = cartItems[itemIndex]['quantity'];
-    const [count, setCount] = useState(defaultCount);
 
     return (
         <CustomeContainer>
@@ -164,7 +164,7 @@ function ProductDescription(props) {
                                 variant="h5"
                                 className={classes.Product_description_main_title}
                             >
-                                {product.name}
+                                {productDetail && productDetail.name}
                             </Typography>
                             <Box
                                 component="fieldset"
@@ -181,7 +181,7 @@ function ProductDescription(props) {
                                     component="p"
                                     className={classes.sellingprice}
                                 >
-                                    Rs.{product.mrp}
+                                    Rs.{productDetail && productDetail.mrp}
                                 </Typography>
                                 <Typography
                                     variant="body1"
@@ -189,7 +189,7 @@ function ProductDescription(props) {
                                     component="p"
                                     className={classes.originalprice}
                                 >
-                                    Rs.{product.mrp}
+                                    Rs.{productDetail && productDetail.mrp}
                                 </Typography>
                             </Box>
                             <Box className={classes.counter_box}>
@@ -230,7 +230,7 @@ function ProductDescription(props) {
                                 </form>
                             </Box>
                             <Box>
-                                <DescriptionTabs onClose={handleClose} open={open} product={product} />
+                                <DescriptionTabs onClose={handleClose} open={open} product={productDetail} />
                             </Box>
                         </Box>
                     </Grid>
@@ -241,7 +241,7 @@ function ProductDescription(props) {
                     <Typography variant="h5">MORE CAKES FOR YOU</Typography>
                 </Box>
                 <Grid container spacing={3}>
-                    <CakesItems products={products && products.data && products.data.data} />
+                    <CakesItems products={productList} />
                 </Grid>
             </Box>
             <Box>

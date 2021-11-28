@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import CmnButton from "../../components/CmnButton/CmnButton";
 import Box from "@material-ui/core/Box";
 import { Typography, Grid } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({

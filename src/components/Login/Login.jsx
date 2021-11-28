@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
-import { authenticateLogin } from "../../api/api";
+import { authenticateLogin } from "../../shared/store/actions/app.actions";
 
 const loginInitialValues = {
     mobile: "",
@@ -15,7 +15,7 @@ function Login() {
     const [login, setLogin] = useState(loginInitialValues);
 
     const loginViaOTP = async () => {
-        let response = await authenticateLogin(login);
+        await authenticateLogin(login);
     };
 
     const onValueChange = (e) => {

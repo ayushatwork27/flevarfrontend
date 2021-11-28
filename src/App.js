@@ -23,7 +23,7 @@ import EmptyCart from "./components/EmptyCart/Index"
 function App() {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getProductListAction())
+        dispatch(getProductListAction());
     }, [dispatch]);
 
     return (

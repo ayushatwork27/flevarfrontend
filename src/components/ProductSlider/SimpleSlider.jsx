@@ -64,7 +64,7 @@ export default function SimpleSlider(props) {
             //   mailTitle={val.mailTitle}
             //   imagesrc={val.imagesrc}
             // />
-            <div>
+            <div key={i}>
               <Grid container className="slider-wrapper">
                 {val.megaSlider && (
                   <>

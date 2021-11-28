@@ -10,10 +10,6 @@ export const UPDATE_CART = '[Cart] Update Cart';
 export const UPDATE_CART_SUCCESS = '[Cart] Update Cart Success';
 export const UPDATE_CART_FAILURE = '[Cart] Update Cart Failure';
 
-export const DELETE_CART = '[Cart] Delete Cart';
-export const DELETE_CART_SUCCESS = '[Cart] Delete Cart Success';
-export const DELETE_CART_FAILURE = '[Cart] Delete Cart Failure';
-
 export const DELETE_ITEM_FROM_CART = '[Cart] Delete Item From Cart';
 export const DELETE_ITEM_FROM_CART_SUCCESS = '[Cart] Delete Item From Cart Success';
 export const DELETE_ITEM_FROM_CART_FAILURE = '[Cart] Delete Item From Cart Failure';

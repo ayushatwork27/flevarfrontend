@@ -1,2 +1,2 @@
-export const FLEVAR_USER = 'FLEVAR_USER';
-export const CART_TOKEN = 'CART_TOKEN';
+export const FLEVAR_USER = 'flevar_user';
+export const CART_TOKEN = 'cart_token';
