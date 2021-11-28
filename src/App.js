@@ -17,6 +17,9 @@ import OrderDetails from "./Pages/OrderDetails/Index";
 import AddNewAdderess from "./Pages/AddNewAdderess/Index";
 import ProfileUpdate from "./Pages/ProfileUpdate/Index";
 import EmptyCart from "./Components/EmptyCart/Index"
+import SpecialOrderRequest from "./Pages/SpecialOrderRequest/Index";
+import PageNotFound from "./Pages/PageNotFound/Index";
+import SearchPage from "./Pages/SearchPage/Index"
 
 function App() {
   return (
@@ -43,10 +46,14 @@ function App() {
           component={CategoriesDetails}
         ></Route>
         <Route exact path="/order_details" component={OrderDetails}></Route>
-           <Route exact path="/add_new_address" component={AddNewAdderess}></Route>
-             <Route exact path="/profile_update" component={ProfileUpdate}></Route>
-               <Route exact path="/emptycart" component={EmptyCart}></Route>
+        <Route exact path="/add_new_address" component={AddNewAdderess}></Route>
+        <Route exact path="/profile_update" component={ProfileUpdate}></Route>
+        <Route exact path="/emptycart" component={EmptyCart}></Route>
+        <Route exact path="/specail_order_request" component={SpecialOrderRequest}></Route>
+             <Route exact path="/pagenotfound" component={PageNotFound}></Route>
+                <Route exact path="/searchpage" component={SearchPage}></Route>
       </Switch>
+
     </Router>
   );
 }

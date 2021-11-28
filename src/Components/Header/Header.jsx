@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useHistory } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -17,6 +17,7 @@ import { NavLink, Link } from "react-router-dom";
 import Box from "@material-ui/core//Box";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Hidden from "@material-ui/core/Hidden";
+import OnHoverLocation from "../../Pages/OnHoverLocation/OnHoverLocation";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -39,11 +40,20 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: "#00000008",
+    textDecoration: "none",
+    color: "inherit",
+    // backgroundColor: "#00000008",
     transition: "all 0.3s ease",
-    "&:hover": {
-      backgroundColor: "#0000001c",
+
+    [theme.breakpoints.up("sm")]: {
+      backgroundColor: "#00000008",
     },
+    // "&:hover": {
+    //   backgroundColor: "#0000001c",
+    // },
+    // "&:focus": {
+    //   backgroundColor: "#0000001c",
+    // },
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: "100%",
@@ -69,10 +79,19 @@ const useStyles = makeStyles((theme) => ({
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
+    width: "0ch",
+    "&:focus": {
       width: "20ch",
     },
+    [theme.breakpoints.down("sm")]: {
+      width: "0ch",
+      "&:focus": {
+        width: "15ch",
+        backgroundColor: "#0000001c",
+      }
+
+    },
+
   },
   sectionDesktop: {
     display: "none",
@@ -95,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
   },
   menu_link: {
-    color: "#fff",
+    color: "#222",
     padding: "10px",
     textTransform: "uppercase",
     transition: "all 0.3s ease",
@@ -103,19 +122,27 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     "&:hover": {
       color: "#222222",
+      fontWeight: "600"
     },
   },
   mobilemenulink: {
     display: "flex",
     flexFlow: "column",
-    backgroundColor: "#e8656bcf",
-
     height: "100%",
+    padding: "0px 35px 0px 4px"
   },
   desktop_link_wrapper: {
     display: "flex",
     alignItems: "center",
   },
+  mobile_logo: {
+    maxWidth: "121px",
+    marginTop: "10px",
+    textAlign: 'center',
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
+    },
+  }
 }));
 
 export default function PrimarySearchAppBar() {
@@ -144,6 +171,10 @@ export default function PrimarySearchAppBar() {
   };
   const [open, setOpen] = useState(false);
 
+  // let history = useHistory();
+  // const routeChange = () => {
+  //   history.push("/searchpage");
+  // }
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -216,7 +247,17 @@ export default function PrimarySearchAppBar() {
   );
   const menuputtertop = (
     <>
-      <Typography variant="body2" className={classes.location_title}>
+
+      <Link to="/" className={classes.logo}>
+        <Typography className={classes.mobile_logo} variant="h6" noWrap>
+          <img
+            src="/assets/images/flevarlogo.png"
+            alt=""
+            style={{ maxWidth: "100px" }}
+          />
+        </Typography>
+      </Link>
+      <Typography variant="body2" className={`header-location-link ${classes.location_title}`}>
         LOCATION
       </Typography>
       <NavLink
@@ -246,7 +287,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" elevation={1} className={`header-wrapper `}>
+      <AppBar position="static" elevation={0} className={`header-wrapper `}>
         <Toolbar className={`cmn-main-container  ${classes.main_header}`}>
           <Hidden lgUp>
             <IconButton
@@ -274,10 +315,10 @@ export default function PrimarySearchAppBar() {
           <Hidden mdDown>
             <Box className={classes.desktop_link_wrapper}>{menuputtertop}</Box>
           </Hidden>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
+          <Box className={classes.search} component={Link} to="/searchpage">
+            <Box className={classes.searchIcon} >
               <SearchIcon />
-            </div>
+            </Box>
             <InputBase
               placeholder="Search…"
               classes={{
@@ -286,6 +327,9 @@ export default function PrimarySearchAppBar() {
               }}
               inputProps={{ "aria-label": "search" }}
             />
+          </Box>
+          <div className="onhover-location">
+            <OnHoverLocation />
           </div>
 
           <div className={classes.sectionDesktop}>
