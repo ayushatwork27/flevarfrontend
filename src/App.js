@@ -1,5 +1,7 @@
 import "./Style/style.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from 'react-redux';
 import Home from "./pages/Home/Index";
 import About from "./pages/About/Index";
 import Contact from "./pages/Contact/Index";
@@ -19,12 +21,13 @@ import EmptyCart from "./components/EmptyCart/Index"
 import SpecialOrderRequest from "./pages/SpecialOrderRequest/Index";
 import PageNotFound from "./pages/PageNotFound/Index";
 import SearchPage from "./pages/SearchPage/Index"
+import { getProductListAction } from './shared/store/actions/product.actions';
 
 function App() {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(getProductListAction());
-  // }, [dispatch]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProductListAction());
+  }, [dispatch]);
 
   return (
     <Router>

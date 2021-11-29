@@ -114,7 +114,6 @@ function ProductDescription(props) {
     const { id } = useParams();
     const dispatch = useDispatch();
     useEffect(() => dispatch(getProductDetailAction(id)), [id]);
-
     const { productList, productDetail } = useSelector(state => state.product);
     const { cartItems } = useSelector(state => state.cart);
 
