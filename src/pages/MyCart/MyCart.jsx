@@ -31,9 +31,10 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 
-    cart_product_tittle: {
+    cart_product_title: {
         fontSize: "25px",
         fontWeight: "600",
+        textTransform: 'capitalize'
     },
 
     popolarcakepricing: {
@@ -154,9 +155,9 @@ function MyCart() {
                                                 <Box className={classes.cart_product_title_with_btn}>
                                                     <Typography
                                                         variant="h3"
-                                                        className={classes.cart_product_tittle}
+                                                        className={classes.cart_product_title}
                                                     >
-                                                        {cartItem['cart_items'] && cartItem['cart_items'].length && cartItem['cart_items'][0]['name']}
+                                                        {cartItem['cart_items'] && cartItem['cart_items'].length && cartItem['cart_items'][0]['product_name']}
                                                     </Typography>
                                                     <CmnButton
                                                         btntitle="Remove"

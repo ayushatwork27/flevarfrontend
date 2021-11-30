@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
         color: "#222",
         fontWeight: 600,
         lineHeight: "47px",
+        textTransform: 'capitalize'
     },
 
     popolarcakepricing: {

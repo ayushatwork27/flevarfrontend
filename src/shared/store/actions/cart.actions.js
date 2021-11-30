@@ -19,8 +19,9 @@ export const getCartAction = payload => dispatch => {
     dispatch({ type: actionTypes.GET_CART, payload });
     const cart_id = window && localStorage.getItem('cart_id');
     const cart_token = window && localStorage.getItem(CART_TOKEN);
-    const options = { headers: { 'cart_token': cart_token } }
-    return flevar.get(`${CART_API}/${cart_id}`, options).then(response => {
+    const options = { headers: { 'cart_token': cart_token } };
+    const params = { cart_token };
+    return flevar.post(`${CART_API}/${cart_id}`, params, options).then(response => {
         const { success, data } = response['data'];
         if (success) dispatch({ type: actionTypes.GET_CART_SUCCESS, payload: data['data'] });
     });
@@ -45,5 +46,6 @@ export const updateCartAction = payload => dispatch => {
     const cart_id = window && localStorage.getItem('cart_id');
     const cart_token = window && localStorage.getItem(CART_TOKEN);
     const options = { headers: { 'cart_token': cart_token } };
+    payload['cart_token'] = cart_token;
     return flevar.post(`${CART_API}/${cart_id}`, payload, options).then(response => { });
 }
