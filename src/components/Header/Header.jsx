@@ -21,7 +21,8 @@ import Hidden from "@material-ui/core/Hidden";
 import OnHoverLocation from "../../pages/OnHoverLocation/OnHoverLocation";
 import { resetUserProfile } from "../../shared/store/actions/userActions"
 import { getCartAction } from "../../shared/store/actions/cart.actions";
-
+import Grid from "@material-ui/core/Grid"
+import CmnButton from '../../components/CmnButton/CmnButton'
 const useStyles = makeStyles((theme) => ({
     grow: {
         flexGrow: 1,
@@ -134,9 +135,60 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up("sm")]: {
             display: "none",
         },
-    }
-}));
+    }, location_single_box: {
+        display: "inline-flex",
+        justifyContent: "center",
+        alignItems: "center",
+        // width: "350px",
 
+        // [theme.breakpoints.up("xl")]: {
+        //     width: "490px",
+        //     height: "480px",
+        // },
+        // [theme.breakpoints.down("md")]: {
+        //     marginBottom: "10px",
+        // },
+        "& button": {
+            position: "absolute",
+            zIndex: "55",
+            backgroundColor: "#fff",
+            color: "#222",
+            "&:hover": {
+                backgroundColor: "#fff",
+            }
+        }
+    },
+    content_box: {
+        display: "flex",
+        flexFlow: "column",
+        justifyContent: "center",
+        height: "100%",
+        "& p:nth-of-type(1)": {
+            marginBottom: "20px"
+        },
+        "& p:nth-of-type(2)": {
+            color: "#222",
+            maxWidth: "353px",
+            fontWeight: "600",
+            fontSize: "30px"
+        }
+    }
+
+}));
+const locationData = [
+    {
+        imgsrc: "assets/images/cityimage4.jpg",
+        btnlable: "Calcutta"
+    },
+    {
+        imgsrc: "assets/images/cityimage4.jpg",
+        btnlable: "JAMSHEDPUR"
+    },
+    {
+        imgsrc: "assets/images/cityimage4.jpg",
+        btnlable: "RANCHI"
+    },
+]
 export default function PrimarySearchAppBar() {
     const renderMobileMenu = null;
     const profiles = useSelector(state => state.getUser);
@@ -239,9 +291,45 @@ export default function PrimarySearchAppBar() {
                     />
                 </Typography>
             </Link>
-            <Typography variant="body2" className={`header-location-link ${classes.location_title}`}>
-                LOCATION
-            </Typography>
+            <Box class="location-box-mega-wrapper">
+                <div className="hover-wrapper">
+                    <Grid container >
+                        <Grid sm={12} md={6} lg={6} item class="hover-box-conent">
+                            <Box className={classes.content_box}>
+                                <Typography
+                                    variant="body1"
+                                    className="onhover-small-title">
+                                    SERVING NOW
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    className="onhover-header">
+                                    Cities where we are Delivering right now!
+                                </Typography>
+                            </Box>
+                        </Grid>
+                        <Grid sm={12} md={6} lg={6} item>
+                            <Box className="location-wrapperbox">
+                                <Grid container className="home-onhover-location-right-wrapper" >
+                                    {
+                                        locationData.map((val, i) => {
+                                            return (
+                                                <Grid item sm={6} md={4} className={` home-onhover-location-singlebox ${classes.location_single_box}`} key={i}>
+                                                    <img src={val.imgsrc} alt="cityimage" />
+                                                    <CmnButton btntitle={val.btnlable} />
+                                                </Grid>
+                                            )
+                                        })
+                                    }
+                                </Grid>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </div>
+                <Typography variant="body2" className={`header-location-link ${classes.location_title}`}>
+                    LOCATION
+                </Typography>
+            </Box>
             <NavLink
                 exact
                 to="/"
@@ -310,9 +398,9 @@ export default function PrimarySearchAppBar() {
                             inputProps={{ "aria-label": "search" }}
                         />
                     </Box>
-                    <div className="onhover-location">
+                    {/* <div className="onhover-location">
                         <OnHoverLocation />
-                    </div>
+                    </div> */}
 
                     <div className={classes.sectionDesktop}>
                         <IconButton
@@ -321,8 +409,8 @@ export default function PrimarySearchAppBar() {
                             component={Link}
                             to="/mycart"
                         >
-                            <Badge badgeContent={cartItems.map(item => item['cart_items']&& item['cart_items'].length?item['cart_items'][0]['quantity']: 0).reduce((a, b) => a + b, 0)} color="secondary">
-                            <LocalMallIcon />
+                            <Badge badgeContent={cartItems.map(item => item['cart_items'] && item['cart_items'].length ? item['cart_items'][0]['quantity'] : 0).reduce((a, b) => a + b, 0)} color="secondary">
+                                <LocalMallIcon />
                             </Badge>
                         </IconButton>
 

@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "15px",
   },
   cmn_date_inner_form_box: {
+    minWidth: "340px",
     padding: "15px",
     "& .MuiFormControl-root": {
       width: "100%",

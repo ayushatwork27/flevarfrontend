@@ -105,10 +105,10 @@ function ProductDescription(props) {
     const handleDecrement = () => {
         if (count < 2) setCount(1);
         else setCount((prevCount) => prevCount - 1);
-        
+
     };
     const [open, setOpen] = useState(false);
-    
+
     const handleClose = () => setOpen(false);
 
     const { id } = useParams();
