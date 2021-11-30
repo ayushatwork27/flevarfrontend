@@ -5,7 +5,7 @@ import flevar from '../../../api/api';
 export const authenticateLogin = payload => dispatch => {
     dispatch({ type: actionTypes.LOGIN, payload });
     return flevar.post(SEND_OTP_API, payload).then(response => {
-        console.log(response);
+        console.log('dtat', response, payload);
     });
 };
 
