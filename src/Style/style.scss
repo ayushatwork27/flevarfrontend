@@ -16,13 +16,20 @@ body {
 
 .active_link {
   color: #222222 !important;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .header-wrapper {
-  background-color: #e8656bcf !important;
-  color: #fff !important;
+  background-color: #fff !important;
+  color: #222 !important;
+  position: relative;
 }
+
+// .MuiPaper-root {
+//   background-color: #fff !important;
+//   max-width: 360px;
+//   width: 40%
+// }
 
 //  home arrow
 .home-slider-wrapper {
@@ -485,7 +492,7 @@ body {
 }
 
 .spacer {
-  height: 80px !important;
+  height: 60px !important;
   width: 100% !important;
 }
 
@@ -616,8 +623,76 @@ input::-webkit-inner-spin-button {
   max-width: 500px
 }
 
+.d-block {
+  display: block !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
 /* contact us  page end */
+.MuiPickersDay-daySelected {
+  background-color: #e8656bcf !important
+}
+
+.MuiRadio-colorSecondary.Mui-checked {
+  color: #cd4978 !important;
+}
 
 
 /* responsive */
+
+/* on hover component home start */
+.onhover-location {
+  position: absolute;
+  top: 66px;
+  background-color: #F4ECEC;
+  color: #000;
+  left: 0;
+  right: 0;
+  z-index: 55;
+}
+
+.onhover-small-title {
+  color: #e8656b;
+  font-weight: 600;
+  font-size: 17px !important;
+  line-height: 20px !important;
+  letter-spacing: 5px !important;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 60px !important;
+
+  &::after {
+    position: absolute;
+    content: "";
+    background-color: #e8656b;
+    width: 51px;
+    height: 2px;
+    left: 0;
+  }
+}
+
+// .onhover-location {
+//   display: none;
+// }
+
+.hover-wrapper {
+  padding: 30px 40px 30px 80px;
+  transition: all 0.5s ease;
+}
+
+.header-location-link:hover~.onhover-location {
+  display: block;
+}
+
+.home-onhover-location-right-wrapper {
+  .home-onhover-location-singlebox {
+    padding: 0px 10px
+  }
+}
+
+/* on hover componetnt home end */
 @import "responsive";

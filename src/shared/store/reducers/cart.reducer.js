@@ -6,7 +6,7 @@ const initialState = {
 
 export const cartReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.ADD_TO_CART:
+        case actionTypes.ADD_TO_CART_SUCCESS:
             const item = action.payload;
             const existIndex = state.cartItems.findIndex(product => product.product_id === item.product_id);
             if (existIndex > -1) {

@@ -14,13 +14,7 @@ import { useParams } from "react-router-dom";
 import { getProductDetailAction } from '../../shared/store/actions/product.actions';
 import { addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
 import { useHistory } from "react-router-dom";
-// import DateTimeModal from "./DateTimeStepper";
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-// import DialogTitle from '@material-ui/core/DialogTitle';
-import DateTimeStepper from "./DateTimeStepper";
 
 const useStyles = makeStyles((theme) => ({
     Product_description_main_title: {
@@ -121,7 +115,6 @@ function ProductDescription(props) {
     const { id } = useParams();
     const dispatch = useDispatch();
     useEffect(() => dispatch(getProductDetailAction(id)), [id]);
-
     const { productList, productDetail } = useSelector(state => state.product);
     const { cartItems } = useSelector(state => state.cart);
 
@@ -139,8 +132,7 @@ function ProductDescription(props) {
             mrp: productDetail.mrp,
             pincode: 495689
         }
-        const isItemInCart = cartItems && cartItems.find(item => item['cart_items'] && item['cart_items'].length && item['cart_items'][0]['product_id'] === productDetail.id);
-        if (isItemInCart) dispatch(updateCartAction(productObj));
+        if (localStorage.getItem('cart_token')) dispatch(updateCartAction(productObj));
         else dispatch(addToCartAction(productObj));
         history.push('/mycart');
     }
@@ -194,7 +186,7 @@ function ProductDescription(props) {
                                 </Typography>
                             </Box>
                             <Box className={classes.counter_box}>
-                                <Button onClick={handleDecrement}>-</Button>
+                                <Button onClick={handleDecrement} disabled={count === 1}>-</Button>
                                 <Typography variant="h6">{count}</Typography>
                                 <Button onClick={handleIncrement}>+</Button>
                             </Box>
@@ -254,19 +246,50 @@ function ProductDescription(props) {
                     maxWidth="sm"
                     fullWidth
                 >
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            <DateTimeStepper />
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleClose} color="primary" autoFocus>
-                            Done
-                        </Button>
-                    </DialogActions>
+                    Rs.1079
                 </Dialog>
             </Box>
-        </CustomeContainer>
+            <Box className={classes.counter_box}>
+                <Button onClick={handleDecrement}>-</Button>
+                <Typography variant="h6">{count}</Typography>
+                <Button onClick={handleIncrement}>+</Button>
+            </Box>
+            <Box>
+                <CmnButton
+                    btntitle="Buy Now"
+                    variant="contained"
+                    className="theme-contained-btn"
+                    onClick={buyNow}
+                />
+                <CmnButton
+                    variant="outlined"
+                    btntitle="View in 3D"
+                    className={classes.view3d}
+                />
+            </Box>
+            <Box>
+                <form noValidate autoComplete="off">
+                    <Box className={classes.description_messages_wrapper}>
+                        <TextField
+                            id="filled-basic"
+                            fullWidth
+                            variant="filled"
+                            label="Type Message on Cake Here"
+                            className={classes.description_messages_input}
+                            disableunderline="true"
+                        />
+                        <CmnButton
+                            variant="outlined"
+                            className={classes.send_btn}
+                            startIcon={<ArrowForwardIcon />}
+                        />
+                    </Box>
+                </form>
+            </Box>
+            <Box>
+                <DescriptionTabs onClose={handleClose} open={open} />
+            </Box>
+        </CustomeContainer >
     );
 }
 

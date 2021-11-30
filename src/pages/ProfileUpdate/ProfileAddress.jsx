@@ -44,52 +44,30 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function ProfileAddress() {
+function ProfileAddress({addressList}) {
     const classes = useStyles();
     return (
         <div>
             <Grid container>
-
                 <Grid item xs={12} xl={10}>
-                    <Box className={classes.addressSingeBox}>
-                        <Box className={classes.address}>
-                            <Typography variant="h5">My Home</Typography>
-                            <Typography variant="body2">
-                                49,VIP Enclave,Baguiati,Kolkata 700959
-                            </Typography>
+                {addressList && addressList.map((val, i) => {
+                    return (
+                        <Box className={classes.addressSingeBox}>
+                            <Box className={classes.address}>
+                                <Typography variant="h5">{val.address_name} ({val.receiver_name || 'NA'})</Typography>
+                                <Typography variant="body2">
+                                    {val.line_1_address}
+                                </Typography>
+                            </Box>
+                            <Box>
+                                <CmnButton
+                                    btntitle={i === 0 ? "Default" : "Select"}
+                                    className={i === 0 ? `${classes.selected_text}` : `${classes.notselected_text}`}
+                                />
+                            </Box>
                         </Box>
-                        <Box>
-                            <CmnButton
-                                btntitle="Default"
-                                className={` ${classes.selected_text}`}
-                            />
-                        </Box>
-                    </Box>
-                    <Box className={classes.addressSingeBox}>
-                        <Box className={classes.address}>
-                            <Typography variant="h5">Friend Home</Typography>
-                            <Typography variant="body2">
-                                49,VIP Enclave,Baguiati,Kolkata 700959
-                            </Typography>
-                        </Box>
-                        <Box>
-                            <CmnButton
-                                btntitle="Select"
-                                className={` ${classes.notselected_text}`}
-                            />
-                        </Box>
-                    </Box>
-                    <Box className={classes.addressSingeBox}>
-                        <Box className={classes.address}>
-                            <Typography variant="h5">Add a new Address</Typography>
-                        </Box>
-                        <Box>
-                            <CmnButton
-                                btntitle="add new"
-                                className={` ${classes.addnewBtn}`}
-                            />
-                        </Box>
-                    </Box>
+                    )
+                })}
                 </Grid>
             </Grid>
 

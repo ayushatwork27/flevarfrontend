@@ -1,5 +1,6 @@
 import { Box, Grid, Typography } from '@material-ui/core'
 import React from 'react'
+import { Link } from "react-router-dom"
 import Circle from '../../components/CircularText/CircularText'
 import CmnButton from '../../components/CmnButton/CmnButton'
 import { makeStyles } from "@material-ui/core/styles";
@@ -32,7 +33,11 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     home_special_request_description_wrapper: {
-        margin: "8% 0px"
+        margin: "8% 0px",
+        [theme.breakpoints.down("sm")]: {
+            marginTop: "70px"
+        }
+
     }
 }));
 
@@ -56,7 +61,7 @@ function SpecialRequest() {
                         <Typography variant="body1">SPECIAL CAKES BY FLEVAR</Typography>
                         <Typography variant="h2">Have a special cake request?</Typography>
                         <Typography variant="body2">LET US KNOW AND WE WILL MAKE IT HAPPEN</Typography>
-                        <CmnButton btntitle="Make a request" className="cmnBtn theme-contained-btn" />
+                        <CmnButton btntitle="Make a request" component={Link} to="/specail_order_request" className="cmnBtn theme-contained-btn" />
                     </Box>
                 </Grid>
             </Grid>

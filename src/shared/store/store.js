@@ -4,11 +4,15 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { getProductReducer, getProductDegtailReducer } from './reducers/product.reducer';
 import { cartReducer } from './reducers/cart.reducer';
+import { getAddressReducer } from './reducers/addressReducer';
+import { getUserReducer } from './reducers/userReducer';
 
 const reducer = combineReducers({
     products: getProductReducer,
     productDetail: getProductDegtailReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    getAddress: getAddressReducer,
+    getUser: getUserReducer
 })
 
 

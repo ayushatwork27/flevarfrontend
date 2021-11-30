@@ -1,5 +1,6 @@
 import { Box, Typography } from "@material-ui/core";
-import React, { useState } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -12,10 +13,10 @@ const loginInitialValues = {
 };
 
 function Login() {
+    let dispatch = useDispatch();
     const [login, setLogin] = useState(loginInitialValues);
-
-    const loginViaOTP = async () => {
-        await authenticateLogin(login);
+    const loginViaOTP = () => {
+        dispatch(authenticateLogin(login));
     };
 
     const onValueChange = (e) => {

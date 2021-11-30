@@ -1,4 +1,5 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import SimpleSlider from "../../components/ProductSlider/SimpleSlider";
 import CakesItems from "../../components/CakeItemCard/CakesItems";
 import Box from "@material-ui/core/Box";
@@ -16,6 +17,7 @@ import DataInstaFameSlider from "../../components/Data/DataInstaFameSlider";
 import Service from "./Service";
 import { Link } from "react-router-dom";
 import SpecialRequest from "./SpecialRequest";
+import { loadUserProfile } from "../../shared/store/actions/userActions";
 
 function Home() {
     const settings = {
@@ -73,8 +75,15 @@ function Home() {
             },
         ],
     };
+    const token = localStorage.getItem('token');
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (token) dispatch(loadUserProfile(token));
+    }, [token]);
 
     const { productList } = useSelector(state => state.product);
+
+    const categories = {};
 
     return (
         <div>
@@ -121,7 +130,7 @@ function Home() {
                         </CmnButton>
                     </Box>
                     <Box>
-                        <ShopByCategory />
+                        <ShopByCategory categories={categories && categories.data && categories.data.data} />
                     </Box>
                 </Box>
 
@@ -150,7 +159,7 @@ function Home() {
             <CustomeContainer>
                 <SpecialRequest />
             </CustomeContainer>
-            
+
             <CustomeContainer>
                 <Box className="title_with_btn">
                     <Typography variant="h5">JOIN OUR INSTA FAM</Typography>

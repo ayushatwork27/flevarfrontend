@@ -34,7 +34,7 @@
   font-weight: 500;
   left: 0%;
   /* I think this works for centering? */
-  top: calc(11% - 64px);
+  top: 10px;
   -webkit-transform: translate(-50%, calc(-50% - 64px));
   -ms-transform: translate(-50%, calc(-50% - 64px));
   transform: translate(-50%, calc(-50% - 64px));

@@ -209,7 +209,7 @@ function MyCart() {
                         }
                         {productLists && productLists.length ? <Grid item xs={12} sm={12} md={5}>
                             <Box className={classes.promo_code_price_details_wrapper}>
-                                <PromocodePriceDetails />
+                                <PromocodePriceDetails deliveryDate={true}/>
                                 <Box>
                                     <Box
                                         className={classes.checkoutBtn}
