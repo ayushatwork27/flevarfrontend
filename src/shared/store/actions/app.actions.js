@@ -4,10 +4,12 @@ import flevar from '../../../api/api';
 
 export const authenticateLogin = payload => dispatch => {
     dispatch({ type: actionTypes.LOGIN, payload });
-    return flevar.post(SEND_OTP_API, payload).then(response => { });
+    return flevar.post(SEND_OTP_API, payload).then(response => {
+        console.log('dtat', response, payload);
+    });
 };
 
 export const verifyOtpOnServer = payload => dispatch => {
     dispatch({ type: actionTypes.VERIFY_OTP, payload });
-    return flevar.post(VERIFY_OTP_API, payload).then(response => { });
+    return flevar.post(VERIFY_OTP_API, payload).then(response => {});
 };

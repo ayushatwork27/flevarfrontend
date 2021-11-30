@@ -6,7 +6,6 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
-import { userLoginMobile } from "../../shared/store/actions/userActions";
 import { authenticateLogin } from "../../shared/store/actions/app.actions";
 
 const loginInitialValues = {
@@ -14,14 +13,10 @@ const loginInitialValues = {
 };
 
 function Login() {
-    const [login, setLogin] = useState(loginInitialValues);
     let dispatch = useDispatch();
-    const loginViaOTP = async () => {
-        let response = await authenticateLogin(login);
-        if (!response) console.log("erro while login");
-        else {
-            dispatch(userLoginMobile(login));
-        }
+    const [login, setLogin] = useState(loginInitialValues);
+    const loginViaOTP = () => {
+        dispatch(authenticateLogin(login));
     };
 
     const onValueChange = (e) => {

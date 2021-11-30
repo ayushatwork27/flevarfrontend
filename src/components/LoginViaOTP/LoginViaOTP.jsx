@@ -16,22 +16,20 @@ const otpInitialValues = {
 };
 
 function LoginViaOTP() {
-
     const [otp, setOtp] = useState(otpInitialValues);
     const onValueChange = (e) => {
         setOtp({ ...otp, [e.target.name]: e.target.value });
     }
-
-    const { mobile } = useSelector(state => state.getUser)
     const history = useHistory();
     const submitOTP = async () => {
-        let response = await verifyOtpOnServer(Object.values(otp).join(''), mobile.mobile);
-        if (!response) console.log("error while verify otp");
-        else {
-            const token = response && response.data && response.data.data && response.data.data.data && response.data.data.data.token;
-            localStorage.setItem('token', token);
-            history.push('/');
-        }
+        console.log(Object.values(otp).join(''), '');
+        // let response = await verifyOtpOnServer(Object.values(otp).join(''), mobile.mobile);
+        // if (!response) console.log("error while verify otp");
+        // else {
+        //     const token = response && response.data && response.data.data && response.data.data.data && response.data.data.data.token;
+        //     localStorage.setItem('token', token);
+        //     history.push('/');
+        // }
     };
 
     return (

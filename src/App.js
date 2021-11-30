@@ -41,7 +41,7 @@ function App() {
         <Route exact path="/loginviaotp" component={LoginViaOTP}></Route>
         <Route
           exact
-          path="/procductdescription/:id"
+          path="/productdescription/:id"
           component={ProductDescription}
         ></Route>
         <Route exact path="/mycart" component={MyCart}></Route>
