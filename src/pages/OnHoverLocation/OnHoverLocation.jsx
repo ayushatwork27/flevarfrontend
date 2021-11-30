@@ -62,40 +62,41 @@ const locationData = [
 function OnHoverLocation() {
     const classes = useStyles();
     return (
-        <div className="hover-wrapper">
-            <Grid container >
-                <Grid sm={12} md={6} lg={6} item >
-                    <Box className={classes.content_box}>
-                        <Typography
-                            variant="body1"
-                            className="onhover-small-title">
-                            SERVING NOW
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            className="onhover-header">
-                            Cities where we are Delivering right now!
-                        </Typography>
-                    </Box>
-                </Grid>
-                <Grid sm={12} md={6} lg={6} item>
-                    <Box className="location-wrapperbox">
-                        <Grid container className="home-onhover-location-right-wrapper" >
-                            {
-                                locationData.map((val, i) => {
-                                    return (
-                                        <Grid item sm={6} md={4} className={` home-onhover-location-singlebox ${classes.location_single_box}`} key={i}>
-                                            <img src={val.imgsrc} alt="cityimage" />
-                                            <CmnButton btntitle={val.btnlable} />
-                                        </Grid>
-                                    )
-                                })
-                            }
-                        </Grid>
-                    </Box>
-                </Grid>
-            </Grid>
-        </div>
+        <></>
+        // <div className="hover-wrapper">
+        //     <Grid container >
+        //         <Grid sm={12} md={6} lg={6} item >
+        //             <Box className={classes.content_box}>
+        //                 <Typography
+        //                     variant="body1"
+        //                     className="onhover-small-title">
+        //                     SERVING NOW
+        //                 </Typography>
+        //                 <Typography
+        //                     variant="body2"
+        //                     className="onhover-header">
+        //                     Cities where we are Delivering right now!
+        //                 </Typography>
+        //             </Box>
+        //         </Grid>
+        //         <Grid sm={12} md={6} lg={6} item>
+        //             <Box className="location-wrapperbox">
+        //                 <Grid container className="home-onhover-location-right-wrapper" >
+        //                     {
+        //                         locationData.map((val, i) => {
+        //                             return (
+        //                                 <Grid item sm={6} md={4} className={` home-onhover-location-singlebox ${classes.location_single_box}`} key={i}>
+        //                                     <img src={val.imgsrc} alt="cityimage" />
+        //                                     <CmnButton btntitle={val.btnlable} />
+        //                                 </Grid>
+        //                             )
+        //                         })
+        //                     }
+        //                 </Grid>
+        //             </Box>
+        //         </Grid>
+        //     </Grid>
+        // </div>
     )
 }
 

@@ -8,6 +8,7 @@ export const PRODUCT_LIST_API = 'customer/product_list';
 export const PRODUCT_DETAIL_API = 'customer/product_details';
 export const PRODUCT_CATEGORIES_API = 'customer/product_categories';
 export const CART_API = 'customer/showcart';
+export const CART_ITEM_SAVE_API = 'customer/cart';
 export const PRODUCT_REVIEW_LIST_API = 'customer/product_review_list';
 export const PRODUCT_REVIEW_API = 'customer/product_review';
 export const CUSTOMER_ADDRESS_LISTING_API = 'customer/address_listing';

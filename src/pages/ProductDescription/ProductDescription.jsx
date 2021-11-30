@@ -131,8 +131,7 @@ function ProductDescription(props) {
             mrp: productDetail.mrp,
             pincode: 495689
         }
-        const isItemInCart = cartItems && cartItems.find(item => item['cart_items'] && item['cart_items'].length && item['cart_items'][0]['product_id'] === productDetail.id);
-        if (isItemInCart) dispatch(updateCartAction(productObj));
+        if (localStorage.getItem('cart_token')) dispatch(updateCartAction(productObj));
         else dispatch(addToCartAction(productObj));
         history.push('/mycart');
     }
