@@ -61,8 +61,8 @@ function ProfileAddress({addressList}) {
                             </Box>
                             <Box>
                                 <CmnButton
-                                    btntitle={i === 0 ? "Default" : "Select"}
-                                    className={i === 0 ? `${classes.selected_text}` : `${classes.notselected_text}`}
+                                    btntitle={i === 0 ? "Default" : null}
+                                    className={i === 0 ? `${classes.selected_text}` : null}
                                 />
                             </Box>
                         </Box>

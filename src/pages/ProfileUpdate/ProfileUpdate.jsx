@@ -13,7 +13,6 @@ import Tab from "@material-ui/core/Tab";
 import ProfileAddress from "./ProfileAddress";
 import EditProfile from "./EditProfile";
 import { getAddressList } from "../../shared/store/actions/address.actions";
-import { FLEVAR_USER } from '../../shared/constants/app.constants';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -105,7 +104,6 @@ function ProfileUpdate() {
     }, [user && user.id]);
 
     const { addressList } = useSelector(state => state.address);
-    const flevarUser = window && JSON.parse(localStorage.getItem(FLEVAR_USER));
 
     return <>
         <CustomeContainer>
@@ -133,7 +131,7 @@ function ProfileUpdate() {
                                 </Tabs>
                             </AppBar>
                             <TabPanel value={value} index={0}>
-                                <EditProfile flevarUser={flevarUser}/>
+                                <EditProfile flevarUser={user}/>
                             </TabPanel>
                             <TabPanel value={value} index={1}>
                                 <ProfileAddress addressList={addressList} />

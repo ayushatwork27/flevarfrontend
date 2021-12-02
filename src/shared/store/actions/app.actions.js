@@ -1,4 +1,4 @@
-import { SEND_OTP_API, LOGOUT_API, VERIFY_OTP_API, USER_PROFILE_API, REGISTER_API } from '../../constants/api-routes.constants';
+import { SEND_OTP_API, LOGOUT_API, VERIFY_OTP_API, USER_PROFILE_API, REGISTER_API, PROFILE_UPDATE_API } from '../../constants/api-routes.constants';
 import * as actionTypes from '../types/app.types';
 import flevar from '../../../api/api';
 
@@ -45,7 +45,6 @@ export const userProfile = payload => async (dispatch) => {
         const { success, data } = response['data'];
         if (success) {
             dispatch({ type: actionTypes.USER_PROFILE_SUCCESS, payload: data['data'] });
-            localStorage.setItem('flevar_user', JSON.stringify(data['data']));
         } else dispatch({ type: actionTypes.USER_PROFILE_FAILURE, payload: response });
     });
 };
@@ -60,5 +59,19 @@ export const userRegister = payload => dispatch => {
         const { success, data } = response['data'];
         if (success) dispatch({ type: actionTypes.USER_REGISTER_SUCCESS, payload: data['data'] });
         else dispatch({ type: actionTypes.USER_REGISTER_FAILURE, payload: response });
+    });
+};
+
+export const userUpdate = payload => dispatch => {
+    dispatch({ type: actionTypes.USER_PROFILE_UPDATE, payload: undefined });
+    const options = {
+        headers: { 'Authorization': "Bearer " + localStorage.getItem('token') }
+    };
+    return flevar.post(PROFILE_UPDATE_API, payload, options).then(response => {
+        const { success, data } = response['data'];
+        if (success) {
+            dispatch({ type: actionTypes.USER_PROFILE_UPDATE_SUCCESS, payload: data['data'] });
+            dispatch(userProfile(localStorage.getItem('token')));
+        } else dispatch({ type: actionTypes.USER_PROFILE_UPDATE_FAILURE, payload: response });
     });
 };

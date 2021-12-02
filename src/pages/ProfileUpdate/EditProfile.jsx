@@ -1,8 +1,12 @@
-import React from 'react'
+import { useState } from 'react'
 import { makeStyles } from "@material-ui/core/styles";
 import CmnButton from "../../components/CmnButton/CmnButton"
 import { Grid, TextField } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { userUpdate } from "../../shared/store/actions/app.actions";
+
 const useStyles = makeStyles((theme) => ({
     add_new_address_container: {
         maxWidth: "863px"
@@ -48,70 +52,65 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function EditProfile({flevarUser}) {
+function EditProfile({ flevarUser }) {
     const classes = useStyles();
+    let dispatch = useDispatch();
+    const history = useHistory();
+    const [user, setUser] = useState({
+        name: flevarUser.name,
+        email: flevarUser.email,
+        mobile: flevarUser.mobile,
+        password: "asdf1234"
+    });
+    const onValueChange = (e) => {
+        setUser({ ...user, [e.target.name]: e.target.value });
+    };
+    const { name, mobile, email } = user;
+
+    const userUpdateAction = () => {
+        dispatch(userUpdate(user));
+        history.push('/');
+    };
+
     return (
         <div>
             <Grid container justifyContent="space-between">
-                <Grid xs={12} md={6} item>
-                    <TextField
-                        label=""
-                        variant="filled"
-                        className=
-                        {`single-formbox cmn-form-box-mb  ${classes.w_50}`}
-                        name="name" />
+                <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                        <TextField
+                            label="Full Name"
+                            variant="filled"
+                            className="single-formbox"
+                            disableunderline="false"
+                            onChange={(e) => onValueChange(e)}
+                            value={name}
+                            name="name"
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <TextField
+                            label="Mobile Number"
+                            variant="filled"
+                            className="single-formbox"
+                            onChange={(e) => onValueChange(e)}
+                            value={mobile}
+                            name="mobile"
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <TextField
+                            label="Email Id"
+                            variant="filled"
+                            className="single-formbox"
+                            onChange={(e) => onValueChange(e)}
+                            value={email}
+                            name="email"
+                        />
+                    </Grid>
                 </Grid>
-                <Grid xs={12} md={6} item >
-                    <TextField
-                        label=""
-                        variant="filled"
-                        className={`single-formbox cmn-form-box-mb  ${classes.w_50} ${classes.fl_right}`}
-                        name="name"
-                    />
-                </Grid>
-                <Grid xs={12} md={6} item>
-                    <TextField
-                        label=""
-                        variant="filled"
-                        className=
-                        {`single-formbox cmn-form-box-mb  ${classes.w_50}`}
-                        name="name" />
-                </Grid>
-                <Grid xs={12} md={6} item>
-                    <TextField
-                        label=""
-                        variant="filled"
-                        className={`single-formbox cmn-form-box-mb  ${classes.w_50} ${classes.fl_right}`}
-                        name="name"
-                    />
-                </Grid>
-                <Grid xs={12} md={6} item>
-                    <TextField
-                        label=""
-                        variant="filled"
-                        className=
-                        {`single-formbox cmn-form-box-mb  ${classes.w_50}`}
-                        name="name" />
-                </Grid>
-                <Grid xs={12} md={6} item>
-                    <TextField
-                        label=""
-                        variant="filled"
-                        className={`single-formbox cmn-form-box-mb  ${classes.w_50} ${classes.fl_right}`}
-                        name="name"
-                    />
-                </Grid>
-                <TextField
-                    label=""
-                    variant="filled"
-                    className={`single-formbox cmn-form-box-mb `}
-                    name="name"
-                    multiline
-                    rows={4}
-                />
             </Grid>
             <Box className="cmn-tabs-black-btn-wrapper">
-                <CmnButton btntitle="Update" className={`cmn-tabs-black-btn`} />
+                <CmnButton btntitle="Update" className={`cmn-tabs-black-btn`} onClick={() => userUpdateAction()} />
             </Box>
         </div>
     )

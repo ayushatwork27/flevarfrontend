@@ -10,6 +10,10 @@ export const USER_PROFILE = '[User] User Profile';
 export const USER_PROFILE_SUCCESS = '[User] User Profile Success';
 export const USER_PROFILE_FAILURE = '[User] User Profile Failure';
 
+export const USER_PROFILE_UPDATE = '[User] User Profile Update';
+export const USER_PROFILE_UPDATE_SUCCESS = '[User] User Profile Update Success';
+export const USER_PROFILE_UPDATE_FAILURE = '[User] User Profile Update Failure';
+
 export const USER_REGISTER = '[User] User Register';
 export const USER_REGISTER_SUCCESS = '[User] User Register Success';
 export const USER_REGISTER_FAILURE = '[User] User Register Failure';

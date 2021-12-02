@@ -5,7 +5,6 @@ import { cartReducer } from './cart.reducer';
 import { appReducer } from './app.reducer';
 import { addressReducer } from './address.reducer';
 
-import { FLEVAR_USER } from '../../constants/app.constants';
 import { LOGIN_SUCCESS, LOGOUT } from '../types/app.types';
 
 const reducers = combineReducers({
@@ -17,7 +16,6 @@ const reducers = combineReducers({
 
 const rootReducers = (state, action) => {
     if (action.type === LOGOUT) {
-        localStorage.removeItem(FLEVAR_USER);
         state = undefined;
     } else if (action.type === LOGIN_SUCCESS) {
         state = {

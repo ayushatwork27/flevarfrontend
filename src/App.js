@@ -22,13 +22,19 @@ import SpecialOrderRequest from "./pages/SpecialOrderRequest/Index";
 import PageNotFound from "./pages/PageNotFound/Index";
 import SearchPage from "./pages/SearchPage/Index"
 import { getProductListAction, getCategoryListAction } from './shared/store/actions/product.actions';
+import { userProfile } from './shared/store/actions/app.actions';
 
 function App() {
+  const token = localStorage.getItem('token');
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProductListAction());
     dispatch(getCategoryListAction());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (token) dispatch(userProfile(token));
+  }, [token]);
 
   return (
     <Router>
