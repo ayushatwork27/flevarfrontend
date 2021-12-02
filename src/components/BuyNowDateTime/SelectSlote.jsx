@@ -50,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
   },
   select_slot_type_wrapper: {
     width: "350px",
+    [theme.breakpoints.down("sm")]: {
+      width: "290px",
+    },
   },
 }));
 export default function SelectSlote(props) {

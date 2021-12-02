@@ -14,7 +14,11 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "30px",
         letterSpacing: "5px",
         fontWeight: "600",
-        marginBottom: "15px"
+        marginBottom: "15px",
+        [theme.breakpoints.down("sm")]: {
+            fontSize: "22px",
+            letterSpacing: "1px",
+        },
     }
 }));
 
