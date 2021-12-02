@@ -12,7 +12,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import ProfileAddress from "./ProfileAddress";
 import EditProfile from "./EditProfile";
-import { loadAddresses } from "../../shared/store/actions/addressActions";
+import { getAddressList } from "../../shared/store/actions/address.actions";
+import { FLEVAR_USER } from '../../shared/constants/app.constants';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -97,12 +98,14 @@ function ProfileUpdate() {
 
     let dispatch = useDispatch();
 
-    const { user } = useSelector(state => state.getUser);
-    const { addresses } = useSelector(state => state.getAddress);
+    const { user } = useSelector(state => state.app);
 
     useEffect(() => {
-        dispatch(loadAddresses(user && user.id));
+        dispatch(getAddressList(user && user.id));
     }, [user && user.id]);
+
+    const { addressList } = useSelector(state => state.address);
+    const flevarUser = window && JSON.parse(localStorage.getItem(FLEVAR_USER));
 
     return <>
         <CustomeContainer>
@@ -130,10 +133,10 @@ function ProfileUpdate() {
                                 </Tabs>
                             </AppBar>
                             <TabPanel value={value} index={0}>
-                                <EditProfile />
+                                <EditProfile flevarUser={flevarUser}/>
                             </TabPanel>
                             <TabPanel value={value} index={1}>
-                                <ProfileAddress addressList={addresses && addresses.data && addresses.data.data} />
+                                <ProfileAddress addressList={addressList} />
                             </TabPanel>
                         </Box>
                     </Box>

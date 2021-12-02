@@ -21,12 +21,13 @@ import EmptyCart from "./components/EmptyCart/Index"
 import SpecialOrderRequest from "./pages/SpecialOrderRequest/Index";
 import PageNotFound from "./pages/PageNotFound/Index";
 import SearchPage from "./pages/SearchPage/Index"
-import { getProductListAction } from './shared/store/actions/product.actions';
+import { getProductListAction, getCategoryListAction } from './shared/store/actions/product.actions';
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProductListAction());
+    dispatch(getCategoryListAction());
   }, [dispatch]);
 
   return (

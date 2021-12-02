@@ -1,14 +1,18 @@
 import { combineReducers } from 'redux';
 
-
 import { productReducer } from './product.reducer';
 import { cartReducer } from './cart.reducer';
+import { appReducer } from './app.reducer';
+import { addressReducer } from './address.reducer';
+
 import { FLEVAR_USER } from '../../constants/app.constants';
 import { LOGIN_SUCCESS, LOGOUT } from '../types/app.types';
 
 const reducers = combineReducers({
     product: productReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    app: appReducer,
+    address: addressReducer
 });
 
 const rootReducers = (state, action) => {

@@ -6,34 +6,31 @@ const user = window && localStorage.getItem(FLEVAR_USER);
 const initialState = {
     isLoading: false,
     user: JSON.parse(user) || undefined,
-    image: undefined,
-    error: undefined
+    image: undefined
 }
 
-export default function authReducer(state = initialState, action) {
+export const appReducer = (state = initialState, action) => {
     switch (action.type) {
-        case LOADING:
+        case actionTypes.LOADING:
             return {
                 ...state,
                 isLoading: action.payload
-            }
-        case actionTypes.GET_USER_PROFILE_SUCCESS:
-            return {
-                ...state,
-                isLoading: false,
-                user: action.payload
             }
         case actionTypes.UPLOAD_IMAGE_SUCCESS:
             return {
                 ...state,
                 image: action.payload.data.image
             }
-        case actionTypes.GET_USER_PROFILE_FAILURE:
+        case actionTypes.USER_PROFILE_SUCCESS:
             return {
                 ...state,
-                error: action.payload,
-                isLoading: false
-            }
+                user: action.payload
+            };
+        case actionTypes.USER_PROFILE_RESET:
+            return {
+                ...state,
+                user: action.payload
+            };
         default:
             return state;
     }

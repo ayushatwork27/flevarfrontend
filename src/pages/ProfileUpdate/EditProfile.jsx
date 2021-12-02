@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function EditProfile() {
+function EditProfile({flevarUser}) {
     const classes = useStyles();
     return (
         <div>

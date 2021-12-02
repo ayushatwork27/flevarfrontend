@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -14,15 +14,14 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useHistory } from "react-router-dom";
 import Box from "@material-ui/core//Box";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Hidden from "@material-ui/core/Hidden";
-import OnHoverLocation from "../../pages/OnHoverLocation/OnHoverLocation";
-import { resetUserProfile } from "../../shared/store/actions/userActions"
-import { getCartAction } from "../../shared/store/actions/cart.actions";
-import Grid from "@material-ui/core/Grid"
-import CmnButton from '../../components/CmnButton/CmnButton'
+import Grid from "@material-ui/core/Grid";
+import CmnButton from '../../components/CmnButton/CmnButton';
+import { authenticateLogOut } from "../../shared/store/actions/app.actions";
+
 const useStyles = makeStyles((theme) => ({
     grow: {
         flexGrow: 1,
@@ -32,18 +31,11 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: theme.shape.borderRadius,
         textDecoration: "none",
         color: "inherit",
-        // backgroundColor: "#00000008",
         transition: "all 0.3s ease",
 
         [theme.breakpoints.up("sm")]: {
             backgroundColor: "#00000008",
         },
-        // "&:hover": {
-        //   backgroundColor: "#0000001c",
-        // },
-        // "&:focus": {
-        //   backgroundColor: "#0000001c",
-        // },
         marginRight: theme.spacing(2),
         marginLeft: 0,
         width: "100%",
@@ -66,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
     },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create("width"),
         width: "0ch",
@@ -139,15 +130,6 @@ const useStyles = makeStyles((theme) => ({
         display: "inline-flex",
         justifyContent: "center",
         alignItems: "center",
-        // width: "350px",
-
-        // [theme.breakpoints.up("xl")]: {
-        //     width: "490px",
-        //     height: "480px",
-        // },
-        // [theme.breakpoints.down("md")]: {
-        //     marginBottom: "10px",
-        // },
         "& button": {
             position: "absolute",
             zIndex: "55",
@@ -190,8 +172,8 @@ const locationData = [
     },
 ]
 export default function PrimarySearchAppBar() {
+
     const renderMobileMenu = null;
-    const profiles = useSelector(state => state.getUser);
     const { cartItems } = useSelector(state => state.cart);
 
     const classes = useStyles();
@@ -218,12 +200,15 @@ export default function PrimarySearchAppBar() {
     };
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
+    const history = useHistory();
     const logOut = () => {
-        dispatch(resetUserProfile())
-        localStorage.clear();
+        const mobile = localStorage.getItem('mobile');
+        dispatch(authenticateLogOut({ mobile }));
+        history.push('/');
     }
 
-    useEffect(() => dispatch(getCartAction()), []);
+    const { user } = useSelector(state => state.app);
+
     const menuId = "primary-search-account-menu";
 
     const renderMenu = (
@@ -237,13 +222,13 @@ export default function PrimarySearchAppBar() {
             onClose={handleMenuClose}
         >
             {
-                profiles && profiles.success ?
+                user ?
                     <>
                         <MenuItem onClick={handleMenuClose}>
-                            <h4>{profiles?.data?.data?.name}</h4>
+                            <h4>{user?.name}</h4>
                         </MenuItem>
                         <MenuItem onClick={handleMenuClose}>
-                            <Link>Account</Link>
+                            <Link to="/profile_update">Account</Link>
                         </MenuItem>
                         <MenuItem onClick={handleMenuClose}>
                             <Link to="/" onClick={logOut}>LogOut</Link>
@@ -263,22 +248,6 @@ export default function PrimarySearchAppBar() {
     );
 
     const mobileMenuId = "primary-search-account-menu-mobile";
-    // const renderMobileMenu = (
-    //       <Menu
-    //           anchorEl={mobileMoreAnchorEl}
-    //           anchorOrigin={{ vertical: "top", horizontal: "right" }}
-    //           id={mobileMenuId}
-    //           keepMounted
-    //           transformOrigin={{ vertical: "top", horizontal: "right" }}
-    //           open={isMobileMenuOpen}
-    //           onClose={handleMobileMenuClose}
-    //       >
-    //         <AccountCircle />
-    //       </IconButton>
-    //       <p>Profile</p>
-    //     </MenuItem >
-    //   </Menu >
-    // );
     const menuputtertop = (
         <>
 
@@ -291,10 +260,10 @@ export default function PrimarySearchAppBar() {
                     />
                 </Typography>
             </Link>
-            <Box class="location-box-mega-wrapper">
+            <Box className="location-box-mega-wrapper">
                 <div className="hover-wrapper">
                     <Grid container >
-                        <Grid sm={12} md={6} lg={6} item class="hover-box-conent">
+                        <Grid sm={12} md={6} lg={6} item className="hover-box-conent">
                             <Box className={classes.content_box}>
                                 <Typography
                                     variant="body1"
