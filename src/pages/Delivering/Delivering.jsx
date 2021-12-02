@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import CmnButton from "../../components/CmnButton/CmnButton";
 import PromocodePriceDetails from "../MyCart/PromocodePriceDetails";
 import { Link } from "react-router-dom";
-import { loadAddresses } from "../../shared/store/actions/addressActions";
+import { getAddressList } from "../../shared/store/actions/address.actions";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileAddress from "../ProfileUpdate/ProfileAddress";
 import { verifyOrderAction } from "../../shared/store/actions/order.actions";
@@ -63,12 +63,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Delivering() {
     const classes = useStyles();
-    const user = useSelector(state => state.user);
-    const addresses = useSelector(state => state.user && state.user.addresses);
+    const user = useSelector(state => state.app.user);
+    const addresses = useSelector(state => state.app.user && state.app.user.addresses);
     const { cartItems, cart_id, cart_token } = useSelector(state => state.cart);
     let dispatch = useDispatch();
     useEffect(() => {
-        dispatch(loadAddresses(user && user.id));
+        dispatch(getAddressList(user && user.id));
     }, [user && user.id]);
 
     const loadScript = (src) => new Promise((resolve) => {

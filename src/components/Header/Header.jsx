@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -14,13 +14,13 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useHistory } from "react-router-dom";
 import Box from "@material-ui/core//Box";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Hidden from "@material-ui/core/Hidden";
-import OnHoverLocation from "../../pages/OnHoverLocation/OnHoverLocation";
-import { resetUserProfile } from "../../shared/store/actions/userActions"
-import { getCartAction } from "../../shared/store/actions/cart.actions";
+import Grid from "@material-ui/core/Grid";
+import CmnButton from '../../components/CmnButton/CmnButton';
+import { authenticateLogOut } from "../../shared/store/actions/app.actions";
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -31,18 +31,11 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: theme.shape.borderRadius,
         textDecoration: "none",
         color: "inherit",
-        // backgroundColor: "#00000008",
         transition: "all 0.3s ease",
 
         [theme.breakpoints.up("sm")]: {
             backgroundColor: "#00000008",
         },
-        // "&:hover": {
-        //   backgroundColor: "#0000001c",
-        // },
-        // "&:focus": {
-        //   backgroundColor: "#0000001c",
-        // },
         marginRight: theme.spacing(2),
         marginLeft: 0,
         width: "100%",
@@ -65,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
     },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create("width"),
         width: "0ch",
@@ -134,12 +126,54 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up("sm")]: {
             display: "none",
         },
+    }, location_single_box: {
+        display: "inline-flex",
+        justifyContent: "center",
+        alignItems: "center",
+        "& button": {
+            position: "absolute",
+            zIndex: "55",
+            backgroundColor: "#fff",
+            color: "#222",
+            "&:hover": {
+                backgroundColor: "#fff",
+            }
+        }
+    },
+    content_box: {
+        display: "flex",
+        flexFlow: "column",
+        justifyContent: "center",
+        height: "100%",
+        "& p:nth-of-type(1)": {
+            marginBottom: "20px"
+        },
+        "& p:nth-of-type(2)": {
+            color: "#222",
+            maxWidth: "353px",
+            fontWeight: "600",
+            fontSize: "30px"
+        }
     }
-}));
 
+}));
+const locationData = [
+    {
+        imgsrc: "assets/images/cityimage4.jpg",
+        btnlable: "Calcutta"
+    },
+    {
+        imgsrc: "assets/images/cityimage4.jpg",
+        btnlable: "JAMSHEDPUR"
+    },
+    {
+        imgsrc: "assets/images/cityimage4.jpg",
+        btnlable: "RANCHI"
+    },
+]
 export default function PrimarySearchAppBar() {
+
     const renderMobileMenu = null;
-    const profiles = useSelector(state => state.getUser);
     const { cartItems } = useSelector(state => state.cart);
 
     const classes = useStyles();
@@ -166,12 +200,15 @@ export default function PrimarySearchAppBar() {
     };
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
+    const history = useHistory();
     const logOut = () => {
-        dispatch(resetUserProfile())
-        localStorage.clear();
+        const mobile = localStorage.getItem('mobile');
+        dispatch(authenticateLogOut({ mobile }));
+        history.push('/');
     }
 
-    useEffect(() => dispatch(getCartAction()), []);
+    const { user } = useSelector(state => state.app);
+
     const menuId = "primary-search-account-menu";
 
     const renderMenu = (
@@ -185,13 +222,13 @@ export default function PrimarySearchAppBar() {
             onClose={handleMenuClose}
         >
             {
-                profiles && profiles.success ?
+                user ?
                     <>
                         <MenuItem onClick={handleMenuClose}>
-                            <h4>{profiles?.data?.data?.name}</h4>
+                            <h4>{user?.name}</h4>
                         </MenuItem>
                         <MenuItem onClick={handleMenuClose}>
-                            <Link>Account</Link>
+                            <Link to="/profile_update">Account</Link>
                         </MenuItem>
                         <MenuItem onClick={handleMenuClose}>
                             <Link to="/" onClick={logOut}>LogOut</Link>
@@ -211,22 +248,6 @@ export default function PrimarySearchAppBar() {
     );
 
     const mobileMenuId = "primary-search-account-menu-mobile";
-    // const renderMobileMenu = (
-    //       <Menu
-    //           anchorEl={mobileMoreAnchorEl}
-    //           anchorOrigin={{ vertical: "top", horizontal: "right" }}
-    //           id={mobileMenuId}
-    //           keepMounted
-    //           transformOrigin={{ vertical: "top", horizontal: "right" }}
-    //           open={isMobileMenuOpen}
-    //           onClose={handleMobileMenuClose}
-    //       >
-    //         <AccountCircle />
-    //       </IconButton>
-    //       <p>Profile</p>
-    //     </MenuItem >
-    //   </Menu >
-    // );
     const menuputtertop = (
         <>
 
@@ -239,9 +260,45 @@ export default function PrimarySearchAppBar() {
                     />
                 </Typography>
             </Link>
-            <Typography variant="body2" className={`header-location-link ${classes.location_title}`}>
-                LOCATION
-            </Typography>
+            <Box className="location-box-mega-wrapper">
+                <div className="hover-wrapper">
+                    <Grid container >
+                        <Grid sm={12} md={6} lg={6} item className="hover-box-conent">
+                            <Box className={classes.content_box}>
+                                <Typography
+                                    variant="body1"
+                                    className="onhover-small-title">
+                                    SERVING NOW
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    className="onhover-header">
+                                    Cities where we are Delivering right now!
+                                </Typography>
+                            </Box>
+                        </Grid>
+                        <Grid sm={12} md={6} lg={6} item>
+                            <Box className="location-wrapperbox">
+                                <Grid container className="home-onhover-location-right-wrapper" >
+                                    {
+                                        locationData.map((val, i) => {
+                                            return (
+                                                <Grid item sm={6} md={4} className={` home-onhover-location-singlebox ${classes.location_single_box}`} key={i}>
+                                                    <img src={val.imgsrc} alt="cityimage" />
+                                                    <CmnButton btntitle={val.btnlable} />
+                                                </Grid>
+                                            )
+                                        })
+                                    }
+                                </Grid>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </div>
+                <Typography variant="body2" className={`header-location-link ${classes.location_title}`}>
+                    LOCATION
+                </Typography>
+            </Box>
             <NavLink
                 exact
                 to="/"
@@ -310,9 +367,9 @@ export default function PrimarySearchAppBar() {
                             inputProps={{ "aria-label": "search" }}
                         />
                     </Box>
-                    <div className="onhover-location">
+                    {/* <div className="onhover-location">
                         <OnHoverLocation />
-                    </div>
+                    </div> */}
 
                     <div className={classes.sectionDesktop}>
                         <IconButton
@@ -321,8 +378,8 @@ export default function PrimarySearchAppBar() {
                             component={Link}
                             to="/mycart"
                         >
-                            <Badge badgeContent={cartItems.map(item => item['cart_items']&& item['cart_items'].length?item['cart_items'][0]['quantity']: 0).reduce((a, b) => a + b, 0)} color="secondary">
-                            <LocalMallIcon />
+                            <Badge badgeContent={cartItems.map(item => item['cart_items'] && item['cart_items'].length ? item['cart_items'][0]['quantity'] : 0).reduce((a, b) => a + b, 0)} color="secondary">
+                                <LocalMallIcon />
                             </Badge>
                         </IconButton>
 

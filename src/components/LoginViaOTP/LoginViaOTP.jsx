@@ -1,12 +1,12 @@
 import { Box, Typography } from "@material-ui/core";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import { Link, useHistory } from "react-router-dom";
-import { verifyOtpOnServer } from "../../service/api";
+import { verifyOtpOnServer } from "../../shared/store/actions/app.actions";
 
 const otpInitialValues = {
     one: "",
@@ -16,20 +16,19 @@ const otpInitialValues = {
 };
 
 function LoginViaOTP() {
+    let dispatch = useDispatch();
     const [otp, setOtp] = useState(otpInitialValues);
     const onValueChange = (e) => {
         setOtp({ ...otp, [e.target.name]: e.target.value });
     }
     const history = useHistory();
     const submitOTP = async () => {
-        console.log(Object.values(otp).join(''), '');
-        // let response = await verifyOtpOnServer(Object.values(otp).join(''), mobile.mobile);
-        // if (!response) console.log("error while verify otp");
-        // else {
-        //     const token = response && response.data && response.data.data && response.data.data.data && response.data.data.data.token;
-        //     localStorage.setItem('token', token);
-        //     history.push('/');
-        // }
+        const verifyOtp = {
+            mobile: localStorage.getItem('mobile'),
+            otp: Object.values(otp).join(''),
+        };
+        dispatch(verifyOtpOnServer(verifyOtp));
+        history.push('/');
     };
 
     return (

@@ -1,7 +1,6 @@
 export const SEND_OTP_API = 'customer/sendotp';
 export const VERIFY_OTP_API = 'customer/verifyotp';
 export const REGISTER_API = 'customer/register';
-export const PROFILE_API = 'customer/profile';
 export const PROFILE_UPDATE_API = 'customer/profile_update';
 export const LOGOUT_API = 'customer/logout';
 export const PRODUCT_LIST_API = 'customer/product_list';

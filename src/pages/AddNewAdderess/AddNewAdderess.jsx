@@ -7,7 +7,7 @@ import LogoutButton from "../../components/LogOutButton/LogoutButton";
 import Profile from '../../components/Pofile/Profile';
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { addAddress, getAddress, updateAddress } from "../../shared/store/actions/addressActions";
+import { addAddress, getAddress, updateAddress } from "../../shared/store/actions/address.actions";
 import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({

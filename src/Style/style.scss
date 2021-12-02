@@ -649,8 +649,6 @@ input::-webkit-inner-spin-button {
   top: 66px;
   background-color: #F4ECEC;
   color: #000;
-  left: 0;
-  right: 0;
   z-index: 55;
 }
 
@@ -678,11 +676,35 @@ input::-webkit-inner-spin-button {
 // .onhover-location {
 //   display: none;
 // }
+.location-box-mega-wrapper {
+  position: relative;
+}
+
+.hover-box-conent {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-right: auto;
+}
 
 .hover-wrapper {
+  z-index: 5555555;
   padding: 30px 40px 30px 80px;
   transition: all 0.5s ease;
+  top: 50px;
+  left: 0;
+  right: 0;
+  position: fixed;
+  // transform: translateZ(50px);
+  background-color: #F4ECEC;
+  color: #000;
+  display: none;
 }
+
+.location-box-mega-wrapper:hover .hover-wrapper {
+  display: block;
+}
+
 
 .header-location-link:hover~.onhover-location {
   display: block;
