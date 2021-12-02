@@ -12,7 +12,7 @@ import DescriptionTabs from "./DescriptionTabs";
 import CakesItems from "../../components/CakeItemCard/CakesItems";
 import { useParams } from "react-router-dom";
 import { getProductDetailAction } from '../../shared/store/actions/product.actions';
-import { addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
+import { addCakeMessageAction, addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
 import { useHistory } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
 
@@ -106,10 +106,11 @@ function ProductDescription(props) {
     const handleDecrement = () => {
         if (count < 2) setCount(1);
         else setCount((prevCount) => prevCount - 1);
-        
+
     };
     const [open, setOpen] = useState(false);
-    
+    const [cakeMsg, updateCakeMsg] = useState('');
+
     const handleClose = () => setOpen(false);
 
     const { id } = useParams();
@@ -213,11 +214,14 @@ function ProductDescription(props) {
                                             label="Type Message on Cake Here"
                                             className={classes.description_messages_input}
                                             disableunderline="true"
+                                            value={cakeMsg}
+                                            onChange={e => updateCakeMsg(e.target.value)}
                                         />
                                         <CmnButton
                                             variant="outlined"
                                             className={classes.send_btn}
                                             startIcon={<ArrowForwardIcon />}
+                                            onClick={() => dispatch(addCakeMessageAction(cakeMsg))}
                                         />
                                     </Box>
                                 </form>

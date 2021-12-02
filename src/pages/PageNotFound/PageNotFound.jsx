@@ -1,6 +1,5 @@
-import { Box, Grid, TextField, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import React from 'react'
-import CmnButton from '../../components/CmnButton/CmnButton';
 import CustomeContainer from '../../components/CustomeContainer/CustomeContainer';
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function PageNotFound() {
-    const classes = useStyles();
     return (
         <CustomeContainer>
             <Grid container className="abv" justifyContent="center">

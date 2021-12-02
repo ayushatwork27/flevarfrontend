@@ -6,6 +6,7 @@ const user = window && localStorage.getItem(FLEVAR_USER);
 const initialState = {
     isLoading: false,
     user: JSON.parse(user) || undefined,
+    addresses: [],
     image: undefined,
     error: undefined
 }

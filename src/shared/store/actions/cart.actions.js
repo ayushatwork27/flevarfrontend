@@ -50,3 +50,9 @@ export const updateCartAction = payload => dispatch => {
         if (response['data']['success']) dispatch(getCartAction());
     });
 }
+
+export const addCakeMessageAction = payload => dispatch => {
+    dispatch({ type: actionTypes.ADD_CAKE_MESSAGE, payload });
+    localStorage.setItem("cake_msg", payload);
+    dispatch({ type: actionTypes.ADD_CAKE_MESSAGE_SUCCESS, payload });
+}

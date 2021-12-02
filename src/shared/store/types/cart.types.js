@@ -13,3 +13,7 @@ export const UPDATE_CART_FAILURE = '[Cart] Update Cart Failure';
 export const DELETE_ITEM_FROM_CART = '[Cart] Delete Item From Cart';
 export const DELETE_ITEM_FROM_CART_SUCCESS = '[Cart] Delete Item From Cart Success';
 export const DELETE_ITEM_FROM_CART_FAILURE = '[Cart] Delete Item From Cart Failure';
+
+export const ADD_CAKE_MESSAGE = '[Cart] Add Cake Message';
+export const ADD_CAKE_MESSAGE_SUCCESS = '[Cart] Add Cake Message Success';
+export const ADD_CAKE_MESSAGE_FAILURE = '[Cart] Add Cake Message Failure';

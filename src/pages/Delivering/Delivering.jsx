@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import { loadAddresses } from "../../shared/store/actions/addressActions";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileAddress from "../ProfileUpdate/ProfileAddress";
+import { verifyOrderAction } from "../../shared/store/actions/order.actions";
+import PaymentButton from "./PaymentButton";
 
 const useStyles = makeStyles((theme) => ({
     // mycart_wrapper: {
@@ -61,8 +63,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Delivering() {
     const classes = useStyles();
-    const { user } = useSelector(state => state.getUser);
-    const { addresses } = useSelector(state => state.getAddress);
+    const user = useSelector(state => state.user);
+    const addresses = useSelector(state => state.user && state.user.addresses);
+    const { cartItems, cart_id, cart_token } = useSelector(state => state.cart);
     let dispatch = useDispatch();
     useEffect(() => {
         dispatch(loadAddresses(user && user.id));
@@ -79,28 +82,6 @@ function Delivering() {
     useEffect(() => {
         loadScript("https://checkout.razorpay.com/v1/checkout.js");
     });
-
-    const payNow = () => {
-        var options = {
-            key: "rzp_test_hAVuEDTOKZ8ST0", // Key ID generated from the Dashboard
-            amount: "10000", // Amount is in currency sub units. Hence, 50000 refers to 50000 paise.
-            currency: "INR", // Default currency is INR.
-            name: "Flevar", // 
-            // "order_id": "order_9A33XWu170gUtm", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            handler: function (response) {
-                // console.log(response.razorpay_payment_id);
-                // console.log(response.razorpay_order_id);
-                // console.log(response.razorpay_signature);
-            },
-            prefill: user,
-            notes: {
-                address: user.address
-            }
-        };
-        var rzp1 = new window.Razorpay(options);
-        rzp1.on('payment.failed', response => { });
-        rzp1.open();
-    }
 
     return (
         <CustomeContainer>
@@ -160,12 +141,7 @@ function Delivering() {
                                         component={Link}
                                         to="/delevering"
                                     >
-                                        <CmnButton
-                                            btntitle="pay now"
-                                            variant="contained"
-                                            className="theme-contained-btn"
-                                            onClick={() => payNow()}
-                                        />
+                                        <PaymentButton />
                                     </Box>
                                 </Box>
                             </Box>
