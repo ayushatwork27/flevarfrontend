@@ -19,7 +19,7 @@ const store = createStore(
     composeEnhancer(applyMiddleware(...middlewares)));
 
 const render = (Comp) => {
-    const renderMethod = !!module.hot ? ReactDOM.render : ReactDOM.hydrate
+    const renderMethod = !!module.hot ? ReactDOM.render : ReactDOM.hydrate;
     renderMethod(
         <Provider store={store}>
             <React.StrictMode>

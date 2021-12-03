@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
         display: "inherit",
     },
 }));
-function Delivering() {
+const Delivering = () => {
     const classes = useStyles();
     const user = useSelector(state => state.app.user);
     const addresses = useSelector(state => state.app.user && state.app.user.addresses);
