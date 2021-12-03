@@ -73,12 +73,6 @@ function Profile() {
                     >
                         {user && user.name}
                     </Typography>
-                    <Typography
-                        variant="body1"
-                        className={`${classes.fw_light} ${classes.cityname}`}
-                    >
-                        NA
-                    </Typography>
                 </Box>
                 <Box
                     className={`${classes.cmn_profile_bg_spacing} ${classes.profile_details}`}
@@ -123,7 +117,7 @@ function Profile() {
                             className={`${classes.fw_light} ${classes.detail}`}
                             style={{ textTransform: 'capitalize' }}
                         >
-                            {address && `${address.address_name}, ${address.line_1_address}, ${address.line_2_address} ${address.pincode}`}
+                            {address && `${address.address_name}, ${address.line_1_address ? address.line_1_address : ''}, ${address.line_2_address ? address.line_2_address : ''} ${address.pincode}`}
                         </Typography>
                     </Box>
                 </Box>

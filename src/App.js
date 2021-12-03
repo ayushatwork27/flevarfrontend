@@ -67,7 +67,7 @@ function App() {
                     path="/categories_details/:id"
                     component={CategoriesDetails}
                 ></Route>
-                <Route exact path="/order_details" component={OrderDetails}></Route>
+                <Route exact path="/order_details/:id" component={OrderDetails}></Route>
                 <Route exact path="/add_new_address" component={AddNewAdderess}></Route>
                 <Route exact path="/add_new_address/:id" component={AddNewAdderess}></Route>
                 <Route exact path="/profile_update" component={ProfileUpdate}></Route>

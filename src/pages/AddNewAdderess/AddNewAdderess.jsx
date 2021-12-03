@@ -64,17 +64,19 @@ function AddNewAdderess() {
         if (id) dispatch(getAddressAction(id));
     }, [id]);
 
-    if (user && !addressDetail) setAddressDetail(!address ? {
-        customer_id: user.id,
-        address_name: "",
-        pincode: "",
-        line_1_address: "",
-        line_2_address: "",
-        landmark: "",
-        receiver_contact: "",
-        receiver_name: ""
-    } : { customer_id: user.id, ...address });
-
+    if (user && user.id && !addressDetail) {
+        setAddressDetail(!address ? {
+            customer_id: user.id,
+            address_name: "",
+            pincode: "",
+            line_1_address: "",
+            line_2_address: "",
+            landmark: "",
+            receiver_contact: "",
+            receiver_name: ""
+        } : { customer_id: user.id, ...address });
+    }
+    
     return (
         <CustomeContainer>
             <Grid container>
@@ -136,24 +138,24 @@ function AddNewAdderess() {
                             </Grid>
                             <Grid xs={12} md={6} item>
                                 <TextField
-                                    label="Receiver’s Contact Number"
+                                    label="Receiver’s Contact Name"
                                     variant="filled"
-                                    name="receiver_contact"
+                                    name="receiver_name"
                                     onChange={handleInputChange}
-                                    value={addressDetail && addressDetail.receiver_contact}
+                                    value={addressDetail && addressDetail.receiver_name}
                                     className={`single-formbox cmn-form-box-mb  ${classes.w_50} ${classes.fl_right}`}
-                                    type="number"
                                 />
                             </Grid>
                         </Grid>
                         <Grid container justifyContent="space-between">
                             <Grid xs={12} md={6} item>
                                 <TextField
-                                    label="Receiver’s Name"
+                                    label="Receiver’s Contact Number"
                                     variant="filled"
-                                    name="receiver_name"
+                                    name="receiver_contact"
+                                    type="number"
                                     onChange={handleInputChange}
-                                    value={addressDetail && addressDetail.receiver_name}
+                                    value={addressDetail && addressDetail.receiver_contact}
                                     className={`single-formbox cmn-form-box-mb  ${classes.w_50}`} />
                             </Grid>
                         </Grid>
