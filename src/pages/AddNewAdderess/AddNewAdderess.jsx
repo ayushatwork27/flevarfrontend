@@ -7,7 +7,7 @@ import LogoutButton from "../../components/LogOutButton/LogoutButton";
 import Profile from '../../components/Pofile/Profile';
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { addAddress, getAddress, updateAddress } from "../../shared/store/actions/address.actions";
+import { addAddressAction, getAddressAction, updateAddressAction } from "../../shared/store/actions/app.actions";
 import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -63,12 +63,12 @@ function AddNewAdderess() {
     let dispatch = useDispatch();
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (id) dispatch(updateAddress(state, id));
-        else dispatch(addAddress(state));
+        if (id) dispatch(updateAddressAction(state, id));
+        else dispatch(addAddressAction(state));
     }
 
     useEffect(() => {
-        if (id) dispatch(getAddress(id));
+        if (id) dispatch(getAddressAction(id));
     }, [id]);
 
     useEffect(() => {

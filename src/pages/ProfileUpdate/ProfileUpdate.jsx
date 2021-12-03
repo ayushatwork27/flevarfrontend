@@ -12,7 +12,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import ProfileAddress from "./ProfileAddress";
 import EditProfile from "./EditProfile";
-import { getAddressList } from "../../shared/store/actions/address.actions";
+import { getAddressListAction } from "../../shared/store/actions/app.actions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -100,10 +100,10 @@ function ProfileUpdate() {
     const { user } = useSelector(state => state.app);
 
     useEffect(() => {
-        dispatch(getAddressList(user && user.id));
+        dispatch(getAddressListAction(user && user.id));
     }, [user && user.id]);
 
-    const { addressList } = useSelector(state => state.address);
+    const { addressList } = useSelector(state => state.app);
 
     return <>
         <CustomeContainer>
@@ -131,7 +131,7 @@ function ProfileUpdate() {
                                 </Tabs>
                             </AppBar>
                             <TabPanel value={value} index={0}>
-                                <EditProfile flevarUser={user}/>
+                                <EditProfile flevarUser={user} />
                             </TabPanel>
                             <TabPanel value={value} index={1}>
                                 <ProfileAddress addressList={addressList} />

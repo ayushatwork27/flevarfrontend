@@ -3,6 +3,7 @@ import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,6 +54,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Profile() {
   const classes = useStyles();
+  const user = useSelector(state => state.app.user);
+  const address = useSelector(state => state.app.addressList && state.app.addressList[0]);
   return (
     <>
       <Box>
@@ -68,7 +71,7 @@ function Profile() {
             variant="h5"
             className={`${classes.fw_bold} ${classes.usename}`}
           >
-            Amit Mehta
+            {user && user.name}
           </Typography>
           <Typography
             variant="body1"
@@ -91,7 +94,7 @@ function Profile() {
               variant="body1"
               className={`${classes.fw_light} ${classes.detail}`}
             >
-              amitmehta@aol.in
+              {user && user.email}
             </Typography>
           </Box>
           <Box className={classes.single_profile_details}>
@@ -105,7 +108,7 @@ function Profile() {
               variant="body1"
               className={`${classes.fw_light} ${classes.detail}`}
             >
-              9876546736
+              {user && user.mobile}
             </Typography>
           </Box>
           <Box className={classes.single_profile_details}>
@@ -118,8 +121,9 @@ function Profile() {
             <Typography
               variant="body1"
               className={`${classes.fw_light} ${classes.detail}`}
+              style={{textTransform: 'capitalize'}}
             >
-              7D Akankha, AA IIC, Street 629, New Town, Kolkata 700135
+              {address && `${address.address_name}, ${address.line_1_address}, ${address.line_2_address} ${address.pincode}`}
             </Typography>
           </Box>
         </Box>
