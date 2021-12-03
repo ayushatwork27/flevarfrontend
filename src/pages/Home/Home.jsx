@@ -41,6 +41,18 @@ function Home() {
     const CustomerReviewSliderSetting = {
         dots: false,
         className: "customer-review-slidersetting",
+        responsive: [
+
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: false,
+                    dots: true,
+                },
+            },
+        ],
     };
     const InstaFameSetting = {
         className: "instaFame-wrapper",
@@ -67,7 +79,7 @@ function Home() {
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 2,
-
+                    arrows: false,
                     dots: true,
                 },
             },

@@ -183,7 +183,7 @@ function Footer() {
             </Grid>
           </Grid>
           <Box className={classes.terms_condition_policy_wrapper}>
-            <Box className={classes.terms_condition_policy_inner}>
+            <Box className={`${classes.terms_condition_policy_inner} wrape-sm`}>
               <Typography variant="body2">
                 © 2021 FLEV AR TECHNOLOGIES
               </Typography>

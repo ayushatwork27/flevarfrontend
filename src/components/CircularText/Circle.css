@@ -87,3 +87,28 @@
 }
 
 /* Home special request circle start */
+
+@media screen and (max-width:800px) {
+
+  .wrapper h1,
+  .home_circular_arrow,
+  .home_special_request_circle_wrapper h1,
+  .home_special_request_circle_arrow {
+    display: none !important;
+  }
+
+  .wrapper img {
+    max-width: 435px;
+  }
+
+  .home_special_request_circle_wrapper {
+    text-align: center;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+  .wrapper img {
+    max-width: 328px;
+  }
+}

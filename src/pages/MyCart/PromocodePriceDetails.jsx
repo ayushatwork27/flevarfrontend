@@ -114,6 +114,9 @@ const useStyles = makeStyles((theme) => ({
         width: "350px",
         height: "30px",
         paddingLeft: "5px",
+        [theme.breakpoints.down("sm")]: {
+            width: "325px",
+        },
     },
     calender_icon: {
         position: "absolute",

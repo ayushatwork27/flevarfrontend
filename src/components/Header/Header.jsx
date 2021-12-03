@@ -72,6 +72,12 @@ const useStyles = makeStyles((theme) => ({
             }
 
         },
+        [theme.breakpoints.down("xs")]: {
+            "&:focus": {
+                width: "8ch",
+            }
+
+        },
 
     },
     sectionDesktop: {
