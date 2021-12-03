@@ -25,51 +25,53 @@ import { getProductListAction, getCategoryListAction } from './shared/store/acti
 import { userProfile } from './shared/store/actions/app.actions';
 
 function App() {
-  const token = localStorage.getItem('token');
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getProductListAction());
-    dispatch(getCategoryListAction());
-  }, [dispatch]);
+    const token = localStorage.getItem('token');
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (token) dispatch(userProfile(token));
+    }, [token, dispatch]);
+    useEffect(() => {
+        dispatch(getProductListAction({
+            "filterkey": "",
+            "location_id": 2
+        }));
+        dispatch(getCategoryListAction());
+    }, [dispatch]);
 
-  useEffect(() => {
-    if (token) dispatch(userProfile(token));
-  }, [token]);
-
-  return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Home}></Route>
-        <Route exact path="/about" component={About}></Route>
-        <Route exact path="/contact" component={Contact}></Route>
-        <Route exact path="/register" component={Register}></Route>
-        <Route exact path="/login" component={Login}></Route>
-        <Route exact path="/order" component={Order}></Route>
-        <Route exact path="/loginviaotp" component={LoginViaOTP}></Route>
-        <Route
-          exact
-          path="/productdescription/:id"
-          component={ProductDescription}
-        ></Route>
-        <Route exact path="/mycart" component={MyCart}></Route>
-        <Route exact path="/delevering" component={Delivering}></Route>
-        <Route exact path="/categories" component={Categories}></Route>
-        <Route
-          exact
-          path="/categories_details"
-          component={CategoriesDetails}
-        ></Route>
-        <Route exact path="/order_details" component={OrderDetails}></Route>
-        <Route exact path="/add_new_address" component={AddNewAdderess}></Route>
-        <Route exact path="/add_new_address/:id" component={AddNewAdderess}></Route>
-        <Route exact path="/profile_update" component={ProfileUpdate}></Route>
-        <Route exact path="/emptycart" component={EmptyCart}></Route>
-        <Route exact path="/specail_order_request" component={SpecialOrderRequest}></Route>
-        <Route exact path="/pagenotfound" component={PageNotFound}></Route>
-        <Route exact path="/searchpage" component={SearchPage}></Route>
-      </Switch>
-    </Router>
-  );
+    return (
+        <Router>
+            <Switch>
+                <Route exact path="/" component={Home}></Route>
+                <Route exact path="/about" component={About}></Route>
+                <Route exact path="/contact" component={Contact}></Route>
+                <Route exact path="/register" component={Register}></Route>
+                <Route exact path="/login" component={Login}></Route>
+                <Route exact path="/order" component={Order}></Route>
+                <Route exact path="/loginviaotp" component={LoginViaOTP}></Route>
+                <Route
+                    exact
+                    path="/productdescription/:id"
+                    component={ProductDescription}
+                ></Route>
+                <Route exact path="/mycart" component={MyCart}></Route>
+                <Route exact path="/delevering" component={Delivering}></Route>
+                <Route exact path="/categories" component={Categories}></Route>
+                <Route
+                    exact
+                    path="/categories_details/:id"
+                    component={CategoriesDetails}
+                ></Route>
+                <Route exact path="/order_details" component={OrderDetails}></Route>
+                <Route exact path="/add_new_address" component={AddNewAdderess}></Route>
+                <Route exact path="/add_new_address/:id" component={AddNewAdderess}></Route>
+                <Route exact path="/profile_update" component={ProfileUpdate}></Route>
+                <Route exact path="/emptycart" component={EmptyCart}></Route>
+                <Route exact path="/specail_order_request" component={SpecialOrderRequest}></Route>
+                <Route exact path="/pagenotfound" component={PageNotFound}></Route>
+                <Route exact path="/searchpage" component={SearchPage}></Route>
+            </Switch>
+        </Router>
+    );
 }
 
 export default App;

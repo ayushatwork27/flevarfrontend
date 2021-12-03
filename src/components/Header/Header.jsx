@@ -14,7 +14,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import { NavLink, Link, useHistory } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import Box from "@material-ui/core//Box";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Hidden from "@material-ui/core/Hidden";
@@ -200,11 +200,9 @@ export default function PrimarySearchAppBar() {
     };
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
-    const history = useHistory();
     const logOut = () => {
         const mobile = localStorage.getItem('mobile');
         dispatch(authenticateLogOut({ mobile }));
-        history.push('/');
     }
 
     const { user } = useSelector(state => state.app);
@@ -367,10 +365,6 @@ export default function PrimarySearchAppBar() {
                             inputProps={{ "aria-label": "search" }}
                         />
                     </Box>
-                    {/* <div className="onhover-location">
-                        <OnHoverLocation />
-                    </div> */}
-
                     <div className={classes.sectionDesktop}>
                         <IconButton
                             aria-label="show 4 new mails"

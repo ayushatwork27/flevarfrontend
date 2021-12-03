@@ -100,7 +100,7 @@ function ProfileUpdate() {
     const { user } = useSelector(state => state.app);
 
     useEffect(() => {
-        dispatch(getAddressList(user && user.id));
+        if (user && user.id) dispatch(getAddressList(user && user.id));
     }, [user && user.id]);
 
     const { addressList } = useSelector(state => state.address);
@@ -110,7 +110,7 @@ function ProfileUpdate() {
             <Grid container>
                 <Grid sm={12} md={3} item>
                     <Box>
-                        <Profile />
+                        <Profile flevarUser={user} />
                         <Box className="cmn-profile_bottom_btn">
                             <LogoutButton />
                         </Box>
@@ -131,7 +131,7 @@ function ProfileUpdate() {
                                 </Tabs>
                             </AppBar>
                             <TabPanel value={value} index={0}>
-                                <EditProfile flevarUser={user}/>
+                                {user && user.name ? <EditProfile flevarUser={user} /> : null}
                             </TabPanel>
                             <TabPanel value={value} index={1}>
                                 <ProfileAddress addressList={addressList} />

@@ -97,7 +97,7 @@ function Home() {
                             endIcon={<ChevronRightIcon />}
                             btntitle="view All"
                             component={Link}
-                            to="/categories_details"
+                            to="/products"
                         >
                             View All
                         </CmnButton>

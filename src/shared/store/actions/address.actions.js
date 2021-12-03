@@ -4,7 +4,7 @@ import flevar from '../../../api/api';
 
 
 export const getAddressList = payload => async (dispatch) => {
-    dispatch({ type: actionTypes.GET_ADDRESS_LIST, payload: undefined });
+    dispatch({ type: actionTypes.GET_ADDRESS_LIST, payload: [] });
     return flevar.get(`${ADDRESS_LIST_API}/${payload}`).then(response => {
         const { success, data } = response['data'];
         if (success) dispatch({ type: actionTypes.GET_ADDRESS_LIST_SUCCESS, payload: data['data'] });
@@ -29,7 +29,7 @@ export const updateAddress = (payload, id) => async (dispatch) => {
 };
 
 export const getAddress = (payload) => async (dispatch) => {
-    dispatch({ type: actionTypes.GET_ADDRESS_LIST, payload });
+    dispatch({ type: actionTypes.GET_ADDRESS_LIST, payload: {} });
     return flevar.get(`${ADDRESS_LIST_API}/${payload}`).then(response => {
         const { success, data } = response['data'];
         if (success) dispatch({ type: actionTypes.GET_ADDRESS_LIST_SUCCESS, payload: data['data'] });
