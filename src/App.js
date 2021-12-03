@@ -42,7 +42,7 @@ function App() {
     useEffect(() => {
         if (user && user.id) dispatch(getAddressListAction(user && user.id));
     }, [user && user.id]);
-    
+
     return (
         <Router>
             <Switch>

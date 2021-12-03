@@ -17,6 +17,9 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from "@material-ui/pickers";
+import { useDispatch } from "react-redux";
+import { addDeliveryDateAction, addDeliveryTimeRangeAction, addShipmentPriceAction, addShipmentTypeAction } from "../../shared/store/actions/cart.actions";
+import { useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
     promo_code_price_details_wrapper: {
         marginTop: "30px",
@@ -159,6 +162,8 @@ const useStyles = makeStyles((theme) => ({
 
 function PromocodePriceDetails({ deliveryDate }) {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const { cartItems, shipment_price, shipment_type, delivery_date, delivery_time_range } = useSelector(state => state.cart);
     const monthNames = [
         "January",
         "February",
@@ -174,17 +179,18 @@ function PromocodePriceDetails({ deliveryDate }) {
         "December",
     ];
     const [timeSlots, setTimeSlot] = useState([]);
-    const [open, setOpen] = useState(false);
     const [openSloat, setSloat] = useState(false);
+    const [slots, setSlots] = useState([]);
+    const [todaysSlotTypes, setTodysSlotType] = useState([]);
+    const [tomorrowSlotTypes, setTomorrowSlotType] = useState([]);
+
+    const [open, setOpen] = useState(false);
     const [openTime, setTime] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [startMinDate, setStartDate] = useState(new Date());
     const [value, setValue] = useState('"Standard Delivery');
     const [deliverytime, setdeliveryTime] = useState("");
     const [selectedDateString, setSelectedDateStirng] = useState("");
-    const [todaysSlotTypes, setTodysSlotType] = useState([]);
-    const [tomorrowSlotTypes, setTomorrowSlotType] = useState([]);
-    const [slots, setSlots] = useState([]);
 
     useEffect(() => {
         const todaysDate = new Date();
@@ -263,7 +269,8 @@ function PromocodePriceDetails({ deliveryDate }) {
             if (todaysDate.getHours > 18) setSlots(tomorrowSlotTypes);
             else setSlots(main_slot_types);
         }
-
+        const selectedDate = new Date(date);
+        dispatch(addDeliveryDateAction(`${selectedDate.getFullYear()}/${selectedDate.getMonth()}/${selectedDate.getDate()}`));
         setSelectedDate(date);
         setSloat(true);
         setOpen(false);
@@ -273,7 +280,8 @@ function PromocodePriceDetails({ deliveryDate }) {
         let slot1 = slots.find((slot) => slot.delivery === event.target.value);
         if (slot1) setTimeSlot(slot1.time_slots);
         else setTimeSlot([]);
-
+        dispatch(addShipmentTypeAction(slot1.key));
+        dispatch(addShipmentPriceAction(slot1.key == 'standard' ? '' : slot1.charge));
         setValue(event.target.value);
         setTime(true);
         setSloat(false);
@@ -294,6 +302,8 @@ function PromocodePriceDetails({ deliveryDate }) {
     };
 
     const getTime = (event) => {
+        const time_range = event.target.value;
+        dispatch(addDeliveryTimeRangeAction(String(time_range).replace(/\s/g, '')));
         setdeliveryTime(event.target.value);
         setTime(false);
         setSloat(false);
@@ -422,7 +432,11 @@ function PromocodePriceDetails({ deliveryDate }) {
                         Price Details
                     </Typography>
                     <Typography variant="body1" className={classes.totalQuantity}>
-                        Total Quantity : 2
+                        Total Quantity : {cartItems.length &&
+                            cartItems[0]['cart_items'].reduce((quantity, item) => {
+                                quantity = quantity + item.quantity;
+                                return quantity;
+                            }, 0)}
                     </Typography>
                 </Box>
                 <Box className={classes.cmn_price_discount_amount_main_ceontainer}>
@@ -439,9 +453,27 @@ function PromocodePriceDetails({ deliveryDate }) {
                             variant="body1"
                             className={classes.cmn_price_discount_amount_value}
                         >
-                            Rs. 1,240
+                            Rs. {cartItems.length && cartItems[0]['total_amout']}
                         </Typography>
                     </Box>
+                    {shipment_price && (
+                        <Box
+                            className={`flex-wraper ${classes.cmn_price_discount_amount_wrapper}`}
+                        >
+                            <Typography
+                                variant="body1"
+                                className={classes.cmn_price_discount_amount_title}
+                            >
+                                Shipment Price
+                            </Typography>
+                            <Typography
+                                variant="body1"
+                                className={classes.cmn_price_discount_amount_value}
+                            >
+                                Rs. {shipment_price}
+                            </Typography>
+                        </Box>
+                    )}
                     <Box
                         className={`flex-wraper ${classes.cmn_price_discount_amount_wrapper}`}
                     >
@@ -471,7 +503,7 @@ function PromocodePriceDetails({ deliveryDate }) {
                             variant="body1"
                             className={`${classes.cmn_price_discount_amount_value} ${classes.total}`}
                         >
-                            Rs. 1,190
+                            Rs. {cartItems.length && (cartItems[0]['total_amout'] + Number(shipment_price) - 50)}
                         </Typography>
                     </Box>
                 </Box>

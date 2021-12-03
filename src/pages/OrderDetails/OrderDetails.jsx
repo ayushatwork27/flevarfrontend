@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CustomeContainer from "../../components/CustomeContainer/CustomeContainer";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import OrderTabs from "../Orders/OrderTabs";
 import CmnButton from "../../components/CmnButton/CmnButton";
 import DeliveryDetails from "./DeliveryDetails";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from 'react-router-dom';
+import { getOrderDetailAction } from "../../shared/store/actions/order.actions";
+import OrderItemDetail from "../../components/Order/OrderItemDetail";
 const useStyles = makeStyles((theme) => ({
   cmn_bg: {
     backgroundColor: "rgba(244, 244, 244, 1)",
@@ -181,6 +184,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 function OrderDetails() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const params = useParams();
+  const { orderDetail } = useSelector(state => state.order);
+
+  useEffect(() => {
+    dispatch(getOrderDetailAction(params.orderId));
+  }, [])
   return (
     <CustomeContainer>
       <Grid container>
@@ -239,7 +249,7 @@ function OrderDetails() {
                           variant="body1"
                           className={classes.order_box_smll_title_below_content}
                         >
-                          Happy Birthday Rahul
+                          { orderDetail && orderDetail.message }
                         </Typography>
                       </Box>
                     </Box>
@@ -272,14 +282,14 @@ function OrderDetails() {
                         variant="body1"
                         className={classes.order_box_smll_title_below_content}
                       >
-                        FV872638
+                        { orderDetail && orderDetail.order_number }
                       </Typography>
                     </Box>
                   </Grid>
                 </Grid>
               </Box>
               <Box>
-                <OrderTabs />
+                <OrderItemDetail order={orderDetail} />
               </Box>
             </Box>
           </Grid>

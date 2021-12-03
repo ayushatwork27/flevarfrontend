@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ProfileAddress from "../ProfileUpdate/ProfileAddress";
 import { verifyOrderAction } from "../../shared/store/actions/order.actions";
 import PaymentButton from "./PaymentButton";
+import { addAddressIdAction } from "../../shared/store/actions/cart.actions";
 
 const useStyles = makeStyles((theme) => ({
     // mycart_wrapper: {
@@ -61,14 +62,13 @@ const useStyles = makeStyles((theme) => ({
         display: "inherit",
     },
 }));
-function Delivering() {
+const Delivering = () => {
     const classes = useStyles();
-    const user = useSelector(state => state.app.user);
-    const addresses = useSelector(state => state.app.user && state.app.user.addresses);
-    const { cartItems, cart_id, cart_token } = useSelector(state => state.cart);
+    const { user, addressList } = useSelector(state => state.app);
+    const { cartItems, cart_id, cart_token, address_id } = useSelector(state => state.cart);
     let dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getAddressListAction(user && user.id));
+        if (user && user.id) dispatch(getAddressListAction(user.id));
     }, [user && user.id]);
 
     const loadScript = (src) => new Promise((resolve) => {
@@ -78,6 +78,10 @@ function Delivering() {
         script.onerror = () => resolve(false);
         document.body.appendChild(script);
     });
+
+    const selectAddress = address => {
+        dispatch(addAddressIdAction(address.id));
+    }
 
     useEffect(() => {
         loadScript("https://checkout.razorpay.com/v1/checkout.js");
@@ -92,7 +96,24 @@ function Delivering() {
                 <Box>
                     <Grid container>
                         <Grid item xs={12} sm={12} md={7}>
-                            <Box className={classes.addressSingeBox}>
+                            {addressList && addressList.map(address => (
+                                <Box className={classes.addressSingeBox}>
+                                    <Box className={classes.address}>
+                                        <Typography variant="h5" style={{ textTransform: 'capitalize' }}>{address.address_name}</Typography>
+                                        <Typography variant="body2" style={{ textTransform: 'capitalize' }}>
+                                            {`${address.line_1_address}, ${address.line_2_address}, ${address.pincode}`}
+                                        </Typography>
+                                    </Box>
+                                    <Box>
+                                        <CmnButton
+                                            btntitle={address.id == address_id ? 'Selected' : 'Select'}
+                                            className={` ${address.id == address_id ? classes.selected_text : classes.notselected_text}`}
+                                            onClick={() => selectAddress(address)}
+                                        />
+                                    </Box>
+                                </Box>
+                            ))}
+                            {/* <Box className={classes.addressSingeBox}>
                                 <Box className={classes.address}>
                                     <Typography variant="h5">My Home</Typography>
                                     <Typography variant="body2">
@@ -105,8 +126,8 @@ function Delivering() {
                                         className={` ${classes.selected_text}`}
                                     />
                                 </Box>
-                            </Box>
-                            <Box className={classes.addressSingeBox}>
+                            </Box> */}
+                            {/* <Box className={classes.addressSingeBox}>
                                 <Box className={classes.address}>
                                     <Typography variant="h5">Friend Home</Typography>
                                     <Typography variant="body2">
@@ -119,7 +140,7 @@ function Delivering() {
                                         className={` ${classes.notselected_text}`}
                                     />
                                 </Box>
-                            </Box>
+                            </Box> */}
                             <Box className={classes.addressSingeBox}>
                                 <Box className={classes.address}>
                                     <Typography variant="h5">Add a new Address</Typography>
