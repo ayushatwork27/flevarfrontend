@@ -13,6 +13,7 @@ import MyCart from "./pages/MyCart/Index";
 import Delivering from "./pages/Delivering/Index";
 import Order from "./pages/Orders/Index";
 import Categories from "./pages/Categories/Index";
+import Products from "./pages/Products/Index";
 import CategoriesDetails from "./pages/CategoriesDetails/Index";
 import OrderDetails from "./pages/OrderDetails/Index";
 import AddNewAdderess from "./pages/AddNewAdderess/Index";
@@ -56,6 +57,7 @@ function App() {
                 <Route exact path="/mycart" component={MyCart}></Route>
                 <Route exact path="/delevering" component={Delivering}></Route>
                 <Route exact path="/categories" component={Categories}></Route>
+                <Route exact path="/products" component={Products}></Route>
                 <Route
                     exact
                     path="/categories_details/:id"

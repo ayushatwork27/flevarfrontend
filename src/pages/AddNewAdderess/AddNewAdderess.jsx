@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState } from 'react'
 import CmnButton from "../../components/CmnButton/CmnButton"
 import { Grid, TextField, Typography } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
@@ -6,9 +6,9 @@ import CustomeContainer from '../../components/CustomeContainer/CustomeContainer
 import LogoutButton from "../../components/LogOutButton/LogoutButton";
 import Profile from '../../components/Pofile/Profile';
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
-import { addAddress, getAddress, updateAddress } from "../../shared/store/actions/address.actions";
-import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { addAddress, updateAddress } from "../../shared/store/actions/address.actions";
 
 const useStyles = makeStyles((theme) => ({
     add_new_address_container: {
@@ -43,69 +43,39 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function AddNewAdderess() {
+function AddNewAdderess({ flevarUser, address }) {
     const classes = useStyles();
     const [state, setState] = useState({
-        customer_id: 1,
-        address_name: "",
-        pincode: "",
-        line_1_address: "",
-        line_2_address: "",
-        landmark: "",
-        receiver_contact: "",
-        receiver_name: ""
+        customer_id: flevarUser.id,
+        address_name: address.address_name,
+        pincode: address.pincode,
+        line_1_address: address.line_1_address,
+        line_2_address: address.line_2_address,
+        landmark: address.landmark,
+        receiver_contact: address.receiver_contact,
+        receiver_name: address.receiver_name
     });
     const handleInputChange = (e) => {
         let { name, value } = e.target;
         setState({ ...state, [name]: value });
     }
-    const { id } = useParams();
+    const history = useHistory();
     let dispatch = useDispatch();
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (id) dispatch(updateAddress(state, id));
+        if (address) dispatch(updateAddress(state, address.id, flevarUser.id));
         else dispatch(addAddress(state));
+        history.push('/');
     }
 
-    useEffect(() => {
-        if (id) dispatch(getAddress(id));
-    }, [id]);
-
-    useEffect(() => {
-        if (address && address.data && address.data.data) {
-            const data = address.data.data;
-            setState({
-                customer_id: data.customer_id,
-                address_name: data.address_name,
-                pincode: data.pincode,
-                line_1_address: data.line_1_address,
-                line_2_address: data.line_2_address,
-                landmark: data.landmark,
-                receiver_contact: data.receiver_contact,
-                receiver_name: data.receiver_name
-            });
-        }
-    }, [id]);
-
-    const address = useSelector(state => state.getAddress);
-    
-    const {
-        customer_id,
-        address_name,
-        pincode,
-        line_1_address,
-        line_2_address,
-        landmark,
-        receiver_contact,
-        receiver_name
-    } = state;
+    const { address_name, pincode, line_1_address, line_2_address, landmark, receiver_contact, receiver_name } = state ? state : {};
 
     return (
         <CustomeContainer>
             <Grid container>
                 <Grid sm={12} md={3} item>
                     <Box>
-                        <Profile />
+                        <Profile flevarUser={flevarUser} />
                         <Box className="cmn-profile_bottom_btn">
                             <LogoutButton />
                         </Box>
@@ -121,9 +91,9 @@ function AddNewAdderess() {
                                     variant="filled"
                                     onChange={handleInputChange}
                                     name="address_name"
+                                    value={address_name}
                                     className=
-                                    {`single-formbox cmn-form-box-mb  ${classes.w_50}`}
-                                    value={address_name} />
+                                    {`single-formbox cmn-form-box-mb  ${classes.w_50}`} />
                             </Grid>
                             <Grid xs={12} md={6} item>
                                 <TextField
@@ -131,8 +101,8 @@ function AddNewAdderess() {
                                     variant="filled"
                                     name="pincode"
                                     onChange={handleInputChange}
-                                    className={`single-formbox cmn-form-box-mb  ${classes.w_50} ${classes.fl_right}`}
                                     value={pincode}
+                                    className={`single-formbox cmn-form-box-mb  ${classes.w_50} ${classes.fl_right}`}
                                     type="number" />
                             </Grid>
                         </Grid>
@@ -184,7 +154,7 @@ function AddNewAdderess() {
                             </Grid>
                         </Grid>
                         <Box className="cmn-tabs-black-btn-wrapper">
-                            <CmnButton btntitle="Add" className={`cmn-tabs-black-btn`} onClick={handleSubmit} />
+                            <CmnButton btntitle={address && address.id ? 'Update' : 'Add'} className={`cmn-tabs-black-btn`} onClick={handleSubmit} />
                         </Box>
                     </Box>
                 </Grid>

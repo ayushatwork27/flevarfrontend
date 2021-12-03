@@ -226,7 +226,7 @@ export default function PrimarySearchAppBar() {
             onClose={handleMenuClose}
         >
             {
-                user ?
+                user && user.id ?
                     <>
                         <MenuItem onClick={handleMenuClose}>
                             <h4>{user?.name}</h4>

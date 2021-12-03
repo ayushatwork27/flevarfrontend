@@ -87,7 +87,7 @@ function a11yProps(index) {
 }
 
 
-function ProfileUpdate() {
+function ProfileUpdate({ flevarUser }) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -97,11 +97,9 @@ function ProfileUpdate() {
 
     let dispatch = useDispatch();
 
-    const { user } = useSelector(state => state.app);
-
     useEffect(() => {
-        if (user && user.id) dispatch(getAddressList(user && user.id));
-    }, [user && user.id]);
+        dispatch(getAddressList(flevarUser.id));
+    }, [dispatch]);
 
     const { addressList } = useSelector(state => state.address);
 
@@ -110,7 +108,7 @@ function ProfileUpdate() {
             <Grid container>
                 <Grid sm={12} md={3} item>
                     <Box>
-                        <Profile flevarUser={user} />
+                        <Profile flevarUser={flevarUser} />
                         <Box className="cmn-profile_bottom_btn">
                             <LogoutButton />
                         </Box>
@@ -131,7 +129,7 @@ function ProfileUpdate() {
                                 </Tabs>
                             </AppBar>
                             <TabPanel value={value} index={0}>
-                                {user && user.name ? <EditProfile flevarUser={user} /> : null}
+                                <EditProfile flevarUser={flevarUser} /> }
                             </TabPanel>
                             <TabPanel value={value} index={1}>
                                 <ProfileAddress addressList={addressList} />
