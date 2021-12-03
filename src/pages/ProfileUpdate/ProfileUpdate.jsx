@@ -129,7 +129,7 @@ function ProfileUpdate({ flevarUser }) {
                                 </Tabs>
                             </AppBar>
                             <TabPanel value={value} index={0}>
-                                <EditProfile flevarUser={flevarUser} /> }
+                                <EditProfile flevarUser={flevarUser} />
                             </TabPanel>
                             <TabPanel value={value} index={1}>
                                 <ProfileAddress addressList={addressList} />
