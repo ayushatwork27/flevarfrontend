@@ -23,6 +23,7 @@ import PageNotFound from "./pages/PageNotFound/Index";
 import SearchPage from "./pages/SearchPage/Index"
 import { getProductListAction, getCategoryListAction } from './shared/store/actions/product.actions';
 import { userProfile } from './shared/store/actions/app.actions';
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 function App() {
   const token = localStorage.getItem('token');
@@ -38,6 +39,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <Switch>
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/about" component={About}></Route>

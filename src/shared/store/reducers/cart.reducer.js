@@ -1,15 +1,27 @@
+import { ADDRESS_ID, CAKE_MSG, CART_ID, CART_TOKEN, COUPON_CODE, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_PRICE, SHIPMENT_TYPE } from '../../constants/app.constants';
 import * as actionTypes from '../types/cart.types';
 
-const cart_id = localStorage.getItem('cart_id');
-const cart_token = localStorage.getItem('cart_token');
-const cake_msg = localStorage.getItem('cake_msg');
+const cart_id = localStorage.getItem(CART_ID);
+const cart_token = localStorage.getItem(CART_TOKEN);
+const cake_msg = localStorage.getItem(CAKE_MSG);
+const coupon_code = localStorage.getItem(COUPON_CODE);
+const address_id = localStorage.getItem(ADDRESS_ID);
+const delivery_date = localStorage.getItem(DELIVERY_DATE);
+const delivery_time_range = localStorage.getItem(DELIVERY_TIME_RANGE);
+const shipment_type = localStorage.getItem(SHIPMENT_TYPE);
+const shipment_price = localStorage.getItem(SHIPMENT_PRICE);
+
 const initialState = {
     cartItems: [],
-    cart_id: cart_id || undefined,
-    cart_token: cart_token || undefined,
-    coupon_code: undefined,
-    address_id: undefined,
-    message: cake_msg || undefined
+    cart_id: cart_id || '',
+    cart_token: cart_token || '',
+    coupon_code: coupon_code || '',
+    address_id: address_id || '',
+    message: cake_msg || '',
+    delivery_date: delivery_date || '',
+    delivery_time_range: delivery_time_range || '',
+    shipment_type: shipment_type || '',
+    shipment_price: shipment_price || ''
 };
 
 export const cartReducer = (state = initialState, action) => {
@@ -24,8 +36,22 @@ export const cartReducer = (state = initialState, action) => {
             return { ...state, cartItems: [...state.cartItems, item] };
         case actionTypes.GET_CART_SUCCESS:
             return { ...state, cartItems: [action.payload] };
-        case actionTypes.ADD_CAKE_MESSAGE_SUCCESS:
+        case actionTypes.ADD_CAKE_MESSAGE:
             return { ...state, message: action.payload };
+        case actionTypes.ADD_COUPON_CODE:
+            return { ...state, coupon_code: action.payload };
+        case actionTypes.ADD_ADDRESS_ID:
+            return { ...state, address_id: action.payload };
+        case actionTypes.ADD_DELIVERY_DATE:
+            return { ...state, delivery_date: action.payload };
+        case actionTypes.ADD_DELIVERY_TIME_RANGE:
+            return { ...state, delivery_time_range: action.payload };
+        case actionTypes.ADD_SHIPMENT_TYPE:
+            return { ...state, shipment_type: action.payload };
+        case actionTypes.ADD_SHIPMENT_PRICE:
+            return { ...state, shipment_price: action.payload };
+        case actionTypes.CLEAR_CART:
+            return { ...state, cartItems: [], message: '', coupon_code: '', address_id: '', delivery_date: '', delivery_time_range: '', shipment_type: '', shipment_price: '' };
         case actionTypes.DELETE_ITEM_FROM_CART:
             return { ...state, cartItems: state.cartItems.filter(item => item['cart_items'][0]['product_id'] !== action.payload) };
         default:

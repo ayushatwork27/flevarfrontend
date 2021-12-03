@@ -4,24 +4,27 @@ import CmnButton from "../../components/CmnButton/CmnButton";
 import flevar from '../../api/api';
 import { PLACE_ORDER_API, VERIFY_ORDER_API } from '../../shared/constants/api-routes.constants';
 import { useHistory } from 'react-router';
+import { ADDRESS_ID, CAKE_MSG, CART_ID, CART_TOKEN, COUPON_CODE, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_PRICE, SHIPMENT_TYPE } from '../../shared/constants/app.constants';
+import { clearCartAction } from '../../shared/store/actions/cart.actions';
 
 function PaymentButton() {
     const history = useHistory();
     const user = useSelector(state => state.app.user);
-    const { cartItems, cart_id, message } = useSelector(state => state.cart);
+    const dispatch = useDispatch();
+    const { cartItems, cart_id, message, address_id, shipment_type, shipment_price, delivery_date, delivery_time_range, coupon_code } = useSelector(state => state.cart);
 
     const placeOrder = async () => {
         const payload = {
             cart_id: Number(cart_id),
-            address_id: Number(2),
-            delivery_date: "2021/12/12",
-            delivery_time_range: "3PM-6PM",
-            shipment_type: "standard",
-            shipment_price: "230",
+            address_id: Number(address_id),
+            delivery_date,
+            delivery_time_range,
+            shipment_type,
+            shipment_price,
             message,
             special_instruction: "No special Instructions",
-            coupon_code: "Valentine",
-            total_discount: 100,
+            coupon_code,
+            total_discount: 50,
             payment_vendor: "razorpay",
             pincode: 700001
         }
@@ -32,7 +35,7 @@ function PaymentButton() {
     const payNow = (payload) => {
         var options = {
             key: "rzp_test_hAVuEDTOKZ8ST0", // Key ID generated from the Dashboard
-            amount: (payload.shipment_price - payload.total_discount) * 100, // Amount is in currency sub units. Hence, 50000 refers to 50000 paise.
+            amount: (cartItems[0]['total_amout'] + Number(shipment_price) - payload.total_discount) * 100, // Amount is in currency sub units. Hence, 50000 refers to 50000 paise.
             currency: "INR", // Default currency is INR.
             name: "Flevar", // 
             handler: function (response) {
@@ -47,7 +50,9 @@ function PaymentButton() {
                     message: item.message || ""
                 }));
                 flevar.post(PLACE_ORDER_API, payload).then(response => {
-                    if(response['data']['success']) history.push('/order');
+                    [CART_TOKEN, CART_ID, CAKE_MSG, COUPON_CODE, ADDRESS_ID, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_TYPE, SHIPMENT_PRICE].forEach(item => localStorage.removeItem(item));
+                    dispatch(clearCartAction());
+                    if (response['data']['success']) history.push('/order');
                 })
                 // console.log(response.razorpay_order_id);
                 // console.log(response.razorpay_signature);

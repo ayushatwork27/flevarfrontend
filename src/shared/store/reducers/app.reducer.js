@@ -2,7 +2,12 @@ import * as actionTypes from '../types/app.types';
 
 const initialState = {
     isLoading: false,
-    user: undefined,
+    user: {
+        id: '',
+        name: '',
+        email: '',
+        mobile: ''
+    },
     addressList: [],
     image: undefined,
     error: undefined
