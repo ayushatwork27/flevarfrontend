@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import CmnButton from "../../components/CmnButton/CmnButton"
 import { Grid, TextField, Typography } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
@@ -6,9 +6,9 @@ import CustomeContainer from '../../components/CustomeContainer/CustomeContainer
 import LogoutButton from "../../components/LogOutButton/LogoutButton";
 import Profile from '../../components/Pofile/Profile';
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { addAddress, updateAddress } from "../../shared/store/actions/address.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { addAddressAction, getAddressAction, updateAddressAction } from "../../shared/store/actions/app.actions";
+import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     add_new_address_container: {
@@ -43,39 +43,44 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function AddNewAdderess({ flevarUser, address }) {
+function AddNewAdderess() {
     const classes = useStyles();
-    const [state, setState] = useState({
-        customer_id: flevarUser.id,
-        address_name: address.address_name,
-        pincode: address.pincode,
-        line_1_address: address.line_1_address,
-        line_2_address: address.line_2_address,
-        landmark: address.landmark,
-        receiver_contact: address.receiver_contact,
-        receiver_name: address.receiver_name
-    });
+    const [addressDetail, setAddressDetail] = useState(null);
+    const { user } = useSelector(state => state.app);
+    const { address } = useSelector(state => state.app);
+    const { id } = useParams();
+    const dispatch = useDispatch();
     const handleInputChange = (e) => {
         let { name, value } = e.target;
-        setState({ ...state, [name]: value });
+        setAddressDetail({ ...addressDetail, [name]: value });
     }
-    const history = useHistory();
-    let dispatch = useDispatch();
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (address) dispatch(updateAddress(state, address.id, flevarUser.id));
-        else dispatch(addAddress(state));
-        history.push('/');
+        if (id) dispatch(updateAddressAction(addressDetail, id, user.id));
+        else dispatch(addAddressAction(addressDetail));
     }
 
-    const { address_name, pincode, line_1_address, line_2_address, landmark, receiver_contact, receiver_name } = state ? state : {};
+    useEffect(() => {
+        if (id) dispatch(getAddressAction(id));
+    }, [id]);
+
+    if (user && !addressDetail) setAddressDetail(!address ? {
+        customer_id: user.id,
+        address_name: "",
+        pincode: "",
+        line_1_address: "",
+        line_2_address: "",
+        landmark: "",
+        receiver_contact: "",
+        receiver_name: ""
+    } : { customer_id: user.id, ...address });
 
     return (
         <CustomeContainer>
             <Grid container>
                 <Grid sm={12} md={3} item>
                     <Box>
-                        <Profile flevarUser={flevarUser} />
+                        <Profile />
                         <Box className="cmn-profile_bottom_btn">
                             <LogoutButton />
                         </Box>
@@ -91,9 +96,8 @@ function AddNewAdderess({ flevarUser, address }) {
                                     variant="filled"
                                     onChange={handleInputChange}
                                     name="address_name"
-                                    value={address_name}
-                                    className=
-                                    {`single-formbox cmn-form-box-mb  ${classes.w_50}`} />
+                                    value={addressDetail && addressDetail.address_name}
+                                    className={`single-formbox cmn-form-box-mb  ${classes.w_50}`} />
                             </Grid>
                             <Grid xs={12} md={6} item>
                                 <TextField
@@ -101,7 +105,7 @@ function AddNewAdderess({ flevarUser, address }) {
                                     variant="filled"
                                     name="pincode"
                                     onChange={handleInputChange}
-                                    value={pincode}
+                                    value={addressDetail && addressDetail.pincode}
                                     className={`single-formbox cmn-form-box-mb  ${classes.w_50} ${classes.fl_right}`}
                                     type="number" />
                             </Grid>
@@ -111,14 +115,14 @@ function AddNewAdderess({ flevarUser, address }) {
                             variant="filled"
                             name="line_1_address"
                             onChange={handleInputChange}
-                            value={line_1_address}
+                            value={addressDetail && addressDetail.line_1_address}
                             className="single-formbox cmn-form-box-mb" />
                         <TextField
                             label="Line 2 Address"
                             variant="filled"
                             name="line_2_address"
                             onChange={handleInputChange}
-                            value={line_2_address}
+                            value={addressDetail && addressDetail.line_2_address}
                             className="single-formbox cmn-form-box-mb" />
                         <Grid container justifyContent="space-between">
                             <Grid xs={12} md={6} item>
@@ -127,7 +131,7 @@ function AddNewAdderess({ flevarUser, address }) {
                                     variant="filled"
                                     name="landmark"
                                     onChange={handleInputChange}
-                                    value={landmark}
+                                    value={addressDetail && addressDetail.landmark}
                                     className={`single-formbox cmn-form-box-mb  ${classes.w_50}`} />
                             </Grid>
                             <Grid xs={12} md={6} item>
@@ -136,7 +140,7 @@ function AddNewAdderess({ flevarUser, address }) {
                                     variant="filled"
                                     name="receiver_contact"
                                     onChange={handleInputChange}
-                                    value={receiver_contact}
+                                    value={addressDetail && addressDetail.receiver_contact}
                                     className={`single-formbox cmn-form-box-mb  ${classes.w_50} ${classes.fl_right}`}
                                     type="number"
                                 />
@@ -149,12 +153,12 @@ function AddNewAdderess({ flevarUser, address }) {
                                     variant="filled"
                                     name="receiver_name"
                                     onChange={handleInputChange}
-                                    value={receiver_name}
+                                    value={addressDetail && addressDetail.receiver_name}
                                     className={`single-formbox cmn-form-box-mb  ${classes.w_50}`} />
                             </Grid>
                         </Grid>
                         <Box className="cmn-tabs-black-btn-wrapper">
-                            <CmnButton btntitle={address && address.id ? 'Update' : 'Add'} className={`cmn-tabs-black-btn`} onClick={handleSubmit} />
+                            <CmnButton btntitle={address ? 'Update' : 'Add'} className={`cmn-tabs-black-btn`} onClick={handleSubmit} />
                         </Box>
                     </Box>
                 </Grid>

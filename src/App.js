@@ -1,7 +1,7 @@
 import "./Style/style.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Home from "./pages/Home/Index";
 import About from "./pages/About/Index";
 import Contact from "./pages/Contact/Index";
@@ -23,7 +23,7 @@ import SpecialOrderRequest from "./pages/SpecialOrderRequest/Index";
 import PageNotFound from "./pages/PageNotFound/Index";
 import SearchPage from "./pages/SearchPage/Index"
 import { getProductListAction, getCategoryListAction } from './shared/store/actions/product.actions';
-import { userProfile } from './shared/store/actions/app.actions';
+import { userProfile, getAddressListAction } from './shared/store/actions/app.actions';
 
 function App() {
     const token = localStorage.getItem('token');
@@ -38,7 +38,11 @@ function App() {
         }));
         dispatch(getCategoryListAction());
     }, [dispatch]);
-
+    const { user } = useSelector(state => state.app);
+    useEffect(() => {
+        if (user && user.id) dispatch(getAddressListAction(user && user.id));
+    }, [user && user.id]);
+    
     return (
         <Router>
             <Switch>

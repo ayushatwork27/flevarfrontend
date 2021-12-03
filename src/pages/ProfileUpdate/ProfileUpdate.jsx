@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Grid, Typography } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import CustomeContainer from '../../components/CustomeContainer/CustomeContainer'
@@ -12,7 +12,6 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import ProfileAddress from "./ProfileAddress";
 import EditProfile from "./EditProfile";
-import { getAddressList } from "../../shared/store/actions/address.actions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -87,28 +86,24 @@ function a11yProps(index) {
 }
 
 
-function ProfileUpdate({ flevarUser }) {
+function ProfileUpdate() {
+
     const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+    const { user } = useSelector(state => state.app);
+    const { addressList } = useSelector(state => state.app);
 
-    let dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getAddressList(flevarUser.id));
-    }, [dispatch]);
-
-    const { addressList } = useSelector(state => state.address);
 
     return <>
         <CustomeContainer>
             <Grid container>
                 <Grid sm={12} md={3} item>
                     <Box>
-                        <Profile flevarUser={flevarUser} />
+                        <Profile />
                         <Box className="cmn-profile_bottom_btn">
                             <LogoutButton />
                         </Box>
@@ -129,7 +124,7 @@ function ProfileUpdate({ flevarUser }) {
                                 </Tabs>
                             </AppBar>
                             <TabPanel value={value} index={0}>
-                                <EditProfile flevarUser={flevarUser} />
+                                <EditProfile flevarUser={user} />
                             </TabPanel>
                             <TabPanel value={value} index={1}>
                                 <ProfileAddress addressList={addressList} />

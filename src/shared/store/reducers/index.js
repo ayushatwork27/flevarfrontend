@@ -3,17 +3,15 @@ import { combineReducers } from 'redux';
 import { productReducer } from './product.reducer';
 import { cartReducer } from './cart.reducer';
 import { appReducer } from './app.reducer';
-import { addressReducer } from './address.reducer';
+import { orderReducer } from './order.reducer';
 
 import { LOGIN_SUCCESS, LOGOUT } from '../types/app.types';
-import { orderReducer } from './order.reducer';
 
 const reducers = combineReducers({
     app: appReducer,
     product: productReducer,
     cart: cartReducer,
-    order: orderReducer,
-    address: addressReducer
+    order: orderReducer
 });
 
 const rootReducers = (state, action) => {

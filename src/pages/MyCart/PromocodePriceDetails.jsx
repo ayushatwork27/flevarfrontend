@@ -189,8 +189,6 @@ function PromocodePriceDetails({ deliveryDate }) {
     useEffect(() => {
         const todaysDate = new Date();
         const currentHour = todaysDate.getHours();
-        console.log(currentHour);
-        console.log(slot_types);
         setSlots(slot_types);
         if (currentHour >= 0 && currentHour <= 8) {
             let filteredSlots = slot_types.filter((slot) => slot.key !== "early");
@@ -206,7 +204,6 @@ function PromocodePriceDetails({ deliveryDate }) {
                 }
             });
             setTodysSlotType(filteredSlots);
-            console.log(filteredSlots);
         } else if (currentHour >= 8 && currentHour <= 12) {
             let filteredSlots = slot_types.filter((slot) => slot.key !== "early");
             filteredSlots.map((slot) => {
@@ -223,7 +220,6 @@ function PromocodePriceDetails({ deliveryDate }) {
                 }
             });
             setTodysSlotType(filteredSlots);
-            console.log(filteredSlots);
         } else if (currentHour > 12 && currentHour < 18) {
             let filteredSlots = slot_types.filter((slot) => slot.key !== "early");
             filteredSlots.map((slot) => {
@@ -244,47 +240,28 @@ function PromocodePriceDetails({ deliveryDate }) {
 
             setTodysSlotType(filteredSlots);
         } else if (currentHour >= 18) {
-            const tomorrowDate = new Date(
-                todaysDate.setDate(todaysDate.getDate() + 1)
-            );
+            const tomorrowDate = new Date(todaysDate.setDate(todaysDate.getDate() + 1));
             setStartDate(tomorrowDate);
             let filteredSlots = slot_types.filter((slot) => slot.key !== "early");
             setTomorrowSlotType(filteredSlots);
         }
-        console.log(slot_types);
     }, []);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+    const handleClickOpen = () => setOpen(true);
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const handleClose = () => setOpen(false);
 
-    const handleCloseSlot = () => {
-        setSloat(false);
-    };
+    const handleCloseSlot = () => setSloat(false);
 
     const handleDateChange = (date) => {
         let selected = date.getDate();
         setSelectedDateStirng(monthNames[date.getMonth()] + ", " + date.getDate());
         let todaysDate = new Date();
 
-        if (selected === todaysDate.getDate()) {
-            console.log("todays Date Selected");
-            setSlots(todaysSlotTypes);
-            console.log(todaysSlotTypes);
-        } else {
-            if (todaysDate.getHours > 18) {
-                console.log("Date seleted above 18");
-                setSlots(tomorrowSlotTypes);
-            } else {
-                console.log("Date seleted normal");
-                //console.log(main_slot_types);
-                setSlots(main_slot_types);
-            }
-            console.log("Date seleted something else");
+        if (selected === todaysDate.getDate()) setSlots(todaysSlotTypes);
+        else {
+            if (todaysDate.getHours > 18) setSlots(tomorrowSlotTypes);
+            else setSlots(main_slot_types);
         }
 
         setSelectedDate(date);
@@ -293,14 +270,10 @@ function PromocodePriceDetails({ deliveryDate }) {
     };
 
     const selectedSloat = (event) => {
-        console.log(event.target.value);
         let slot1 = slots.find((slot) => slot.delivery === event.target.value);
-        if (slot1) {
-            console.log("inside if");
-            setTimeSlot(slot1.time_slots);
-        } else {
-            setTimeSlot([]);
-        }
+        if (slot1) setTimeSlot(slot1.time_slots);
+        else setTimeSlot([]);
+
         setValue(event.target.value);
         setTime(true);
         setSloat(false);

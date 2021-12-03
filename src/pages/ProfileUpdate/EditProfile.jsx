@@ -6,6 +6,7 @@ import Box from "@material-ui/core/Box";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { userUpdate } from "../../shared/store/actions/app.actions";
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     add_new_address_container: {
@@ -52,23 +53,19 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function EditProfile({ flevarUser }) {
+function EditProfile() {
     const classes = useStyles();
     let dispatch = useDispatch();
     const history = useHistory();
-    const [user, setUser] = useState({
-        name: flevarUser.name,
-        email: flevarUser.email,
-        mobile: flevarUser.mobile,
-        password: "asdf1234"
-    });
+    const [userDetail, setUserDetail] = useState(null);
+    const { user } = useSelector(state => state.app);
+    if (user && !userDetail) setUserDetail({ password: "asdf1234", ...user });
     const onValueChange = (e) => {
-        setUser({ ...user, [e.target.name]: e.target.value });
+        setUserDetail({ ...userDetail, [e.target.name]: e.target.value });
     };
-    const { name, mobile, email } = user;
 
     const userUpdateAction = () => {
-        dispatch(userUpdate(user));
+        dispatch(userUpdate(userDetail));
         history.push('/');
     };
 
@@ -83,7 +80,7 @@ function EditProfile({ flevarUser }) {
                             className="single-formbox"
                             disableunderline="false"
                             onChange={(e) => onValueChange(e)}
-                            value={name}
+                            value={userDetail && userDetail.name}
                             name="name"
                         />
                     </Grid>
@@ -93,7 +90,7 @@ function EditProfile({ flevarUser }) {
                             variant="filled"
                             className="single-formbox"
                             onChange={(e) => onValueChange(e)}
-                            value={mobile}
+                            value={userDetail && userDetail.mobile}
                             name="mobile"
                         />
                     </Grid>
@@ -103,7 +100,7 @@ function EditProfile({ flevarUser }) {
                             variant="filled"
                             className="single-formbox"
                             onChange={(e) => onValueChange(e)}
-                            value={email}
+                            value={userDetail && userDetail.email}
                             name="email"
                         />
                     </Grid>

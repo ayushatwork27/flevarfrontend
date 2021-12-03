@@ -18,6 +18,18 @@ export const USER_REGISTER = '[User] User Register';
 export const USER_REGISTER_SUCCESS = '[User] User Register Success';
 export const USER_REGISTER_FAILURE = '[User] User Register Failure';
 
+export const GET_ADDRESS_LIST = '[Address] Get Address List';
+export const GET_ADDRESS_LIST_SUCCESS = '[Address] Get Address List Success';
+export const GET_ADDRESS_LIST_FAILURE = '[Address] Get Address List Failure';
+
+export const GET_ADDRESS = '[Address] Get Address';
+export const GET_ADDRESS_SUCCESS = '[Address] Get Address Success';
+export const GET_ADDRESS_FAILURE = '[Address] Get Address Failure';
+
+export const ADD_ADDRESS = '[Address] Add Address';
+
+export const UPDATE_ADDRESS = '[Address] Update Address';
+
 export const UPLOAD_IMAGE = '[Image] Upload Image';
 export const UPLOAD_IMAGE_SUCCESS = '[Image] Upload Image Success';
 export const UPLOAD_IMAGE_FAILURE = '[Image] Upload Image Failure';
