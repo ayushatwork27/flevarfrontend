@@ -21,10 +21,17 @@ import Hidden from "@material-ui/core/Hidden";
 import Grid from "@material-ui/core/Grid";
 import CmnButton from '../../components/CmnButton/CmnButton';
 import { authenticateLogOut } from "../../shared/store/actions/app.actions";
+import CustomeContainer from "../CustomeContainer/CustomeContainer"
 
 const useStyles = makeStyles((theme) => ({
     grow: {
         flexGrow: 1,
+    },
+    header_mega_wrapper: {
+        "& .MuiToolbar-gutters": {
+            paddingLeft: "0px !important",
+            paddingRight: "0px !important",
+        }
     },
     search: {
         position: "relative",
@@ -43,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: theme.spacing(3),
             width: "auto",
         },
+
     },
     searchIcon: {
         padding: theme.spacing(0, 2),
@@ -52,9 +60,11 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        color: "rgba(0, 0, 0, 0.23)",
     },
     inputRoot: {
-        color: "inherit",
+        border: "1px solid rgba(0, 0, 0, 0.23)",
+        borderRadius: " 5px",
     },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 0),
@@ -232,19 +242,19 @@ export default function PrimarySearchAppBar() {
                             <h4>{user?.name}</h4>
                         </MenuItem>
                         <MenuItem onClick={handleMenuClose}>
-                            <Link to="/profile_update">Account</Link>
+                            <Link to="/profile_update" className="text-black">Account</Link>
                         </MenuItem>
                         <MenuItem onClick={handleMenuClose}>
-                            <Link to="/" onClick={logOut}>LogOut</Link>
+                            <Link to="/" onClick={logOut} className="text-black">LogOut</Link>
                         </MenuItem>
                     </>
                     :
                     <>
                         <MenuItem onClick={handleMenuClose}>
-                            <Link to="/register">SignUp</Link>
+                            <Link to="/register" className="text-black">SignUp</Link>
                         </MenuItem>
                         <MenuItem onClick={handleMenuClose}>
-                            <Link to="/login">LogIn</Link>
+                            <Link to="/login" className="text-black">LogIn</Link>
                         </MenuItem>
                     </>
             }
@@ -330,83 +340,87 @@ export default function PrimarySearchAppBar() {
 
     return (
         <div className={classes.grow}>
-            <AppBar position="static" elevation={0} className={`header-wrapper `}>
-                <Toolbar className={`cmn-main-container  ${classes.main_header}`}>
-                    <Hidden lgUp>
-                        <IconButton
-                            edge="start"
-                            className={classes.menuButton}
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={() => setOpen(true)}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                    </Hidden>
+            <CustomeContainer>
+                <AppBar position="static" elevation={0} className={`header-wrapper ${classes.header_mega_wrapper} `}>
+                    <Toolbar className={`cmn-main-container  ${classes.main_header}`}>
+                        <Hidden lgUp>
+                            <IconButton
+                                edge="start"
+                                className={classes.menuButton}
+                                color="inherit"
+                                aria-label="open drawer"
+                                onClick={() => setOpen(true)}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                        </Hidden>
 
-                    <Link to="/" className={classes.logo}>
-                        <Typography className={classes.title} variant="h6" noWrap>
-                            <img
-                                src="/assets/images/flevarlogo.png"
-                                alt=""
-                                style={{ maxWidth: "100px" }}
+                        <Link to="/" className={classes.logo}>
+                            <Typography className={classes.title} variant="h6" noWrap>
+                                <img
+                                    src="/assets/images/flevarlogo.png"
+                                    alt=""
+                                    style={{ maxWidth: "100px" }}
+                                />
+                            </Typography>
+                        </Link>
+
+                        <div className={classes.grow} />
+                        <Hidden mdDown>
+                            <Box className={classes.desktop_link_wrapper}>{menuputtertop}</Box>
+                        </Hidden>
+                        <Box className={classes.search} component={Link} to="/searchpage">
+                            <Box className={classes.searchIcon} >
+                                <SearchIcon />
+                            </Box>
+                            <InputBase
+                                placeholder="Search…"
+                                classes={{
+                                    root: classes.inputRoot,
+                                    input: classes.inputInput,
+                                }}
+                                inputProps={{ "aria-label": "search" }}
                             />
-                        </Typography>
-                    </Link>
-
-                    <div className={classes.grow} />
-                    <Hidden mdDown>
-                        <Box className={classes.desktop_link_wrapper}>{menuputtertop}</Box>
-                    </Hidden>
-                    <Box className={classes.search} component={Link} to="/searchpage">
-                        <Box className={classes.searchIcon} >
-                            <SearchIcon />
                         </Box>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ "aria-label": "search" }}
-                        />
-                    </Box>
-                    <div className={classes.sectionDesktop}>
-                        <IconButton
-                            aria-label="show 4 new mails"
-                            color="inherit"
-                            component={Link}
-                            to="/mycart"
-                        >
-                            <Badge badgeContent={cartItems.map(item => item['cart_items'] && item['cart_items'].length ? item['cart_items'][0]['quantity'] : 0).reduce((a, b) => a + b, 0)} color="secondary">
-                                <LocalMallIcon />
-                            </Badge>
-                        </IconButton>
+                        <div className={classes.sectionDesktop}>
+                            <IconButton
+                                aria-label="show 4 new mails"
+                                color="inherit"
+                                component={Link}
+                                to="/mycart"
+                            >
+                                <Badge badgeContent={cartItems.map(item => item['cart_items'] && item['cart_items'].length ? item['cart_items'][0]['quantity'] : 0).reduce((a, b) => a + b, 0)} color="secondary">
+                                    <LocalMallIcon />
+                                </Badge>
+                            </IconButton>
 
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                    </div>
-                    <div className={classes.sectionMobile}>
-                        <IconButton
-                            aria-label="show more"
-                            aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
-                            color="inherit"
-                        >
-                            <MoreIcon />
-                        </IconButton>
-                    </div>
-                </Toolbar>
-            </AppBar>
+                            <IconButton
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit"
+
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                        </div>
+                        <div className={classes.sectionMobile}>
+                            <IconButton
+                                edge="end"
+                                aria-label="show more"
+                                aria-controls={mobileMenuId}
+                                aria-haspopup="true"
+                                onClick={handleMobileMenuOpen}
+                                color="inherit"
+
+                            >
+                                <MoreIcon />
+                            </IconButton>
+                        </div>
+                    </Toolbar>
+                </AppBar>
+            </CustomeContainer>
             {renderMobileMenu}
             {renderMenu}
             <SwipeableDrawer

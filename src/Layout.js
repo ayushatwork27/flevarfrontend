@@ -5,12 +5,14 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./Globalmaterilcss";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Box } from "@material-ui/core";
+import Loader from "./components/Loader/Loader";
 
 function Layout({ children }) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header />
+      {/* <Loader/>  */}
       <Box className="spacer"></Box>
       {children}
       <Footer />

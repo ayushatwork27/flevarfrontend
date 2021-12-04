@@ -57,6 +57,8 @@ function Home() {
     const InstaFameSetting = {
         className: "instaFame-wrapper",
         dots: false,
+        slidesToShow: 6,
+        slidesToScroll: 2,
         responsive: [
             {
                 breakpoint: 1900,

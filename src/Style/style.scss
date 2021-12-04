@@ -83,8 +83,36 @@ body {
   flex-wrap: wrap;
 }
 
+.text-black {
+  color: #000 !important
+}
+
+.search-icon-color {
+  color: rgba(0, 0, 0, 0.23) !important;
+}
+
 .servicesBox {
   margin: 4% 0px 8% 0px;
+}
+
+.btn-loader-wrapper {
+  position: relative;
+}
+
+.btn-progress {
+  color: #f4ecec !important;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -12px;
+  margin-left: -12px;
+}
+
+.btn-loader-bg {
+  width: 100%;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.47);
+  height: 36px;
 }
 
 // .cmn-main-container {

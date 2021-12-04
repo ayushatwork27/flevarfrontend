@@ -68,7 +68,7 @@ function SearchPage() {
         <CustomeContainer>
             <Box className={classes.searchpage} >
                 <Box className={classes.searchIcon} >
-                    <SearchIcon />
+                    <SearchIcon className="search-icon-color" />
                 </Box>
                 <InputBase
                     placeholder="Search…"

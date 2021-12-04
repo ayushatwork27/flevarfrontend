@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid, Typography } from "@material-ui/core";
 import { Button } from "@material-ui/core";
@@ -15,6 +15,8 @@ import { getProductDetailAction } from '../../shared/store/actions/product.actio
 import { addCakeMessageAction, addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
 import { useHistory } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
+import clsx from 'clsx';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
     Product_description_main_title: {
@@ -94,7 +96,40 @@ const useStyles = makeStyles((theme) => ({
             fontFamily: "Montserrat",
         },
     },
+    weight_btn_wrapper: {
+        marginBottom: "10px",
+        "& button": {
+            marginRight: "10px"
+        }
+    },
+    wrapper: {
+        margin: theme.spacing(1),
+        position: 'relative',
+    },
+    buttonProgress: {
+        color: "#f4ecec",
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
+    },
 }));
+
+const weightData = [
+    {
+        id: "1",
+        weight: "1"
+    },
+    {
+        id: "2",
+        weight: "2"
+    },
+    {
+        id: "3",
+        weight: "3"
+    }
+]
 
 function ProductDescription(props) {
     let defaultCount = 1;
@@ -138,6 +173,35 @@ function ProductDescription(props) {
         history.push('/mycart');
     }
 
+    const [weight, setWeight] = useState('1');
+    const chooseWeight = (e) => {
+        e.preventDefault();
+        setWeight(e.target.id);
+    }
+
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const timer = useRef();
+
+    const buttonClassname = clsx({
+        [classes.buttonSuccess]: success,
+    });
+    useEffect(() => {
+        return () => {
+            clearTimeout(timer.current);
+        };
+    }, []);
+
+    const handleButtonClick = () => {
+        if (!loading) {
+            setSuccess(false);
+            setLoading(true);
+            timer.current = window.setTimeout(() => {
+                setSuccess(true);
+                setLoading(false);
+            }, 2000);
+        }
+    };
 
     return (
         <CustomeContainer>
@@ -191,6 +255,24 @@ function ProductDescription(props) {
                                 <Typography variant="h6">{count}</Typography>
                                 <Button onClick={handleIncrement}>+</Button>
                             </Box>
+                            <Box className={classes.weight_btn_wrapper}>
+                                {
+                                    weightData.map((val, index) => {
+                                        return (
+                                            <Button
+                                                variant={weight === val.id ? "contained" : "outlined"}
+                                                key={val.id}
+                                                className={weight === val.id ? "theme-contained-btn" : " "}
+                                                id={val.id}
+                                                onClick={chooseWeight}
+
+                                            >
+                                                {val.weight}Kg
+                                            </Button>
+                                        );
+                                    })
+                                }
+                            </Box>
                             <Box>
                                 <CmnButton
                                     btntitle="Buy Now"
@@ -203,6 +285,20 @@ function ProductDescription(props) {
                                     btntitle="View in 3D"
                                     className={classes.view3d}
                                 />
+                                <div className="btn-loader-wrapper">
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        className="theme-contained-btn"
+                                        disabled={loading}
+                                        onClick={handleButtonClick}
+                                    >
+                                        Accept terms
+                                        {loading && <div className="btn-loader-bg"><CircularProgress size={24} className="btn-progress" /> </div>}
+                                    </Button>
+
+                                </div>
+
                             </Box>
                             <Box>
                                 <form noValidate autoComplete="off">
