@@ -159,6 +159,11 @@ function ProductDescription(props) {
     const [count, setCount] = useState(defaultCount);
 
     const buyNow = () => {
+        let authToken = localStorage.getItem('token');
+        if (!authToken) {
+            history.push('/login');
+            return;
+        }
         setOpen(true);
         const productObj = {
             product_id: productDetail.id,

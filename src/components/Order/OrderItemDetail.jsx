@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const OrderItemDetail = (props) => {
-    const { order } = props;
+    const { order, isOrder } = props;
     const reviewLink = order ? 'order_details/' + order.order_id : '';
     const classes = useStyles();
     const [value, setValue] = React.useState(5);
@@ -86,7 +86,7 @@ const OrderItemDetail = (props) => {
                     className={`flex-wraper ${classes.d_flex} ${classes.between} `}
                 >
                     <Typography variant="h5" className={classes.fw_bold}>
-                        Mango Delight Cake
+                        {order && order.product_name}
                     </Typography>
                     <Box className={`flex-wraper ${classes.d_flex}`}>
                         <Typography
@@ -95,7 +95,7 @@ const OrderItemDetail = (props) => {
                             component="p"
                             className={classes.sellingprice}
                         >
-                            Rs.999
+                            Rs. {order && order.total_price}
                         </Typography>
                         <Typography
                             variant="body1"
@@ -103,7 +103,7 @@ const OrderItemDetail = (props) => {
                             component="p"
                             className={classes.originalprice}
                         >
-                            Rs.1079
+                            Rs. {order && order.price}
                         </Typography>
                     </Box>
                 </Box>
@@ -124,7 +124,7 @@ const OrderItemDetail = (props) => {
                     >
                         Delivered on 19th Aug 2021
                     </Typography>
-                    <Box className={`flex-wraper ${classes.d_flex}`}>
+                    {isOrder && <Box className={`flex-wraper ${classes.d_flex}`}>
                         <CmnButton
                             btntitle="Review"
                             variant="outlined"
@@ -137,7 +137,7 @@ const OrderItemDetail = (props) => {
                             variant="contained"
                             className="theme-contained-btn"
                         />
-                    </Box>
+                    </Box>}
                 </Box>
             </Box>
         </Box>

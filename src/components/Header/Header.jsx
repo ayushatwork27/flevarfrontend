@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -22,6 +22,7 @@ import Grid from "@material-ui/core/Grid";
 import CmnButton from '../../components/CmnButton/CmnButton';
 import { authenticateLogOut } from "../../shared/store/actions/app.actions";
 import CustomeContainer from "../CustomeContainer/CustomeContainer"
+import { getCartAction } from "../../shared/store/actions/cart.actions";
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -191,12 +192,15 @@ export default function PrimarySearchAppBar() {
 
     const renderMobileMenu = null;
     const { cartItems } = useSelector(state => state.cart);
-
+    
     const classes = useStyles();
+    const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
     const isMenuOpen = Boolean(anchorEl);
+
+    useEffect(() => dispatch(getCartAction()), []);
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -216,6 +220,7 @@ export default function PrimarySearchAppBar() {
     };
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
+    const history = useHistory();
     const logOut = () => {
         const mobile = localStorage.getItem('mobile');
         dispatch(authenticateLogOut({ mobile }));
