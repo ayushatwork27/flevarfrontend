@@ -219,8 +219,6 @@ export default function PrimarySearchAppBar() {
         setMobileMoreAnchorEl(event.currentTarget);
     };
     const [open, setOpen] = useState(false);
-    const dispatch = useDispatch();
-    const history = useHistory();
     const logOut = () => {
         const mobile = localStorage.getItem('mobile');
         dispatch(authenticateLogOut({ mobile }));
