@@ -1,4 +1,4 @@
-import { SEND_OTP_API, LOGOUT_API, VERIFY_OTP_API, USER_PROFILE_API, REGISTER_API, PROFILE_UPDATE_API, ADDRESS_LIST_API } from '../../constants/api-routes.constants';
+import { SEND_OTP_API, LOGOUT_API, VERIFY_OTP_API, USER_PROFILE_API, REGISTER_API, PROFILE_UPDATE_API, ADDRESS_LIST_API, ADDRESS_API } from '../../constants/api-routes.constants';
 import * as actionTypes from '../types/app.types';
 import flevar from '../../../api/api';
 
@@ -79,26 +79,27 @@ export const getAddressListAction = payload => async (dispatch) => {
     });
 };
 
-export const addAddressAction = (payload) => async (dispatch) => {
-    dispatch({ type: actionTypes.GET_ADDRESS_LIST, payload });
-    return flevar.get(`${ADDRESS_LIST_API}/${payload}`).then(response => {
+export const addAddressAction = payload => async (dispatch) => {
+    dispatch({ type: actionTypes.ADD_ADDRESS, payload });
+    return flevar.post(`${ADDRESS_API}`, payload).then(response => {
         const { success, data } = response['data'];
-        if (success) dispatch({ type: actionTypes.GET_ADDRESS_LIST_SUCCESS, payload: data['data'] });
+        if (success) dispatch(getAddressListAction(data['data']['customer_id']));
     });
 };
 
-export const updateAddressAction = (payload, id) => async (dispatch) => {
-    dispatch({ type: actionTypes.GET_ADDRESS_LIST, payload });
-    return flevar.get(`${ADDRESS_LIST_API}/${id}`).then(response => {
-        const { success, data } = response['data'];
-        if (success) dispatch({ type: actionTypes.GET_ADDRESS_LIST_SUCCESS, payload: data['data'] });
+export const updateAddressAction = (payload, id, customerId) => async (dispatch) => {
+    dispatch({ type: actionTypes.UPDATE_ADDRESS, payload });
+    return flevar.post(`${ADDRESS_API}/${id}`, payload).then(response => {
+        const { success } = response['data'];
+        if (success) dispatch(getAddressListAction(customerId));
     });
 };
 
-export const getAddressAction = (payload) => async (dispatch) => {
-    dispatch({ type: actionTypes.GET_ADDRESS_LIST, payload });
-    return flevar.get(`${ADDRESS_LIST_API}/${payload}`).then(response => {
+export const getAddressAction = payload => async (dispatch) => {
+    dispatch({ type: actionTypes.GET_ADDRESS, payload: {} });
+    return flevar.get(`${ADDRESS_API}/${payload}`).then(response => {
         const { success, data } = response['data'];
-        if (success) dispatch({ type: actionTypes.GET_ADDRESS_LIST_SUCCESS, payload: data['data'] });
+        if (success) dispatch({ type: actionTypes.GET_ADDRESS_SUCCESS, payload: data['data'] });
+        else dispatch({ type: actionTypes.GET_ADDRESS_FAILURE, payload: response });
     });
 };

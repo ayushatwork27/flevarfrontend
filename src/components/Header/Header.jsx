@@ -14,18 +14,25 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import { NavLink, Link, useHistory } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import Box from "@material-ui/core//Box";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Hidden from "@material-ui/core/Hidden";
 import Grid from "@material-ui/core/Grid";
 import CmnButton from '../../components/CmnButton/CmnButton';
 import { authenticateLogOut } from "../../shared/store/actions/app.actions";
+import CustomeContainer from "../CustomeContainer/CustomeContainer"
 import { getCartAction } from "../../shared/store/actions/cart.actions";
 
 const useStyles = makeStyles((theme) => ({
     grow: {
         flexGrow: 1,
+    },
+    header_mega_wrapper: {
+        "& .MuiToolbar-gutters": {
+            paddingLeft: "0px !important",
+            paddingRight: "0px !important",
+        }
     },
     search: {
         position: "relative",
@@ -44,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: theme.spacing(3),
             width: "auto",
         },
+
     },
     searchIcon: {
         padding: theme.spacing(0, 2),
@@ -53,23 +61,31 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        color: "rgba(0, 0, 0, 0.23)",
     },
     inputRoot: {
-        color: "inherit",
+        // border: "1px solid rgba(0, 0, 0, 0.23)",
+        borderRadius: " 5px"
     },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 0),
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create("width"),
         width: "0ch",
-        "&:focus": {
-            width: "20ch",
-        },
+        // "&:focus": {
+        //     width: "20ch",
+        // },
         [theme.breakpoints.down("sm")]: {
             width: "0ch",
             "&:focus": {
                 width: "15ch",
                 backgroundColor: "#0000001c",
+            }
+
+        },
+        [theme.breakpoints.down("xs")]: {
+            "&:focus": {
+                width: "8ch",
             }
 
         },
@@ -203,11 +219,9 @@ export default function PrimarySearchAppBar() {
         setMobileMoreAnchorEl(event.currentTarget);
     };
     const [open, setOpen] = useState(false);
-    const history = useHistory();
     const logOut = () => {
         const mobile = localStorage.getItem('mobile');
         dispatch(authenticateLogOut({ mobile }));
-        history.push('/');
     }
 
     const { user } = useSelector(state => state.app);
@@ -232,19 +246,19 @@ export default function PrimarySearchAppBar() {
                             <h4>{user?.name}</h4>
                         </MenuItem>
                         <MenuItem onClick={handleMenuClose}>
-                            <Link to="/profile_update">Account</Link>
+                            <Link to="/profile_update" className="text-black">Account</Link>
                         </MenuItem>
                         <MenuItem onClick={handleMenuClose}>
-                            <Link to="/" onClick={logOut}>LogOut</Link>
+                            <Link to="/" onClick={logOut} className="text-black">LogOut</Link>
                         </MenuItem>
                     </div>
                     :
                     <div>
                         <MenuItem onClick={handleMenuClose}>
-                            <Link to="/register">SignUp</Link>
+                            <Link to="/register" className="text-black">SignUp</Link>
                         </MenuItem>
                         <MenuItem onClick={handleMenuClose}>
-                            <Link to="/login">LogIn</Link>
+                            <Link to="/login" className="text-black">LogIn</Link>
                         </MenuItem>
                     </div>
             }
@@ -300,17 +314,17 @@ export default function PrimarySearchAppBar() {
                     </Grid>
                 </div>
                 <Typography variant="body2" className={`header-location-link ${classes.location_title}`}>
-                    LOCATION
+                    LOCATIONS
                 </Typography>
             </Box>
-            <NavLink
+            {/* <NavLink
                 exact
                 to="/"
                 className={classes.menu_link}
                 activeClassName="active_link"
             >
                 Home
-            </NavLink>
+            </NavLink> */}
             <NavLink
                 to="/about"
                 className={classes.menu_link}
@@ -330,87 +344,87 @@ export default function PrimarySearchAppBar() {
 
     return (
         <div className={classes.grow}>
-            <AppBar position="static" elevation={0} className={`header-wrapper `}>
-                <Toolbar className={`cmn-main-container  ${classes.main_header}`}>
-                    <Hidden lgUp>
-                        <IconButton
-                            edge="start"
-                            className={classes.menuButton}
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={() => setOpen(true)}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                    </Hidden>
+            <CustomeContainer>
+                <AppBar position="static" elevation={0} className={`header-wrapper ${classes.header_mega_wrapper} `}>
+                    <Toolbar className={`cmn-main-container  ${classes.main_header}`}>
+                        <Hidden lgUp>
+                            <IconButton
+                                edge="start"
+                                className={classes.menuButton}
+                                color="inherit"
+                                aria-label="open drawer"
+                                onClick={() => setOpen(true)}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                        </Hidden>
 
-                    <Link to="/" className={classes.logo}>
-                        <Typography className={classes.title} variant="h6" noWrap>
-                            <img
-                                src="/assets/images/flevarlogo.png"
-                                alt=""
-                                style={{ maxWidth: "100px" }}
+                        <Link to="/" className={classes.logo}>
+                            <Typography className={classes.title} variant="h6" noWrap>
+                                <img
+                                    src="/assets/images/flevarlogo.png"
+                                    alt=""
+                                    style={{ maxWidth: "100px" }}
+                                />
+                            </Typography>
+                        </Link>
+
+                        <div className={classes.grow} />
+                        <Hidden mdDown>
+                            <Box className={classes.desktop_link_wrapper}>{menuputtertop}</Box>
+                        </Hidden>
+                        <Box className={classes.search} component={Link} to="/searchpage">
+                            <Box className={classes.searchIcon} >
+                                <SearchIcon />
+                            </Box>
+                            <InputBase
+                                placeholder="Search…"
+                                classes={{
+                                    root: classes.inputRoot,
+                                    input: classes.inputInput,
+                                }}
+                                inputProps={{ "aria-label": "search" }}
                             />
-                        </Typography>
-                    </Link>
-
-                    <div className={classes.grow} />
-                    <Hidden mdDown>
-                        <Box className={classes.desktop_link_wrapper}>{menuputtertop}</Box>
-                    </Hidden>
-                    <Box className={classes.search} component={Link} to="/searchpage">
-                        <Box className={classes.searchIcon} >
-                            <SearchIcon />
                         </Box>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ "aria-label": "search" }}
-                        />
-                    </Box>
-                    {/* <div className="onhover-location">
-                        <OnHoverLocation />
-                    </div> */}
+                        <div className={classes.sectionDesktop}>
+                            <IconButton
+                                aria-label="show 4 new mails"
+                                color="inherit"
+                                component={Link}
+                                to="/mycart"
+                            >
+                                <Badge badgeContent={cartItems.map(item => item['cart_items'] && item['cart_items'].length ? item['cart_items'][0]['quantity'] : 0).reduce((a, b) => a + b, 0)} color="secondary">
+                                    <LocalMallIcon />
+                                </Badge>
+                            </IconButton>
 
-                    <div className={classes.sectionDesktop}>
-                        <IconButton
-                            aria-label="show 4 new mails"
-                            color="inherit"
-                            component={Link}
-                            to="/mycart"
-                        >
-                            <Badge badgeContent={cartItems.map(item => item['cart_items'] && item['cart_items'].length ? item['cart_items'][0]['quantity'] : 0).reduce((a, b) => a + b, 0)} color="secondary">
-                                <LocalMallIcon />
-                            </Badge>
-                        </IconButton>
+                            <IconButton
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit"
 
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                    </div>
-                    <div className={classes.sectionMobile}>
-                        <IconButton
-                            aria-label="show more"
-                            aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
-                            color="inherit"
-                        >
-                            <MoreIcon />
-                        </IconButton>
-                    </div>
-                </Toolbar>
-            </AppBar>
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                        </div>
+                        <div className={classes.sectionMobile}>
+                            <IconButton
+                                edge="end"
+                                aria-label="show more"
+                                aria-controls={mobileMenuId}
+                                aria-haspopup="true"
+                                onClick={handleMobileMenuOpen}
+                                color="inherit"
+
+                            >
+                                <MoreIcon />
+                            </IconButton>
+                        </div>
+                    </Toolbar>
+                </AppBar>
+            </CustomeContainer>
             {renderMobileMenu}
             {renderMenu}
             <SwipeableDrawer

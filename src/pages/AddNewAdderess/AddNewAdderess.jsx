@@ -45,61 +45,38 @@ const useStyles = makeStyles((theme) => ({
 
 function AddNewAdderess() {
     const classes = useStyles();
-    const [state, setState] = useState({
-        customer_id: 1,
-        address_name: "",
-        pincode: "",
-        line_1_address: "",
-        line_2_address: "",
-        landmark: "",
-        receiver_contact: "",
-        receiver_name: ""
-    });
+    const [addressDetail, setAddressDetail] = useState(null);
+    const { user } = useSelector(state => state.app);
+    const { address } = useSelector(state => state.app);
+    const { id } = useParams();
+    const dispatch = useDispatch();
     const handleInputChange = (e) => {
         let { name, value } = e.target;
-        setState({ ...state, [name]: value });
+        setAddressDetail({ ...addressDetail, [name]: value });
     }
-    const { id } = useParams();
-    let dispatch = useDispatch();
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (id) dispatch(updateAddressAction(state, id));
-        else dispatch(addAddressAction(state));
+        if (id) dispatch(updateAddressAction(addressDetail, id, user.id));
+        else dispatch(addAddressAction(addressDetail));
     }
 
     useEffect(() => {
         if (id) dispatch(getAddressAction(id));
     }, [id]);
 
-    useEffect(() => {
-        if (address && address.data && address.data.data) {
-            const data = address.data.data;
-            setState({
-                customer_id: data.customer_id,
-                address_name: data.address_name,
-                pincode: data.pincode,
-                line_1_address: data.line_1_address,
-                line_2_address: data.line_2_address,
-                landmark: data.landmark,
-                receiver_contact: data.receiver_contact,
-                receiver_name: data.receiver_name
-            });
-        }
-    }, [id]);
-
-    const address = useSelector(state => state.getAddress);
+    if (user && user.id && !addressDetail) {
+        setAddressDetail(!address ? {
+            customer_id: user.id,
+            address_name: "",
+            pincode: "",
+            line_1_address: "",
+            line_2_address: "",
+            landmark: "",
+            receiver_contact: "",
+            receiver_name: ""
+        } : { customer_id: user.id, ...address });
+    }
     
-    const {
-        customer_id,
-        address_name,
-        pincode,
-        line_1_address,
-        line_2_address,
-        landmark,
-        receiver_contact,
-        receiver_name
-    } = state;
-
     return (
         <CustomeContainer>
             <Grid container>
@@ -121,9 +98,8 @@ function AddNewAdderess() {
                                     variant="filled"
                                     onChange={handleInputChange}
                                     name="address_name"
-                                    className=
-                                    {`single-formbox cmn-form-box-mb  ${classes.w_50}`}
-                                    value={address_name} />
+                                    value={addressDetail && addressDetail.address_name}
+                                    className={`single-formbox cmn-form-box-mb  ${classes.w_50}`} />
                             </Grid>
                             <Grid xs={12} md={6} item>
                                 <TextField
@@ -131,8 +107,8 @@ function AddNewAdderess() {
                                     variant="filled"
                                     name="pincode"
                                     onChange={handleInputChange}
+                                    value={addressDetail && addressDetail.pincode}
                                     className={`single-formbox cmn-form-box-mb  ${classes.w_50} ${classes.fl_right}`}
-                                    value={pincode}
                                     type="number" />
                             </Grid>
                         </Grid>
@@ -141,14 +117,14 @@ function AddNewAdderess() {
                             variant="filled"
                             name="line_1_address"
                             onChange={handleInputChange}
-                            value={line_1_address}
+                            value={addressDetail && addressDetail.line_1_address}
                             className="single-formbox cmn-form-box-mb" />
                         <TextField
                             label="Line 2 Address"
                             variant="filled"
                             name="line_2_address"
                             onChange={handleInputChange}
-                            value={line_2_address}
+                            value={addressDetail && addressDetail.line_2_address}
                             className="single-formbox cmn-form-box-mb" />
                         <Grid container justifyContent="space-between">
                             <Grid xs={12} md={6} item>
@@ -157,34 +133,34 @@ function AddNewAdderess() {
                                     variant="filled"
                                     name="landmark"
                                     onChange={handleInputChange}
-                                    value={landmark}
+                                    value={addressDetail && addressDetail.landmark}
                                     className={`single-formbox cmn-form-box-mb  ${classes.w_50}`} />
                             </Grid>
                             <Grid xs={12} md={6} item>
                                 <TextField
-                                    label="Receiver’s Contact Number"
+                                    label="Receiver’s Contact Name"
                                     variant="filled"
-                                    name="receiver_contact"
+                                    name="receiver_name"
                                     onChange={handleInputChange}
-                                    value={receiver_contact}
+                                    value={addressDetail && addressDetail.receiver_name}
                                     className={`single-formbox cmn-form-box-mb  ${classes.w_50} ${classes.fl_right}`}
-                                    type="number"
                                 />
                             </Grid>
                         </Grid>
                         <Grid container justifyContent="space-between">
                             <Grid xs={12} md={6} item>
                                 <TextField
-                                    label="Receiver’s Name"
+                                    label="Receiver’s Contact Number"
                                     variant="filled"
-                                    name="receiver_name"
+                                    name="receiver_contact"
+                                    type="number"
                                     onChange={handleInputChange}
-                                    value={receiver_name}
+                                    value={addressDetail && addressDetail.receiver_contact}
                                     className={`single-formbox cmn-form-box-mb  ${classes.w_50}`} />
                             </Grid>
                         </Grid>
                         <Box className="cmn-tabs-black-btn-wrapper">
-                            <CmnButton btntitle="Add" className={`cmn-tabs-black-btn`} onClick={handleSubmit} />
+                            <CmnButton btntitle={address ? 'Update' : 'Add'} className={`cmn-tabs-black-btn`} onClick={handleSubmit} />
                         </Box>
                     </Box>
                 </Grid>

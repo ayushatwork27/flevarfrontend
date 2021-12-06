@@ -1,9 +1,11 @@
-import { Grid } from '@material-ui/core';
 import React from 'react'
-import CustomeContainer from '../../components/CustomeContainer/CustomeContainer';
+import { Grid, Box } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
-const useStyles = makeStyles((theme) => ({
+import { useHistory } from "react-router-dom";
+import CmnButton from '../../components/CmnButton/CmnButton';
+import CustomeContainer from '../../components/CustomeContainer/CustomeContainer';
 
+const useStyles = makeStyles(() => ({
     special_request_btn: {
         maxWidth: "400px",
         width: "100%",
@@ -14,15 +16,28 @@ const useStyles = makeStyles((theme) => ({
         letterSpacing: "5px",
         fontWeight: "600",
         marginBottom: "15px"
+    },
+    wrapper: {
+        top: "25%",
+        left: "0%",
+        position: "absolute"
     }
 }));
 
 function PageNotFound() {
+    const classes = useStyles();
+    const history = useHistory();
+    const goToHome = () => {
+        history.push('/');
+    }
     return (
-        <CustomeContainer>
-            <Grid container className="abv" justifyContent="center">
+        <CustomeContainer className={classes.wrapper}>
+            <Grid container className={classes.wrapper} justifyContent="center">
                 <Grid sm={12} md={8} item className="text-center">
                     <img src="/assets/images/page_not_found.png" alt="page_not_found" />
+                    <Box className="text-center">
+                        <CmnButton btntitle="Go to home" className={`cmnBtn theme-contained-btn  d-block ${classes.special_request_btn}`} onClick={goToHome} />
+                    </Box>
                 </Grid>
             </Grid>
         </CustomeContainer>

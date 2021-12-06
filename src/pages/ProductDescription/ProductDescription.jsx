@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid, Typography } from "@material-ui/core";
 import { Button } from "@material-ui/core";
@@ -11,10 +11,12 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import DescriptionTabs from "./DescriptionTabs";
 import CakesItems from "../../components/CakeItemCard/CakesItems";
 import { useParams } from "react-router-dom";
-import { getProductDetailAction } from '../../shared/store/actions/product.actions';
+import { getProductDetailAction, getProductReviewsAction } from '../../shared/store/actions/product.actions';
 import { addCakeMessageAction, addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
 import { useHistory } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
+import clsx from 'clsx';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
     Product_description_main_title: {
@@ -94,9 +96,46 @@ const useStyles = makeStyles((theme) => ({
             fontFamily: "Montserrat",
         },
     },
+    weight_btn_wrapper: {
+        marginBottom: "10px",
+        "& button": {
+            marginRight: "10px"
+        }
+    },
+    wrapper: {
+        margin: theme.spacing(1),
+        position: 'relative',
+    },
+    buttonProgress: {
+        color: "#f4ecec",
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
+    },
 }));
 
-function ProductDescription(props) {
+const weightData = [
+    {
+        id: "0",
+        weight: "0.5"
+    },
+    {
+        id: "1",
+        weight: "1"
+    },
+    {
+        id: "2",
+        weight: "2"
+    },
+    {
+        id: "3",
+        weight: "3"
+    }
+]
+
+function ProductDescription() {
     let defaultCount = 1;
     const history = useHistory();
     const classes = useStyles();
@@ -115,8 +154,13 @@ function ProductDescription(props) {
 
     const { id } = useParams();
     const dispatch = useDispatch();
-    useEffect(() => dispatch(getProductDetailAction(id)), [id]);
-    const { productList, productDetail } = useSelector(state => state.product);
+    useEffect(() => dispatch(
+        getProductDetailAction(id),
+    ), [id]);
+    useEffect(() => dispatch(
+        getProductReviewsAction(id)
+    ), [id]);
+    const { productList, productDetail, productReviewList } = useSelector(state => state.product);
     const { cartItems } = useSelector(state => state.cart);
 
     let itemIndex = cartItems.findIndex(item => productDetail && item.product_id === productDetail.id);
@@ -143,18 +187,47 @@ function ProductDescription(props) {
         history.push('/mycart');
     }
 
+    const [weight, setWeight] = useState('0');
+    const chooseWeight = (e) => {
+        setWeight(e.id);
+    }
+
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const timer = useRef();
+
+    const buttonClassname = clsx({
+        [classes.buttonSuccess]: success,
+    });
+    useEffect(() => {
+        return () => {
+            clearTimeout(timer.current);
+        };
+    }, []);
+
+    const handleButtonClick = () => {
+        if (!loading) {
+            setSuccess(false);
+            setLoading(true);
+            timer.current = window.setTimeout(() => {
+                setSuccess(true);
+                setLoading(false);
+            }, 2000);
+        }
+    };
 
     return (
         <CustomeContainer>
             <Box className={classes.Product_description_wrapper}>
                 <Grid container>
                     <Grid item sm={12} md={6}>
-                        <Box className={classes.Product_description_largerimage}>
-                            <img src="/assets/images/description.png" alt="description" />
-                        </Box>
-                        <Box className={classes.Product_description_largerimage}>
-                            <img src="/assets/images/description.png" alt="description" />
-                        </Box>
+                        {productDetail && productDetail.product_gallery_images && productDetail.product_gallery_images.map(img => {
+                            return (
+                                <Box className={classes.Product_description_largerimage}>
+                                    <img src={img.url} />
+                                </Box>
+                            )
+                        })}
                     </Grid>
                     <Grid item sm={12} md={6}>
                         <Box className={classes.Product_description_details_wrapper}>
@@ -188,13 +261,31 @@ function ProductDescription(props) {
                                     component="p"
                                     className={classes.originalprice}
                                 >
-                                    Rs.{productDetail && productDetail.mrp}
+                                    Rs.{productDetail && productDetail.rate}
                                 </Typography>
                             </Box>
                             <Box className={classes.counter_box}>
                                 <Button onClick={handleDecrement} disabled={count === 1}>-</Button>
                                 <Typography variant="h6">{count}</Typography>
                                 <Button onClick={handleIncrement}>+</Button>
+                            </Box>
+                            <Box className={classes.weight_btn_wrapper}>
+                                {
+                                    weightData.map(val => {
+                                        return (
+                                            <Button
+                                                variant={weight === val.id ? "contained" : "outlined"}
+                                                key={val.id}
+                                                className={weight === val.id ? "theme-contained-btn" : " "}
+                                                id={val.id}
+                                                onClick={() => chooseWeight(val)}
+
+                                            >
+                                                {val.weight}Kg
+                                            </Button>
+                                        );
+                                    })
+                                }
                             </Box>
                             <Box>
                                 <CmnButton
@@ -208,6 +299,19 @@ function ProductDescription(props) {
                                     btntitle="View in 3D"
                                     className={classes.view3d}
                                 />
+                                {/* <div className="btn-loader-wrapper">
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        className="theme-contained-btn"
+                                        disabled={loading}
+                                        onClick={handleButtonClick}
+                                    >
+                                        Accept terms
+                                        {loading && <div className="btn-loader-bg"><CircularProgress size={24} className="btn-progress" /> </div>}
+                                    </Button>
+
+                                </div> */}
                             </Box>
                             <Box>
                                 <form noValidate autoComplete="off">
@@ -232,7 +336,7 @@ function ProductDescription(props) {
                                 </form>
                             </Box>
                             <Box>
-                                <DescriptionTabs onClose={handleClose} open={open} product={productDetail} />
+                                <DescriptionTabs onClose={handleClose} open={open} product={productDetail} reviews={productReviewList} />
                             </Box>
                         </Box>
                     </Grid>
@@ -246,7 +350,7 @@ function ProductDescription(props) {
                     <CakesItems products={productList} />
                 </Grid>
             </Box>
-            <Box>
+            {/* <Box>
                 <Dialog
                     open={open}
                     onClose={handleClose}
@@ -297,7 +401,7 @@ function ProductDescription(props) {
             </Box>
             <Box>
                 <DescriptionTabs onClose={handleClose} open={open} />
-            </Box>
+            </Box> */}
         </CustomeContainer >
     );
 }

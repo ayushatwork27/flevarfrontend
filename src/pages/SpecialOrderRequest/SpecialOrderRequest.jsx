@@ -1,10 +1,10 @@
-import { Box, Grid, TextField, Typography } from '@material-ui/core';
 import React from 'react'
+import { Box, Grid, TextField, Typography } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core/styles";
 import CmnButton from '../../components/CmnButton/CmnButton';
 import CustomeContainer from '../../components/CustomeContainer/CustomeContainer';
-import { makeStyles } from "@material-ui/core/styles";
-const useStyles = makeStyles((theme) => ({
 
+const useStyles = makeStyles((theme) => ({
     special_request_btn: {
         maxWidth: "400px",
         width: "100%",
@@ -14,7 +14,11 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "30px",
         letterSpacing: "5px",
         fontWeight: "600",
-        marginBottom: "15px"
+        marginBottom: "15px",
+        [theme.breakpoints.down("sm")]: {
+            fontSize: "22px",
+            letterSpacing: "1px",
+        },
     }
 }));
 

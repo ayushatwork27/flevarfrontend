@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
     contactus_address_box_wrapper: {
+        height: "599px",
         backgroundColor: "#E8656B",
         paddingLeft: "100px",
         [theme.breakpoints.up("xl")]: {
@@ -65,7 +66,7 @@ function ContactMapAddress() {
                     </Box>
                 </Grid>
                 <Grid xs={12} md={6} item>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117711.79145804388!2d86.10572987051263!3d22.784171388479994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f5e31989f0e2b5%3A0xeeec8e81ce9b344!2sJamshedpur%2C%20Jharkhand!5e0!3m2!1sen!2sin!4v1637477024782!5m2!1sen!2sin" width="100%" height="450" allowFullScreen="" loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117711.79145804388!2d86.10572987051263!3d22.784171388479994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f5e31989f0e2b5%3A0xeeec8e81ce9b344!2sJamshedpur%2C%20Jharkhand!5e0!3m2!1sen!2sin!4v1637477024782!5m2!1sen!2sin" width="100%" height="600" allowFullScreen="" loading="lazy"></iframe>
                 </Grid>
             </Grid>
         </div>

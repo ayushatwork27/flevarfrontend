@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     minWidth: "155px",
     marginBottom: "10px",
+    [theme.breakpoints.down("md")]: {
+      marginBottom: "22px",
+    },
 
     "& img": {
       marginBottom: "10px",

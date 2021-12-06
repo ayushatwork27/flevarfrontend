@@ -9,6 +9,7 @@ const initialState = {
         mobile: ''
     },
     addressList: [],
+    address: undefined,
     image: undefined,
     error: undefined
 }
@@ -23,6 +24,8 @@ export const appReducer = (state = initialState, action) => {
             return { ...state, user: action.payload };
         case actionTypes.GET_ADDRESS_LIST_SUCCESS:
             return { ...state, addressList: action.payload };
+        case actionTypes.GET_ADDRESS_SUCCESS:
+            return { ...state, address: action.payload };
         case actionTypes.USER_PROFILE_RESET:
             return { ...state, user: action.payload };
         default: return state;

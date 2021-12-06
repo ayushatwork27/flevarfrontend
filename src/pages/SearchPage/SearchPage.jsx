@@ -55,6 +55,9 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
         top: "5px",
         right: "5px"
+    },
+    inputRoot: {
+        width: "90%"
     }
 }));
 function SearchPage() {
@@ -68,7 +71,7 @@ function SearchPage() {
         <CustomeContainer>
             <Box className={classes.searchpage} >
                 <Box className={classes.searchIcon} >
-                    <SearchIcon />
+                    <SearchIcon className="search-icon-color" />
                 </Box>
                 <InputBase
                     placeholder="Search…"
@@ -80,13 +83,12 @@ function SearchPage() {
                 />
             </Box>
             <Grid container>
-                <Grid item sm={12} md={7}>
+                <Grid item sm={12} md={10}>
                     <Typography variant="h5" className="cmn-pages-title-only">
-                        Showing 1 – 24 of 424 similar matches for
-                        <Typography variant="p">  “Delight Cake”</Typography>
+                        Showing 1 – 24 of 424 similar matches
                     </Typography>
                 </Grid>
-                <Grid item sm={12} md={5}>
+                <Grid item sm={12} md={2}>
                     <Box className={classes.sortby}>
                         <FormControl variant="outlined">
                             <InputLabel id="demo-simple-select-outlined-label">
@@ -101,8 +103,7 @@ function SearchPage() {
                                 IconComponent={ExpandMoreIcon}
                             >
                                 <MenuItem value={10}>By Relevance</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                <MenuItem value={20}>Most Selling</MenuItem>
                             </Select>
                         </FormControl>
                     </Box>

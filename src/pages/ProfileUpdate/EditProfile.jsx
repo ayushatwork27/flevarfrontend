@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function EditProfile({ flevarUser }) {
+function EditProfile() {
     const classes = useStyles();
     let dispatch = useDispatch();
     const history = useHistory();

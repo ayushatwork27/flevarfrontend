@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Grid, Typography } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import CustomeContainer from '../../components/CustomeContainer/CustomeContainer'
@@ -12,7 +12,6 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import ProfileAddress from "./ProfileAddress";
 import EditProfile from "./EditProfile";
-import { getAddressListAction } from "../../shared/store/actions/app.actions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -88,22 +87,16 @@ function a11yProps(index) {
 
 
 function ProfileUpdate() {
+
     const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
-    let dispatch = useDispatch();
-
     const { user } = useSelector(state => state.app);
-
-    useEffect(() => {
-        dispatch(getAddressListAction(user && user.id));
-    }, [user && user.id]);
-
     const { addressList } = useSelector(state => state.app);
+
 
     return <>
         <CustomeContainer>
@@ -131,7 +124,7 @@ function ProfileUpdate() {
                                 </Tabs>
                             </AppBar>
                             <TabPanel value={value} index={0}>
-                                <EditProfile flevarUser={user} />
+                                {user && user.id ? <EditProfile flevarUser={user} /> : null}
                             </TabPanel>
                             <TabPanel value={value} index={1}>
                                 <ProfileAddress addressList={addressList} />

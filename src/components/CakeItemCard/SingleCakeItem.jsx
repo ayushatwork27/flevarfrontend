@@ -8,9 +8,14 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: 345,
+        [theme.breakpoints.down("md")]: {
+            "& img": {
+                maxWidth: "330px"
+            }
+        }
     },
     popolarcakepricing: {
         display: "flex",
@@ -29,7 +34,7 @@ const useStyles = makeStyles({
         width: "500px",
         height: "310px"
     }
-});
+}));
 
 function SingleCakeItem(props) {
     const classes = useStyles();
@@ -52,7 +57,7 @@ function SingleCakeItem(props) {
                         title="Contemplative Reptile"
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h6" style={{textTransform: 'capitalize'}}>
+                        <Typography gutterBottom variant="h6" style={{ textTransform: 'capitalize' }}>
                             {props.productname}
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">

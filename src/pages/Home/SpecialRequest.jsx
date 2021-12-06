@@ -15,27 +15,40 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: "442px",
         marginLeft: "10%",
         color: "#222",
+
         "& p:nth-of-type(1)": {
             fontSize: "19px",
-
             marginBottom: "20px",
             marginTop: "15%",
         },
         "& h2": {
             fontSize: "57px",
-
             marginBottom: "24px",
             fontWeight: "600"
         }, "& p:nth-of-type(2)": {
             fontSize: "13px",
-
             marginBottom: "55px",
+        },
+        [theme.breakpoints.down("sm")]: {
+            maxWidth: "100%",
+            marginLeft: "0",
+
+            "& h2": {
+                fontSize: "43px",
+                marginBottom: "20px",
+                fontWeight: "600"
+            },
+            "& p:nth-of-type(1)": {
+                fontSize: "19px",
+                marginBottom: "10px",
+                marginTop: "5%",
+            },
         },
     },
     home_special_request_description_wrapper: {
         margin: "8% 0px",
         [theme.breakpoints.down("sm")]: {
-            marginTop: "70px"
+            marginTop: "0px"
         }
 
     }
