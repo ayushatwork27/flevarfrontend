@@ -117,7 +117,7 @@ function Profile() {
                             className={`${classes.fw_light} ${classes.detail}`}
                             style={{ textTransform: 'capitalize' }}
                         >
-                            {address && `${address.address_name}, ${address.line_1_address ? address.line_1_address : ''}, ${address.line_2_address ? address.line_2_address : ''} ${address.pincode}`}
+                            {address ? `${address.address_name}, ${address.line_1_address ? address.line_1_address : ''}, ${address.line_2_address ? address.line_2_address : ''} ${address.pincode}` : 'NA'}
                         </Typography>
                     </Box>
                 </Box>

@@ -63,17 +63,17 @@ const useStyles = makeStyles((theme) => ({
         color: "rgba(0, 0, 0, 0.23)",
     },
     inputRoot: {
-        border: "1px solid rgba(0, 0, 0, 0.23)",
-        borderRadius: " 5px",
+        // border: "1px solid rgba(0, 0, 0, 0.23)",
+        borderRadius: " 5px"
     },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 0),
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create("width"),
         width: "0ch",
-        "&:focus": {
-            width: "20ch",
-        },
+        // "&:focus": {
+        //     width: "20ch",
+        // },
         [theme.breakpoints.down("sm")]: {
             width: "0ch",
             "&:focus": {
@@ -310,17 +310,17 @@ export default function PrimarySearchAppBar() {
                     </Grid>
                 </div>
                 <Typography variant="body2" className={`header-location-link ${classes.location_title}`}>
-                    LOCATION
+                    LOCATIONS
                 </Typography>
             </Box>
-            <NavLink
+            {/* <NavLink
                 exact
                 to="/"
                 className={classes.menu_link}
                 activeClassName="active_link"
             >
                 Home
-            </NavLink>
+            </NavLink> */}
             <NavLink
                 to="/about"
                 className={classes.menu_link}

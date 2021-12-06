@@ -12,7 +12,7 @@ function CakesItems(products) {
                     productname={val.name}
                     category={val.product_category && val.product_category.name}
                     sellingprice={val.mrp}
-                    originalprice={val.mrp}
+                    originalprice={val.rate}
                     products={val.products}
                 />
             )}

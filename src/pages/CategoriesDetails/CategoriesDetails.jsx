@@ -12,7 +12,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { useParams } from "react-router-dom";
-import { getProductListAction } from '../../shared/store/actions/product.actions';
+import { getProductsAction } from '../../shared/store/actions/product.actions';
 
 const useStyles = makeStyles((theme) => ({
     categorydetails_header_btn_wrapper: {
@@ -54,24 +54,26 @@ function CategoriesDetails() {
     };
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getProductListAction({
+        dispatch(getProductsAction({
             "filterkey": "",
             "location_id": 2,
             "category_id": id
         }));
     }, [dispatch]);
-    const { categoryProductList } = useSelector(state => state.product);
+    const { products } = useSelector(state => state.product);
+    const { productList } = useSelector(state => state.product);
+    const categoryName = products && products.length && products[0]['product_category'] && products[0]['product_category']['name'];
 
     return (
         <CustomeContainer>
             <Grid container>
-                <Grid item sm={12} md={7}>
+                <Grid item sm={12} md={10}>
                     <Typography variant="h5" className="cmn-pages-title-only">
                         Showing 1 – 24 of 424 results for category
-                        <Typography variant="p"> Mango Cakes</Typography>
+                        <Typography variant="p"> {categoryName}</Typography>
                     </Typography>
                 </Grid>
-                <Grid item sm={12} md={5}>
+                <Grid item sm={12} md={2}>
                     <Box className={classes.sortby}>
                         <FormControl variant="outlined">
                             <InputLabel id="demo-simple-select-outlined-label">
@@ -95,7 +97,7 @@ function CategoriesDetails() {
             </Grid>
             <Box>
                 <Grid container spacing={3}>
-                    <CakesItems products={categoryProductList}/>
+                    <CakesItems products={products} />
                 </Grid>
             </Box>
             <Box>
@@ -112,7 +114,7 @@ function CategoriesDetails() {
                 </Grid>
             </Grid>
             <Grid container spacing={3}>
-                <CakesItems products={categoryProductList}/>
+                <CakesItems products={productList} />
             </Grid>
         </CustomeContainer>
     );

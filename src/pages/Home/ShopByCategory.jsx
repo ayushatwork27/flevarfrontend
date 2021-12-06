@@ -10,8 +10,7 @@ function MasonryGallary({ categories }) {
                 {categories.map((val, i) => {
                     return (
                         <div
-                            className={`single-grid grid-item ${i === 0 || i === categories.length - 1 ? "w-2 h-2" : "w-2 h-1"
-                                } `}
+                            className={`single-grid grid-item ${i === 0 ? "w-2 h-2" : "w-2 h-1"} `}
                             key={i}
                         >
                             <img src={val.category_images[0] && val.category_images[0]['url']} alt={val.category_images[0] && val.category_images[0]['name']} />

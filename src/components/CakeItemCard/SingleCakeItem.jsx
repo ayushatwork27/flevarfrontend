@@ -57,7 +57,7 @@ function SingleCakeItem(props) {
                         title="Contemplative Reptile"
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h6" style={{textTransform: 'capitalize'}}>
+                        <Typography gutterBottom variant="h6" style={{ textTransform: 'capitalize' }}>
                             {props.productname}
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
