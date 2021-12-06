@@ -1,6 +1,6 @@
 import * as actionTypes from '../types/product.types';
 import flevar from '../../../api/api';
-import { PRODUCT_DETAIL_API, PRODUCT_LIST_API, PRODUCT_CATEGORIES_API } from '../../constants/api-routes.constants';
+import { PRODUCT_DETAIL_API, PRODUCT_LIST_API, PRODUCT_CATEGORIES_API, PRODUCT_REVIEW_LIST_API, PRODUCT_REVIEW_API } from '../../constants/api-routes.constants';
 
 export const getProductListAction = (params, query) => dispatch => {
     dispatch({ type: actionTypes.GET_PRODUCT_LIST, payload: undefined });
@@ -55,5 +55,23 @@ export const getProductDetailAction = product_id => dispatch => {
         const { success, data } = response['data'];
         if (success) dispatch({ type: actionTypes.GET_PRODUCT_DETAIL_SUCCESS, payload: data['data'] });
         else dispatch({ type: actionTypes.GET_PRODUCT_DETAIL_FAILURE, payload: response });
+    });
+}
+
+export const getProductReviewsAction = id => dispatch => {
+    dispatch({ type: actionTypes.GET_PRODUCT_REVIEW_LIST, payload: undefined });
+    return flevar.get(`${PRODUCT_REVIEW_LIST_API}/${id}`).then(response => {
+        const { success, data } = response['data'];
+        if (success) dispatch({ type: actionTypes.GET_PRODUCT_REVIEW_LIST_SUCCESS, payload: data['data'] });
+        else dispatch({ type: actionTypes.GET_PRODUCT_REVIEW_LIST_FAILURE, payload: response });
+    });
+}
+
+export const addProductReviewAction = product => dispatch => {
+    dispatch({ type: actionTypes.ADD_PRODUCT_REVIEW, payload: undefined });
+    return flevar.post(PRODUCT_REVIEW_API, product).then(response => {
+        const { success } = response['data'];
+        if (success) dispatch(getProductReviewsAction(product.product_id));
+        else dispatch({ type: actionTypes.ADD_PRODUCT_REVIEW_FAILURE, payload: response });
     });
 }

@@ -11,7 +11,7 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import DescriptionTabs from "./DescriptionTabs";
 import CakesItems from "../../components/CakeItemCard/CakesItems";
 import { useParams } from "react-router-dom";
-import { getProductDetailAction } from '../../shared/store/actions/product.actions';
+import { getProductDetailAction, getProductReviewsAction } from '../../shared/store/actions/product.actions';
 import { addCakeMessageAction, addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
 import { useHistory } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
@@ -118,6 +118,10 @@ const useStyles = makeStyles((theme) => ({
 
 const weightData = [
     {
+        id: "0",
+        weight: "0.5"
+    },
+    {
         id: "1",
         weight: "1"
     },
@@ -131,7 +135,7 @@ const weightData = [
     }
 ]
 
-function ProductDescription(props) {
+function ProductDescription() {
     let defaultCount = 1;
     const history = useHistory();
     const classes = useStyles();
@@ -150,8 +154,13 @@ function ProductDescription(props) {
 
     const { id } = useParams();
     const dispatch = useDispatch();
-    useEffect(() => dispatch(getProductDetailAction(id)), [id]);
-    const { productList, productDetail } = useSelector(state => state.product);
+    useEffect(() => dispatch(
+        getProductDetailAction(id),
+    ), [id]);
+    useEffect(() => dispatch(
+        getProductReviewsAction(id)
+    ), [id]);
+    const { productList, productDetail, productReviewList } = useSelector(state => state.product);
     const { cartItems } = useSelector(state => state.cart);
 
     let itemIndex = cartItems.findIndex(item => productDetail && item.product_id === productDetail.id);
@@ -178,10 +187,9 @@ function ProductDescription(props) {
         history.push('/mycart');
     }
 
-    const [weight, setWeight] = useState('1');
+    const [weight, setWeight] = useState('0');
     const chooseWeight = (e) => {
-        e.preventDefault();
-        setWeight(e.target.id);
+        setWeight(e.id);
     }
 
     const [loading, setLoading] = useState(false);
@@ -213,12 +221,13 @@ function ProductDescription(props) {
             <Box className={classes.Product_description_wrapper}>
                 <Grid container>
                     <Grid item sm={12} md={6}>
-                        <Box className={classes.Product_description_largerimage}>
-                            <img src="/assets/images/description.png" alt="description" />
-                        </Box>
-                        <Box className={classes.Product_description_largerimage}>
-                            <img src="/assets/images/description.png" alt="description" />
-                        </Box>
+                        {productDetail && productDetail.product_gallery_images && productDetail.product_gallery_images.map(img => {
+                            return (
+                                <Box className={classes.Product_description_largerimage}>
+                                    <img src={img.url} />
+                                </Box>
+                            )
+                        })}
                     </Grid>
                     <Grid item sm={12} md={6}>
                         <Box className={classes.Product_description_details_wrapper}>
@@ -252,7 +261,7 @@ function ProductDescription(props) {
                                     component="p"
                                     className={classes.originalprice}
                                 >
-                                    Rs.{productDetail && productDetail.mrp}
+                                    Rs.{productDetail && productDetail.rate}
                                 </Typography>
                             </Box>
                             <Box className={classes.counter_box}>
@@ -262,14 +271,14 @@ function ProductDescription(props) {
                             </Box>
                             <Box className={classes.weight_btn_wrapper}>
                                 {
-                                    weightData.map((val, index) => {
+                                    weightData.map(val => {
                                         return (
                                             <Button
                                                 variant={weight === val.id ? "contained" : "outlined"}
                                                 key={val.id}
                                                 className={weight === val.id ? "theme-contained-btn" : " "}
                                                 id={val.id}
-                                                onClick={chooseWeight}
+                                                onClick={() => chooseWeight(val)}
 
                                             >
                                                 {val.weight}Kg
@@ -290,7 +299,7 @@ function ProductDescription(props) {
                                     btntitle="View in 3D"
                                     className={classes.view3d}
                                 />
-                                <div className="btn-loader-wrapper">
+                                {/* <div className="btn-loader-wrapper">
                                     <Button
                                         variant="contained"
                                         color="primary"
@@ -302,8 +311,7 @@ function ProductDescription(props) {
                                         {loading && <div className="btn-loader-bg"><CircularProgress size={24} className="btn-progress" /> </div>}
                                     </Button>
 
-                                </div>
-
+                                </div> */}
                             </Box>
                             <Box>
                                 <form noValidate autoComplete="off">
@@ -328,7 +336,7 @@ function ProductDescription(props) {
                                 </form>
                             </Box>
                             <Box>
-                                <DescriptionTabs onClose={handleClose} open={open} product={productDetail} />
+                                <DescriptionTabs onClose={handleClose} open={open} product={productDetail} reviews={productReviewList} />
                             </Box>
                         </Box>
                     </Grid>
