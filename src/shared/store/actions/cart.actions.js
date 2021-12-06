@@ -21,7 +21,7 @@ export const getCartAction = payload => dispatch => {
     const cart_token = window && localStorage.getItem(CART_TOKEN);
     const options = { headers: { 'cart_token': cart_token } };
     const params = { cart_token };
-    return flevar.post(`${CART_API}/${cart_id}`, params, options).then(response => {
+    if (cart_id) return flevar.post(`${CART_API}/${cart_id}`, params, options).then(response => {
         const { success, data } = response['data'];
         if (success) dispatch({ type: actionTypes.GET_CART_SUCCESS, payload: data['data'] });
     });

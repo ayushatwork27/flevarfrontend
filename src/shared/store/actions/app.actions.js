@@ -11,15 +11,9 @@ export const authenticateLogin = payload => dispatch => {
     });
 };
 
-export const verifyOtpOnServer = payload => dispatch => {
-    dispatch({ type: actionTypes.VERIFY_OTP, payload: undefined });
-    return flevar.post(VERIFY_OTP_API, payload).then(response => {
-        if (response.status === 200) {
-            const { token } = response['data']['data']['data'];
-            dispatch(userProfile(token));
-            localStorage.setItem('token', token);
-        }
-    });
+export const verifyOtpOnServer = payload => {
+    // dispatch({ type: actionTypes.VERIFY_OTP, payload: undefined });
+    return flevar.post(VERIFY_OTP_API, payload).then(response => response);
 };
 
 export const authenticateLogOut = payload => dispatch => {

@@ -289,7 +289,7 @@ function OrderDetails() {
                 </Grid>
               </Box>
               <Box>
-                <OrderItemDetail order={orderDetail} />
+                {orderDetail && orderDetail.order_items.map(orderItem => <OrderItemDetail isOrder={false} order={orderItem} />)}
               </Box>
             </Box>
           </Grid>
