@@ -342,7 +342,7 @@ function ProductDescription(props) {
                     <CakesItems products={productList} />
                 </Grid>
             </Box>
-            <Box>
+            {/* <Box>
                 <Dialog
                     open={open}
                     onClose={handleClose}
@@ -393,7 +393,7 @@ function ProductDescription(props) {
             </Box>
             <Box>
                 <DescriptionTabs onClose={handleClose} open={open} />
-            </Box>
+            </Box> */}
         </CustomeContainer >
     );
 }
