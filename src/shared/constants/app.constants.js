@@ -1,3 +1,4 @@
+export const AUTH_TOKEN = 'token';
 export const CART_TOKEN = 'cart_token';
 export const CART_ID = 'cart_id';
 export const ADDRESS_ID = 'address_id';
