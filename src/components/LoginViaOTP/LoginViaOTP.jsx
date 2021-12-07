@@ -69,6 +69,7 @@ function LoginViaOTP() {
                                     <TextField variant="filled" className="single-formbox" name="two" onChange={(e) => onValueChange(e)} />
                                     <TextField variant="filled" className="single-formbox" name="three" onChange={(e) => onValueChange(e)} />
                                     <TextField variant="filled" className="single-formbox" name="four" onChange={(e) => onValueChange(e)} /> */}
+                                    <Typography varinat="body1" className="login-via-otp-error">Please enter valid OTP</Typography>
                                 </Box>
                             </Grid>
                         </Grid>

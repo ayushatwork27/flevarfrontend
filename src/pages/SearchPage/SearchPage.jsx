@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: "400px",
         width: "100%",
         padding: '0px 10px',
-        marginBottom: "50px"
+        marginBottom: "50px",
     },
     searchIcon: {
         position: "absolute",
@@ -69,51 +69,55 @@ function SearchPage() {
     };
     return (
         <CustomeContainer>
-            <Box className={classes.searchpage} >
-                <Box className={classes.searchIcon} >
-                    <SearchIcon className="search-icon-color" />
-                </Box>
-                <InputBase
-                    placeholder="Search…"
-                    classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput,
-                    }}
-                    inputProps={{ "aria-label": "search" }}
-                />
-            </Box>
-            <Grid container>
-                <Grid item sm={12} md={10}>
-                    <Typography variant="h5" className="cmn-pages-title-only">
-                        Showing 1 – 24 of 424 similar matches
-                    </Typography>
-                </Grid>
-                <Grid item sm={12} md={2}>
-                    <Box className={classes.sortby}>
-                        <FormControl variant="outlined">
-                            <InputLabel id="demo-simple-select-outlined-label">
-                                SORT
-                            </InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={sortby}
-                                onChange={handleChange}
-                                label="Age"
-                                IconComponent={ExpandMoreIcon}
-                            >
-                                <MenuItem value={10}>By Relevance</MenuItem>
-                                <MenuItem value={20}>Most Selling</MenuItem>
-                            </Select>
-                        </FormControl>
+            <div className="searchpage-min-height-box">
+
+
+                <Box className={classes.searchpage} >
+                    <Box className={classes.searchIcon} >
+                        <SearchIcon className="search-icon-color" />
                     </Box>
+                    <InputBase
+                        placeholder="Search…"
+                        classes={{
+                            root: classes.inputRoot,
+                            input: classes.inputInput,
+                        }}
+                        inputProps={{ "aria-label": "search" }}
+                    />
+                </Box>
+                <Grid container>
+                    <Grid item sm={12} md={10}>
+                        <Typography variant="h5" className="cmn-pages-title-only">
+                            Showing 1 – 24 of 424 similar matches
+                        </Typography>
+                    </Grid>
+                    <Grid item sm={12} md={2}>
+                        <Box className={classes.sortby}>
+                            <FormControl variant="outlined">
+                                <InputLabel id="demo-simple-select-outlined-label">
+                                    SORT
+                                </InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={sortby}
+                                    onChange={handleChange}
+                                    label="Age"
+                                    IconComponent={ExpandMoreIcon}
+                                >
+                                    <MenuItem value={10}>By Relevance</MenuItem>
+                                    <MenuItem value={20}>Most Selling</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Box>
-                <Grid container spacing={3}>
-                    <CakesItems />
-                </Grid>
-            </Box>
+                <Box>
+                    <Grid container spacing={3}>
+                        <CakesItems />
+                    </Grid>
+                </Box>
+            </div>
         </CustomeContainer>
     );
 }
