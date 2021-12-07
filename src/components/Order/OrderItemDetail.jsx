@@ -5,6 +5,7 @@ import Box from "@material-ui/core/Box";
 import { Typography } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 import { Link } from "react-router-dom";
+import { OrderModel } from '../../shared/models/order.model';
 
 const useStyles = makeStyles((theme) => ({
     d_flex: {
@@ -70,9 +71,22 @@ const useStyles = makeStyles((theme) => ({
 
 const OrderItemDetail = (props) => {
     const { order, isOrder } = props;
+    let orderDetail = order && new OrderModel(order);
     const reviewLink = order ? 'order_details/' + order.order_id : '';
     const classes = useStyles();
     const [value, setValue] = React.useState(5);
+
+    const getProductName = orderItems => {
+        if (!orderItems || !orderItems.length) return 'Cake';
+        if (orderItems.length === 1) return orderItems[0]['product_name'];
+        return `${orderItems[0]['product_name']} +${orderItems.length - 1}`;
+    }
+
+    const getDeliveryStatus = () => {
+        if (!orderDetail) return;
+        const { current_status, delivery_date, message, created_at, special_instruction, reason } = orderDetail;
+
+    }
 
     return (
         <Box
@@ -86,7 +100,7 @@ const OrderItemDetail = (props) => {
                     className={`flex-wraper ${classes.d_flex} ${classes.between} `}
                 >
                     <Typography variant="h5" className={classes.fw_bold}>
-                        {order && order.product_name}
+                        {orderDetail && getProductName(orderDetail.order_items)}
                     </Typography>
                     <Box className={`flex-wraper ${classes.d_flex}`}>
                         <Typography
@@ -95,16 +109,16 @@ const OrderItemDetail = (props) => {
                             component="p"
                             className={classes.sellingprice}
                         >
-                            Rs. {order && order.total_price}
+                            Rs. {orderDetail && orderDetail.final_price || 0}
                         </Typography>
-                        <Typography
+                        {/* <Typography
                             variant="body1"
                             color="textSecondary"
                             component="p"
                             className={classes.originalprice}
                         >
                             Rs. {order && order.price}
-                        </Typography>
+                        </Typography> */}
                     </Box>
                 </Box>
                 <Box
@@ -113,7 +127,7 @@ const OrderItemDetail = (props) => {
                     className={classes.ratinbox}
                 >
                     <Rating name="read-only" value={value} readOnly />
-                    <Typography variant="body2">32 Ratings</Typography>
+                    {/* <Typography variant="body2">32 Ratings</Typography> */}
                 </Box>
                 <Box className={`flex-wraper ${classes.d_flex} ${classes.between}`}>
                     <Typography

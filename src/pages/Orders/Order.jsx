@@ -88,16 +88,16 @@ function Order() {
                 aria-label="simple tabs example"
               >
                 <Tab label="Orders" {...a11yProps(0)} />
-                <Tab label="wishlist" {...a11yProps(1)} />
+                {/* <Tab label="wishlist" {...a11yProps(1)} /> */}
                 <Tab label="help" {...a11yProps(2)} />
               </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
               <OrderTabs />
             </TabPanel>
-            <TabPanel value={value} index={1}>
+            {/* <TabPanel value={value} index={1}>
               <WishlistTabs />
-            </TabPanel>
+            </TabPanel> */}
             <TabPanel value={value} index={2}>
               <HelpTabs />
             </TabPanel>
