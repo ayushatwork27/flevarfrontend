@@ -94,6 +94,7 @@ export default function SimpleSlider(props) {
                             btntitle="Shop Now"
                             variant="contained"
                             className="theme-contained-btn"
+                            onClick={() => props.scrollIntoView()}
                           />
                           <CmnButton
                             btntitle="Watch Video"

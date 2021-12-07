@@ -16,6 +16,7 @@ import DataInstaFameSlider from "../../components/Data/DataInstaFameSlider";
 import Service from "./Service";
 import { Link } from "react-router-dom";
 import SpecialRequest from "./SpecialRequest";
+import { useRef } from 'react';
 
 function Home() {
     const settings = {
@@ -92,17 +93,21 @@ function Home() {
 
     const { categoryList } = useSelector(state => state.product);
 
+    const cakesRef = useRef(null);
+
+    const scrollIntoView = () => cakesRef.current.scrollIntoView({ behavior: 'smooth' });
+
     return (
         <div>
             <CustomeContainer>
                 <Box className="slider-wrapper-home">
-                    <SimpleSlider sliderData={homesliderData} settings={settings} />
+                    <SimpleSlider sliderData={homesliderData} settings={settings} scrollIntoView={scrollIntoView} />
                 </Box>
                 <Box className="servicesBox">
                     <Service />
                 </Box>
 
-                <Box>
+                <Box ref={cakesRef}>
                     <Box className="title_with_btn">
                         <Typography variant="h5">POPULAR CAKES</Typography>
                         <CmnButton

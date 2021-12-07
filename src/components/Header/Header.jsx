@@ -192,7 +192,7 @@ export default function PrimarySearchAppBar() {
 
     const renderMobileMenu = null;
     const { cartItems } = useSelector(state => state.cart);
-    
+
     const classes = useStyles();
     const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = useState(null);
@@ -239,8 +239,9 @@ export default function PrimarySearchAppBar() {
             onClose={handleMenuClose}
         >
             {
-                user && user.id ?
-                    <>
+                user ?
+
+                    <div>
                         <MenuItem onClick={handleMenuClose}>
                             <h4>{user?.name}</h4>
                         </MenuItem>
@@ -250,16 +251,16 @@ export default function PrimarySearchAppBar() {
                         <MenuItem onClick={handleMenuClose}>
                             <Link to="/" onClick={logOut} className="text-black">LogOut</Link>
                         </MenuItem>
-                    </>
+                    </div>
                     :
-                    <>
+                    <div>
                         <MenuItem onClick={handleMenuClose}>
                             <Link to="/register" className="text-black">SignUp</Link>
                         </MenuItem>
                         <MenuItem onClick={handleMenuClose}>
                             <Link to="/login" className="text-black">LogIn</Link>
                         </MenuItem>
-                    </>
+                    </div>
             }
         </Menu>
     );

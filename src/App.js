@@ -23,14 +23,15 @@ import SearchPage from "./pages/SearchPage/Index"
 import PageNotFound from "./pages/PageNotFound/Index";
 import { getProductListAction, getCategoryListAction } from './shared/store/actions/product.actions';
 import { userProfile, getAddressListAction } from './shared/store/actions/app.actions';
-// import EmptyCart from "./components/EmptyCart/Index"
+import { AUTH_TOKEN } from "./shared/constants/app.constants";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 function App() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem(AUTH_TOKEN);
     const dispatch = useDispatch();
-    useEffect(() => {
-        if (token) dispatch(userProfile(token));
-    }, [token, dispatch]);
+    
+    useEffect(() => token && dispatch(userProfile(token)), [token, dispatch]);
+    
     useEffect(() => {
         dispatch(getProductListAction({
             filterkey: '',
@@ -41,12 +42,11 @@ function App() {
         }));
     }, [dispatch]);
 
-    useEffect(() => {
-        if (token) dispatch(getAddressListAction(token));
-    }, [token]);
+    useEffect(() => token && dispatch(getAddressListAction(token)), [token]);
 
     return (
         <Router>
+            <ScrollToTop />
             <Switch>
                 <Route exact path="/" component={Home}></Route>
                 <Route exact path="/about" component={About}></Route>
