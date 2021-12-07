@@ -171,6 +171,12 @@ const useStyles = makeStyles((theme) => ({
             fontWeight: "600",
             fontSize: "30px"
         }
+    },
+    sectionMobile: {
+        display: "none",
+        [theme.breakpoints.down("md")]: {
+            display: "block"
+        }
     }
 
 }));
@@ -190,7 +196,7 @@ const locationData = [
 ]
 export default function PrimarySearchAppBar() {
 
-    const renderMobileMenu = null;
+    // const renderMobileMenu = null;
     const { cartItems } = useSelector(state => state.cart);
 
     const classes = useStyles();
@@ -199,7 +205,7 @@ export default function PrimarySearchAppBar() {
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
     const isMenuOpen = Boolean(anchorEl);
-
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     useEffect(() => dispatch(getCartAction()), []);
 
     const handleProfileMenuOpen = (event) => {
@@ -266,6 +272,40 @@ export default function PrimarySearchAppBar() {
     );
 
     const mobileMenuId = "primary-search-account-menu-mobile";
+    /* for mobile option start */
+    const renderMobileMenu = (
+        <Menu
+            anchorEl={mobileMoreAnchorEl}
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            id={mobileMenuId}
+            keepMounted
+            transformOrigin={{ vertical: "top", horizontal: "right" }}
+            open={isMobileMenuOpen}
+            onClose={handleMobileMenuClose}
+        >
+            <MenuItem>
+                <IconButton aria-label="show 4 new mails" color="inherit">
+                    <Badge badgeContent={4} color="secondary">
+                        <LocalMallIcon />
+                    </Badge>
+                </IconButton>
+                <p>Cart Item</p>
+            </MenuItem>
+
+            <MenuItem onClick={handleProfileMenuOpen}>
+                <IconButton
+                    aria-label="account of current user"
+                    aria-controls="primary-search-account-menu"
+                    aria-haspopup="true"
+                    color="inherit"
+                >
+                    <AccountCircle />
+                </IconButton>
+                <p>Profile</p>
+            </MenuItem>
+        </Menu>
+    );
+    /* for mobile option start */
     const menuputtertop = (
         <>
 

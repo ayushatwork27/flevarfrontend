@@ -24,7 +24,7 @@ function Login() {
     };
 
     return (
-        <>
+        <div class="login-min-height">
             <Box>
                 <Box className="cmn-formbox-wraapper">
                     <Container md p={1}>
@@ -65,7 +65,7 @@ function Login() {
                     </Box>
                 </Box>
             </Box>
-        </>
+        </div>
     );
 }
 
