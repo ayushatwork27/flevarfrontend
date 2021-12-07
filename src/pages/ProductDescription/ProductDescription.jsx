@@ -15,6 +15,9 @@ import { getProductDetailAction, getProductReviewsAction } from '../../shared/st
 import { addCakeMessageAction, addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
 import { useHistory } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from "@material-ui/core/DialogTitle";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import DialogContent from "@material-ui/core/DialogContent";
 import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -112,8 +115,28 @@ const useStyles = makeStyles((theme) => ({
         top: '50%',
         left: '50%',
         marginTop: -12,
-        marginLeft: -12,
+        marginLeft: -12
     },
+    dialog_title: {
+        padding: "10px 15px",
+        borderBottom: "1px solid #80808059",
+        "& h2": {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+        },
+        "& svg": {
+            cursor: "pointer",
+            paddingLeft: "5px"
+        }
+    },
+    dialog_content: {
+        padding: "50px"
+    },
+    dialogPaper: {
+        height : '400px',
+        width : '400px'
+    }
 }));
 
 const weightData = [
@@ -147,6 +170,7 @@ function ProductDescription() {
         else setCount((prevCount) => prevCount - 1);
 
     };
+    const [openTDView, setTDView] = useState(false);
     const [open, setOpen] = useState(false);
     const [cakeMsg, updateCakeMsg] = useState('');
 
@@ -205,6 +229,13 @@ function ProductDescription() {
         };
     }, []);
 
+    const viewTd = () => {
+        setTDView(true)
+    }
+
+    const handleCloseTDView = () => setTDView(false);
+
+    // event loader
     const handleButtonClick = () => {
         if (!loading) {
             setSuccess(false);
@@ -298,6 +329,7 @@ function ProductDescription() {
                                     variant="outlined"
                                     btntitle="View in 3D"
                                     className={classes.view3d}
+                                    onClick={viewTd}
                                 />
                                 {/* <div className="btn-loader-wrapper">
                                     <Button
@@ -350,6 +382,29 @@ function ProductDescription() {
                     <CakesItems products={productList} />
                 </Grid>
             </Box>
+            <Dialog
+                classes={{ paper : classes.dialogPaper}}
+                open={openTDView}
+                onClose={handleCloseTDView}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle className={classes.dialog_title}>
+                    {"View In 3D "}
+                    <HighlightOffIcon onClick={handleCloseTDView} />
+                </DialogTitle>
+                <DialogContent className={classes.dialog_content}>
+                    <model-viewer
+                        camera-controls
+                        camera-orbit="45deg 55deg 2.5m"
+                        src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
+                        alt="A 3D model of an astronaut"
+                        data-js-focus-visible=""
+                        ar-status="not-presenting"
+                    >
+                    </model-viewer>
+                </DialogContent>
+            </Dialog>
             {/* <Box>
                 <Dialog
                     open={open}

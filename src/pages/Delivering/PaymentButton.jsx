@@ -52,7 +52,7 @@ function PaymentButton() {
                 flevar.post(PLACE_ORDER_API, payload).then(response => {
                     [CART_TOKEN, CART_ID, CAKE_MSG, COUPON_CODE, ADDRESS_ID, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_TYPE, SHIPMENT_PRICE].forEach(item => localStorage.removeItem(item));
                     dispatch(clearCartAction());
-                    if (response['data']['success']) history.push('/order');
+                    if (response['data']['success']) history.push('/orders');
                 })
                 // console.log(response.razorpay_order_id);
                 // console.log(response.razorpay_signature);

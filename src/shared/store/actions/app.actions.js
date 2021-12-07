@@ -39,6 +39,7 @@ export const userProfile = payload => async (dispatch) => {
         const { success, data } = response['data'];
         if (success) {
             dispatch({ type: actionTypes.USER_PROFILE_SUCCESS, payload: data['data'] });
+            dispatch(getAddressListAction(data['data']['id']));
         } else dispatch({ type: actionTypes.USER_PROFILE_FAILURE, payload: response });
     });
 };

@@ -61,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
     fw_bold: {
         fontWeight: 600,
         color: "#222",
+        "& a": {
+            color: '#222'
+        }
     },
     order_single_box: {
         borderBottom: "1px solid #F4F4F4",
@@ -72,7 +75,8 @@ const useStyles = makeStyles((theme) => ({
 const OrderItemDetail = (props) => {
     const { order, isOrder } = props;
     let orderDetail = order && new OrderModel(order);
-    const reviewLink = order ? 'order_details/' + order.order_id : '';
+    const orderDetailLink = order ? 'order_details/' + order.order_id : '';
+    const reviewLink = order ? 'product-review/' + order.order_id : '';
     const classes = useStyles();
     const [value, setValue] = React.useState(5);
 
@@ -93,14 +97,16 @@ const OrderItemDetail = (props) => {
             className={` ${classes.d_flex} ${classes.order_single_box} xs-wrape`}
         >
             <Box className={classes.order_item_image}>
-                <img src="/assets/images/description.png" alt="description" />
+                <Link to={orderDetailLink}>
+                    <img src="/assets/images/description.png" alt="description" />
+                </Link>
             </Box>
             <Box className={classes.order_discription}>
                 <Box
                     className={`flex-wraper ${classes.d_flex} ${classes.between} `}
                 >
                     <Typography variant="h5" className={classes.fw_bold}>
-                        {orderDetail && getProductName(orderDetail.order_items)}
+                        <Link to={orderDetailLink}>{orderDetail && getProductName(orderDetail.order_items)}</Link>
                     </Typography>
                     <Box className={`flex-wraper ${classes.d_flex}`}>
                         <Typography

@@ -249,6 +249,9 @@ export default function PrimarySearchAppBar() {
                             <Link to="/profile_update" className="text-black">Account</Link>
                         </MenuItem>
                         <MenuItem onClick={handleMenuClose}>
+                            <Link to="/orders" className="text-black">Orders</Link>
+                        </MenuItem>
+                        <MenuItem onClick={handleMenuClose}>
                             <Link to="/" onClick={logOut} className="text-black">LogOut</Link>
                         </MenuItem>
                     </div>

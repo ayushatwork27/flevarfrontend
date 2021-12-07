@@ -22,9 +22,10 @@ import SpecialOrderRequest from "./pages/SpecialOrderRequest/Index";
 import SearchPage from "./pages/SearchPage/Index"
 import PageNotFound from "./pages/PageNotFound/Index";
 import { getProductListAction, getCategoryListAction } from './shared/store/actions/product.actions';
-import { userProfile, getAddressListAction } from './shared/store/actions/app.actions';
+import { userProfile } from './shared/store/actions/app.actions';
 import { AUTH_TOKEN } from "./shared/constants/app.constants";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import ProductReview from "./pages/Review/ProductReview";
 
 function App() {
     const token = localStorage.getItem(AUTH_TOKEN);
@@ -41,8 +42,6 @@ function App() {
             pageSize: 5
         }));
     }, [dispatch]);
-
-    useEffect(() => token && dispatch(getAddressListAction(token)), [token]);
 
     return (
         <Router>
@@ -66,7 +65,8 @@ function App() {
                 <Route exact path="/productdescription/:id" component={ProductDescription}></Route>
                 {token && <Route exact path="/mycart" component={MyCart}></Route>}
                 {token && <Route exact path="/delevering" component={Delivering}></Route>}
-                {token && <Route exact path="/order" component={Order}></Route>}
+                {token && <Route exact path="/orders" component={Order}></Route>}
+                {token && <Route exact path="/product-review/:id" component={ProductReview}></Route>}
                 {token && <Route exact path="/order_details/:id" component={OrderDetails}></Route>}
                 <Redirect from='*' to='/pagenotfound' />
             </Switch>
