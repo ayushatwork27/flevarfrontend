@@ -18,8 +18,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from "@material-ui/core/DialogTitle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import DialogContent from "@material-ui/core/DialogContent";
-import clsx from 'clsx';
-import CircularProgress from '@material-ui/core/CircularProgress';
+// import clsx from 'clsx';
+// import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
     Product_description_main_title: {
@@ -134,8 +134,8 @@ const useStyles = makeStyles((theme) => ({
         padding: "50px"
     },
     dialogPaper: {
-        height : '400px',
-        width : '400px'
+        height: '400px',
+        width: '400px'
     }
 }));
 
@@ -220,9 +220,9 @@ function ProductDescription() {
     const [success, setSuccess] = useState(false);
     const timer = useRef();
 
-    const buttonClassname = clsx({
-        [classes.buttonSuccess]: success,
-    });
+    // const buttonClassname = clsx({
+    //     [classes.buttonSuccess]: success,
+    // });
     useEffect(() => {
         return () => {
             clearTimeout(timer.current);
@@ -236,16 +236,16 @@ function ProductDescription() {
     const handleCloseTDView = () => setTDView(false);
 
     // event loader
-    const handleButtonClick = () => {
-        if (!loading) {
-            setSuccess(false);
-            setLoading(true);
-            timer.current = window.setTimeout(() => {
-                setSuccess(true);
-                setLoading(false);
-            }, 2000);
-        }
-    };
+    // const handleButtonClick = () => {
+    //     if (!loading) {
+    //         setSuccess(false);
+    //         setLoading(true);
+    //         timer.current = window.setTimeout(() => {
+    //             setSuccess(true);
+    //             setLoading(false);
+    //         }, 2000);
+    //     }
+    // };
 
     return (
         <CustomeContainer>
@@ -255,7 +255,7 @@ function ProductDescription() {
                         {productDetail && productDetail.product_gallery_images && productDetail.product_gallery_images.map(img => {
                             return (
                                 <Box className={classes.Product_description_largerimage}>
-                                    <img src={img.url} />
+                                    <img src={img.url} alt={img.url} />
                                 </Box>
                             )
                         })}
@@ -383,7 +383,7 @@ function ProductDescription() {
                 </Grid>
             </Box>
             <Dialog
-                classes={{ paper : classes.dialogPaper}}
+                classes={{ paper: classes.dialogPaper }}
                 open={openTDView}
                 onClose={handleCloseTDView}
                 aria-labelledby="alert-dialog-title"

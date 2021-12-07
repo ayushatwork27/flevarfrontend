@@ -6,7 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
-import { Box, Grid } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import TextField from "@material-ui/core/TextField";
 import CmnButton from "../../components/CmnButton/CmnButton";
@@ -181,7 +181,7 @@ function DescriptionTabs({ product, reviews }) {
                     </Typography>
                 </Box>
             </TabPanel>
-            <TabPanel value={value} index={1}>
+            <TabPanel value={value} index={1}  >
                 {reviews && reviews.length ? reviews.map(review => {
                     return (
                         <Box className={classes.reviews_wrapper}>

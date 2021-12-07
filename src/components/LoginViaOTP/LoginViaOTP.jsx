@@ -1,7 +1,7 @@
 import { Box, Typography } from "@material-ui/core";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import TextField from "@material-ui/core/TextField";
+// import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
@@ -44,7 +44,7 @@ function LoginViaOTP() {
         <>
             <Box>
                 <Box className="cmn-formbox-wraapper">
-                    <Container md p={1}>
+                    <Container p={1}>
                         <Box className="cmn-profile-main-title">
                             <Typography variant="h5">Register To </Typography>
                             <img
@@ -54,7 +54,7 @@ function LoginViaOTP() {
                             />
                         </Box>
                         <Grid container spacing={2} justifyContent="center">
-                            <Grid item sm={12} md={3}>
+                            <Grid item sm={5} md={3}>
                                 <Box className="otp-enter-wrapper">
                                     <OtpInput
                                         className="MuiFormControl-root MuiTextField-root single-formbox"

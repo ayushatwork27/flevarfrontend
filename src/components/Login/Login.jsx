@@ -24,10 +24,10 @@ function Login() {
     };
 
     return (
-        <div class="login-min-height">
+        <div className="login-min-height">
             <Box>
                 <Box className="cmn-formbox-wraapper">
-                    <Container md p={1}>
+                    <Container p={1}>
                         <Box className="cmn-profile-main-title">
                             <Typography variant="h5">Register To </Typography>
                             <img

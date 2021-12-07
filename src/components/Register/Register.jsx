@@ -9,18 +9,18 @@ import { Link, useHistory } from "react-router-dom";
 import CmnButton from "../CmnButton/CmnButton";
 import { userRegister } from "../../shared/store/actions/app.actions";
 
-const useStyles = makeStyles((theme) => ({
-    margin: {
-        margin: theme.spacing(1),
-    },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
-}));
+// const useStyles = makeStyles((theme) => ({
+//     margin: {
+//         margin: theme.spacing(1),
+//     },
+//     formControl: {
+//         margin: theme.spacing(1),
+//         minWidth: 120,
+//     },
+//     selectEmpty: {
+//         marginTop: theme.spacing(2),
+//     },
+// }));
 
 const registerInitialValues = {
     name: "",
@@ -45,7 +45,7 @@ function Register() {
         <>
             <Box>
                 <Box className="cmn-formbox-wraapper">
-                    <Container md p={1}>
+                    <Container p={1}>
                         <Box className="cmn-profile-main-title">
                             <Typography variant="h5">Register To </Typography>
                             <img

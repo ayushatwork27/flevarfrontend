@@ -4,7 +4,7 @@ function Loader() {
     return (
         <div className="loader-wrapper">
             <div className="loader-inner">
-                <img src="/assets/images/flevarlogo.png" />
+                <img src="/assets/images/flevarlogo.png" alt="logo" />
             </div>
         </div>
     )
