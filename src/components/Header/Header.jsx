@@ -287,12 +287,13 @@ export default function PrimarySearchAppBar() {
             onClose={handleMobileMenuClose}
         >
             <MenuItem>
-                <IconButton aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="secondary">
+                <IconButton aria-label="show 4 new mails" color="inherit" component={Link}
+                    to="/mycart">
+                    <Badge badgeContent={cartItems.map(item => item['cart_items'] && item['cart_items'].length ? item['cart_items'][0]['quantity'] : 0).reduce((a, b) => a + b, 0)} color="secondary">
                         <LocalMallIcon />
                     </Badge>
                 </IconButton>
-                <p>Cart Item</p>
+                <p>Cart</p>
             </MenuItem>
 
             <MenuItem onClick={handleProfileMenuOpen}>

@@ -76,7 +76,7 @@ function AddNewAdderess() {
             receiver_name: ""
         } : { customer_id: user.id, ...address });
     }
-    
+
     return (
         <CustomeContainer>
             <Grid container>

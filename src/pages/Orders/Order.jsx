@@ -19,93 +19,93 @@ import { useDispatch, useSelector } from "react-redux";
 import { getOrdersListAction } from "../../shared/store/actions/order.actions";
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+    const { children, value, index, ...other } = props;
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box p={3}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
 }
 
 TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
 };
 
 function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
+    return {
+        id: `simple-tab-${index}`,
+        "aria-controls": `simple-tabpanel-${index}`,
+    };
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
+    root: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
+    },
 }));
 
 function Order() {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+    const classes = useStyles();
+    const [value, setValue] = React.useState(0);
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
-  return (
-    <CustomeContainer>
-      <Grid container>
-        <Grid sm={12} md={3} item>
-          <Box>
-            <Profile />
-            <Box className="cmn-profile_bottom_btn">
-              <Box component={Link} to="/add_new_address">
-                <CmnButton btntitle="Edit Details" variant="outlined" />
-              </Box>
-              <LogoutButton />
-            </Box>
-          </Box>
-        </Grid>
-        <Grid sm={12} md={9} item>
-          <Box className="cmn-tabs_wrapper">
-            <AppBar position="static" className="order-tabs">
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                aria-label="simple tabs example"
-              >
-                <Tab label="Orders" {...a11yProps(0)} />
-                {/* <Tab label="wishlist" {...a11yProps(1)} /> */}
-                <Tab label="help" {...a11yProps(2)} />
-              </Tabs>
-            </AppBar>
-            <TabPanel value={value} index={0}>
-              <OrderTabs />
-            </TabPanel>
-            {/* <TabPanel value={value} index={1}>
+    return (
+        <CustomeContainer>
+            <Grid container>
+                <Grid sm={12} md={3} item>
+                    <Box>
+                        <Profile />
+                        <Box className="cmn-profile_bottom_btn">
+                            <Box component={Link} to="/profile_update">
+                                <CmnButton btntitle="Edit Details" variant="outlined" />
+                            </Box>
+                            <LogoutButton />
+                        </Box>
+                    </Box>
+                </Grid>
+                <Grid sm={12} md={9} item>
+                    <Box className="cmn-tabs_wrapper">
+                        <AppBar position="static" className="order-tabs">
+                            <Tabs
+                                value={value}
+                                onChange={handleChange}
+                                aria-label="simple tabs example"
+                            >
+                                <Tab label="Orders" {...a11yProps(0)} />
+                                {/* <Tab label="wishlist" {...a11yProps(1)} /> */}
+                                <Tab label="help" {...a11yProps(2)} />
+                            </Tabs>
+                        </AppBar>
+                        <TabPanel value={value} index={0}>
+                            <OrderTabs />
+                        </TabPanel>
+                        {/* <TabPanel value={value} index={1}>
               <WishlistTabs />
             </TabPanel> */}
-            <TabPanel value={value} index={2}>
-              <HelpTabs />
-            </TabPanel>
-          </Box>
-        </Grid>
-      </Grid>
-    </CustomeContainer>
-  );
+                        <TabPanel value={value} index={2}>
+                            <HelpTabs />
+                        </TabPanel>
+                    </Box>
+                </Grid>
+            </Grid>
+        </CustomeContainer>
+    );
 }
 
 export default Order;

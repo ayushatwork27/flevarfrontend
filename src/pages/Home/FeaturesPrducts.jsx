@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { Box, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import CmnButton from "../../components/CmnButton/CmnButton";
 
 const useStyles = makeStyles((theme) => ({
@@ -142,6 +143,8 @@ function FeaturesPrducts() {
               btntitle="Order Now"
               variant="contained"
               className="theme-contained-btn"
+              component={Link}
+              to="pagenotfound"
             />
           </Box>
         </Grid>

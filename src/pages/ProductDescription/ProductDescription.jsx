@@ -134,8 +134,13 @@ const useStyles = makeStyles((theme) => ({
         padding: "50px"
     },
     dialogPaper: {
-        height : '400px',
-        width : '400px'
+        height: "700px",
+        width: "700px"
+    },
+    model_viewer : {
+        height: "100%",
+        width: "auto"
+    
     }
 }));
 
@@ -159,17 +164,22 @@ const weightData = [
 ]
 
 function ProductDescription() {
-    let defaultCount = 1;
+    let defaultCount = null;
     const history = useHistory();
     const classes = useStyles();
     const value = 4;
-    const handleIncrement = () => setCount((prevCount) => prevCount + 1);
+    const handleIncrement = () => {
+        defaultCount = null;
+        setCount((prevCount) => prevCount + 1);
+    }
 
     const handleDecrement = () => {
+        defaultCount = null;
         if (count < 2) setCount(1);
         else setCount((prevCount) => prevCount - 1);
 
     };
+    const [count, setCount] = useState(1);
     const [openTDView, setTDView] = useState(false);
     const [open, setOpen] = useState(false);
     const [cakeMsg, updateCakeMsg] = useState('');
@@ -186,10 +196,8 @@ function ProductDescription() {
     ), [id]);
     const { productList, productDetail, productReviewList } = useSelector(state => state.product);
     const { cartItems } = useSelector(state => state.cart);
-
-    let itemIndex = cartItems.findIndex(item => productDetail && item.product_id === productDetail.id);
-    if (itemIndex > -1) defaultCount = cartItems[itemIndex]['quantity'];
-    const [count, setCount] = useState(defaultCount);
+    let itemIndex = cartItems && cartItems.length && cartItems[0].cart_items && cartItems[0].cart_items.length && cartItems[0].cart_items.findIndex(item => productDetail && item.product_id === productDetail.id);
+    if (itemIndex > -1) defaultCount = cartItems && cartItems.length && cartItems[0].cart_items && cartItems[0].cart_items[itemIndex]['quantity'];
 
     const buyNow = () => {
         let authToken = localStorage.getItem('token');
@@ -202,7 +210,7 @@ function ProductDescription() {
             product_id: productDetail.id,
             cake_message: 'New Deewali',
             cake_weight: 1,
-            quantity: count,
+            quantity: defaultCount || count,
             mrp: productDetail.mrp,
             pincode: 495689
         }
@@ -296,8 +304,8 @@ function ProductDescription() {
                                 </Typography>
                             </Box>
                             <Box className={classes.counter_box}>
-                                <Button onClick={handleDecrement} disabled={count === 1}>-</Button>
-                                <Typography variant="h6">{count}</Typography>
+                                <Button onClick={handleDecrement} disabled={(defaultCount || count) === 1}>-</Button>
+                                <Typography variant="h6">{defaultCount || count}</Typography>
                                 <Button onClick={handleIncrement}>+</Button>
                             </Box>
                             <Box className={classes.weight_btn_wrapper}>
@@ -383,7 +391,7 @@ function ProductDescription() {
                 </Grid>
             </Box>
             <Dialog
-                classes={{ paper : classes.dialogPaper}}
+                classes={{ paper: classes.dialogPaper }}
                 open={openTDView}
                 onClose={handleCloseTDView}
                 aria-labelledby="alert-dialog-title"
@@ -395,12 +403,13 @@ function ProductDescription() {
                 </DialogTitle>
                 <DialogContent className={classes.dialog_content}>
                     <model-viewer
-                        camera-controls
-                        camera-orbit="45deg 55deg 2.5m"
+                        style={{height: "100%", width: "auto"}}
+                        bounds="tight"
+                        ar ar-modes="webxr scene-viewer quick-look"
+                        camera-controls environment-image="neutral"
+                        shadow-intensity="1"
                         src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
                         alt="A 3D model of an astronaut"
-                        data-js-focus-visible=""
-                        ar-status="not-presenting"
                     >
                     </model-viewer>
                 </DialogContent>
