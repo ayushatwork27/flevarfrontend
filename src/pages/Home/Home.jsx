@@ -17,8 +17,50 @@ import Service from "./Service";
 import { Link } from "react-router-dom";
 import SpecialRequest from "./SpecialRequest";
 import { useRef } from 'react';
+import { makeStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
+const useStyles = makeStyles((theme) => ({
+    mega_review_wrapper: {
+        border: "1px solid #afa0a0",
+        boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.5)",
+        borderRadius: "5px",
+    },
+    reviews_wrapper: {
+        display: "flex",
+        padding: "5px 5px",
+        borderBottom: "1px solid #afa0a0",
+        color: "#afa0a0",
+
+        "& p": {
+            marginLeft: "10px",
+            fontSize: "14px",
+            color: "#7e7474",
+        },
+        "& h6": {
+            marginLeft: "10px",
+            fontWeight: "600",
+            color: "#7e7474",
+        }
+    },
+    image_name_place: {
+        display: "flex",
+        justifyItems: "center",
+        alignItems: "center",
+        flexFlow: "column",
+        fontSize: "14px",
+        minWidth: "150px",
+        color: "#7e7474",
+
+        "& p": {
+            fontWeight: "600"
+        },
+    }
+}));
+
+
 
 function Home() {
+    const classes = useStyles();
     const settings = {
         className: "home-slider-wrapper",
         fade: true,
@@ -124,6 +166,46 @@ function Home() {
                     <Grid container spacing={3}>
                         <CakesItems products={productList} />
                     </Grid>
+                </Box>
+
+                <Box>
+                    <Box className="title_with_btn">
+                        <Typography variant="h5">Our Happy Customers Reviews</Typography>
+                    </Box>
+                    <Box className={classes.mega_review_wrapper} >
+                        <Box className={`testclass ${classes.reviews_wrapper}`}>
+                            <Box className={classes.image_name_place}>
+                                <Avatar alt="Remy Sharp" src="/assets/images/review_tabs.png" />
+                                <Typography variant="body1">
+                                    Manoj Singh,Delhi
+                                </Typography>
+                            </Box>
+
+                            <Box>
+                                <Typography variant="h6">Test is amizing</Typography>
+                                <Typography variant="body1">
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+                                </Typography>
+                            </Box>
+
+                        </Box>
+                        <Box className={`testclass ${classes.reviews_wrapper}`}>
+                            <Box className={classes.image_name_place}>
+                                <Avatar alt="Remy Sharp" src="/assets/images/review_tabs.png" />
+                                <Typography variant="body1">
+                                    Manoj Singh,Delhi
+                                </Typography>
+                            </Box>
+
+                            <Box>
+                                <Typography variant="h6">Quality with test</Typography>
+                                <Typography variant="body1">
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                </Typography>
+                            </Box>
+
+                        </Box>
+                    </Box>
                 </Box>
 
                 <Box>
