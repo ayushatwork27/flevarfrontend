@@ -119,11 +119,11 @@ function MyCart() {
     const productLists = [];
     const classes = useStyles();
     const [value, setValue] = useState(4);
-    const { productList } = useSelector(state => state.product);
+    const { products } = useSelector(state => state.product);
     const { cartItems } = useSelector(state => state.cart);
     cartItems.forEach(item => {
-        const prodIndex = item['cart_items'] && item['cart_items'].length && productList.findIndex(prod => prod.id === item['cart_items'][0]['product_id']);
-        if (prodIndex > -1 && item['cart_items'] && item['cart_items'].length) productLists.push(productList[prodIndex]);
+        const prodIndex = item['cart_items'] && item['cart_items'].length && products.findIndex(prod => prod.id === item['cart_items'][0]['product_id']);
+        if (prodIndex > -1 && item['cart_items'] && item['cart_items'].length) productLists.push(products[prodIndex]);
     });
     const dispatch = useDispatch();
     const removeItemFromCart = (product_id) => {
