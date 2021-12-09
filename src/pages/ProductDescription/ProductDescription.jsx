@@ -196,7 +196,7 @@ function ProductDescription() {
     ), [id]);
     const { productList, productDetail, productReviewList } = useSelector(state => state.product);
     const { cartItems } = useSelector(state => state.cart);
-    let itemIndex = cartItems && cartItems.length && cartItems[0].cart_items && cartItems[0].cart_items.length && cartItems[0].cart_items.findIndex(item => productDetail && item.product_id === productDetail.id);
+    let itemIndex = cartItems && cartItems.length && cartItems[0].cart_items && cartItems[0].cart_items.length ? cartItems[0].cart_items.findIndex(item => productDetail && item.product_id === productDetail.id) : -1;
     if (itemIndex > -1) defaultCount = cartItems && cartItems.length && cartItems[0].cart_items && cartItems[0].cart_items[itemIndex]['quantity'];
 
     const buyNow = () => {
