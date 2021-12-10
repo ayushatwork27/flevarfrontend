@@ -21,4 +21,5 @@ export const ADD_DELIVERY_DATE = '[Cart] Add Delivery Date';
 export const ADD_DELIVERY_TIME_RANGE = '[Cart] Add Delivery Time Range';
 export const ADD_SHIPMENT_TYPE = '[Cart] Add Shipment Type';
 export const ADD_SHIPMENT_PRICE = '[Cart] Add Shipment Price';
+export const ADD_CAKE_WEIGHT = '[Cart] Add Cake Weight';
 export const CLEAR_CART = '[Cart] Clear Cart';

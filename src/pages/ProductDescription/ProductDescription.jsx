@@ -12,7 +12,7 @@ import DescriptionTabs from "./DescriptionTabs";
 import CakesItems from "../../components/CakeItemCard/CakesItems";
 import { useParams } from "react-router-dom";
 import { getProductDetailAction, getProductReviewsAction } from '../../shared/store/actions/product.actions';
-import { addCakeMessageAction, addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
+import { addCakeMessageAction, addToCartAction, addWeightAction, updateCartAction } from '../../shared/store/actions/cart.actions';
 import { useHistory } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -137,10 +137,10 @@ const useStyles = makeStyles((theme) => ({
         height: "700px",
         width: "700px"
     },
-    model_viewer : {
+    model_viewer: {
         height: "100%",
         width: "auto"
-    
+
     }
 }));
 
@@ -222,6 +222,7 @@ function ProductDescription() {
     const [weight, setWeight] = useState('0');
     const chooseWeight = (e) => {
         setWeight(e.id);
+        dispatch(addWeightAction(e.id));
     }
 
     const [loading, setLoading] = useState(false);
@@ -403,7 +404,7 @@ function ProductDescription() {
                 </DialogTitle>
                 <DialogContent className={classes.dialog_content}>
                     <model-viewer
-                        style={{height: "100%", width: "auto"}}
+                        style={{ height: "100%", width: "auto" }}
                         bounds="tight"
                         ar ar-modes="webxr scene-viewer quick-look"
                         camera-controls environment-image="neutral"
