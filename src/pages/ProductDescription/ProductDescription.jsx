@@ -137,10 +137,10 @@ const useStyles = makeStyles((theme) => ({
         height: "700px",
         width: "700px"
     },
-    model_viewer : {
+    model_viewer: {
         height: "100%",
         width: "auto"
-    
+
     }
 }));
 
@@ -167,7 +167,6 @@ function ProductDescription() {
     let defaultCount = null;
     const history = useHistory();
     const classes = useStyles();
-    const value = 4;
     const handleIncrement = () => {
         defaultCount = null;
         setCount((prevCount) => prevCount + 1);
@@ -208,10 +207,10 @@ function ProductDescription() {
         setOpen(true);
         const productObj = {
             product_id: productDetail.id,
-            cake_message: 'New Deewali',
-            cake_weight: 1,
+            cake_message: cakeMsg,
             quantity: defaultCount || count,
             mrp: productDetail.mrp,
+            cake_weight: 1,
             pincode: 495689
         }
         if (localStorage.getItem('cart_token')) dispatch(updateCartAction(productObj));
@@ -282,8 +281,8 @@ function ProductDescription() {
                                 borderColor="transparent"
                                 className={classes.ratinbox}
                             >
-                                <Rating name="read-only" value={value} readOnly />
-                                <Typography variant="body2">32 Ratings</Typography>
+                                <Rating name="read-only" value={productDetail && productDetail.product_rating} readOnly />
+                                <Typography variant="body2">{productDetail && productDetail.total_rated_by} Ratings</Typography>
                             </Box>
                             <Box className={classes.popolarcakepricing} display="flex">
                                 <Typography
@@ -403,7 +402,7 @@ function ProductDescription() {
                 </DialogTitle>
                 <DialogContent className={classes.dialog_content}>
                     <model-viewer
-                        style={{height: "100%", width: "auto"}}
+                        style={{ height: "100%", width: "auto" }}
                         bounds="tight"
                         ar ar-modes="webxr scene-viewer quick-look"
                         camera-controls environment-image="neutral"
