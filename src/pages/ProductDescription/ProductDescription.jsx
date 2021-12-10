@@ -194,8 +194,11 @@ function ProductDescription() {
     useEffect(() => dispatch(
         getProductReviewsAction(id)
     ), [id]);
+    useEffect(() => dispatch(
+        addWeightAction(weightData[0]['weight'])
+    ), [id]);
     const { productList, productDetail, productReviewList } = useSelector(state => state.product);
-    const { cartItems } = useSelector(state => state.cart);
+    const { cartItems, cake_weight } = useSelector(state => state.cart);
     let itemIndex = cartItems && cartItems.length && cartItems[0].cart_items && cartItems[0].cart_items.length ? cartItems[0].cart_items.findIndex(item => productDetail && item.product_id === productDetail.id) : -1;
     if (itemIndex > -1) defaultCount = cartItems && cartItems.length && cartItems[0].cart_items && cartItems[0].cart_items[itemIndex]['quantity'];
 
@@ -209,7 +212,7 @@ function ProductDescription() {
         const productObj = {
             product_id: productDetail.id,
             cake_message: 'New Deewali',
-            cake_weight: 1,
+            cake_weight,
             quantity: defaultCount || count,
             mrp: productDetail.mrp,
             pincode: 495689
@@ -321,7 +324,7 @@ function ProductDescription() {
                                                 onClick={() => chooseWeight(val)}
 
                                             >
-                                                {val.weight}Kg
+                                                {val.weight} Kg
                                             </Button>
                                         );
                                     })

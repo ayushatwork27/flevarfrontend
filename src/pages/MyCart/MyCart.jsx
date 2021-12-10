@@ -143,73 +143,75 @@ function MyCart() {
                 <Box>
                     <Grid container>
                         {
-                            cartItems.map(cartItem => (
+                            cartItems && cartItems.length && cartItems[0]['cart_items'].map(cartItem => (
                                 cartItem['cart_items'] && !cartItem['cart_items'].length ? null :
-                                <Grid item key={cartItem.id} xs={12} sm={12} md={7}>
-                                    <Grid container className={classes.mycart_product}>
-                                        <Grid item xs={12} sm={4} md={4}>
-                                            <img src="/assets/images/description.png" alt="description" />
-                                        </Grid>
-                                        <Grid item xs={12} sm={8} md={8}>
-                                            <Box className={classes.price_title_message_wrapper}>
-                                                <Box className={classes.cart_product_title_with_btn}>
-                                                    <Typography
-                                                        variant="h3"
-                                                        className={classes.cart_product_title}
+                                    <Grid item key={cartItem.id} xs={12} sm={12} md={7}>
+                                        <Grid container className={classes.mycart_product}>
+                                            <Grid item xs={12} sm={4} md={4}>
+                                                <img src="/assets/images/description.png" alt="description" />
+                                            </Grid>
+                                            <Grid item xs={12} sm={8} md={8}>
+                                                <Box className={classes.price_title_message_wrapper}>
+                                                    <Box className={classes.cart_product_title_with_btn}>
+                                                        <Typography
+                                                            variant="h3"
+                                                            className={classes.cart_product_title}
+                                                        >
+                                                            {cartItem['product_name']}
+                                                        </Typography>
+                                                        <CmnButton
+                                                            btntitle="Remove"
+                                                            className={classes.removeBtn}
+                                                            onClick={() => removeItemFromCart(cartItem['id'])}
+                                                        />
+                                                    </Box>
+                                                    <Box
+                                                        component="fieldset"
+                                                        borderColor="transparent"
+                                                        className={classes.ratinbox}
                                                     >
-                                                        {cartItem['cart_items'] && cartItem['cart_items'].length && cartItem['cart_items'][0]['product_name']}
-                                                    </Typography>
-                                                    <CmnButton
-                                                        btntitle="Remove"
-                                                        className={classes.removeBtn}
-                                                        onClick={() => removeItemFromCart(cartItem['cart_items'][0]['id'])}
-                                                    />
+                                                        <Rating name="read-only" value={value} readOnly />
+                                                        <Typography variant="body2">32 Ratings</Typography>
+                                                    </Box>
+                                                    <Box
+                                                        className={`flex-wraper ${classes.popolarcakepricing}`}
+                                                    >
+                                                        <Typography
+                                                            variant="h5"
+                                                            color="textSecondary"
+                                                            component="p"
+                                                            className={classes.sellingprice}
+                                                        >
+                                                            Rs.{cartItem['mrp']}
+                                                        </Typography>
+                                                        <Typography
+                                                            variant="body1"
+                                                            color="textSecondary"
+                                                            component="p"
+                                                            className={classes.originalprice}
+                                                        >
+                                                            Rs.{cartItem['mrp']}
+                                                        </Typography>
+                                                        {
+                                                            cartItem && <Typography
+                                                                variant="body1"
+                                                                color="textSecondary"
+                                                                component="p"
+                                                                className={classes.cartBirthdayMessage}
+                                                            >
+                                                                {cartItem['cake_message']}
+                                                            </Typography>
+                                                        }
+                                                    </Box>
                                                 </Box>
-                                                <Box
-                                                    component="fieldset"
-                                                    borderColor="transparent"
-                                                    className={classes.ratinbox}
-                                                >
-                                                    <Rating name="read-only" value={value} readOnly />
-                                                    <Typography variant="body2">32 Ratings</Typography>
-                                                </Box>
-                                                <Box
-                                                    className={`flex-wraper ${classes.popolarcakepricing}`}
-                                                >
-                                                    <Typography
-                                                        variant="h5"
-                                                        color="textSecondary"
-                                                        component="p"
-                                                        className={classes.sellingprice}
-                                                    >
-                                                        Rs.{cartItem['cart_items'] && cartItem['cart_items'].length && cartItem['cart_items'][0]['mrp']}
-                                                    </Typography>
-                                                    <Typography
-                                                        variant="body1"
-                                                        color="textSecondary"
-                                                        component="p"
-                                                        className={classes.originalprice}
-                                                    >
-                                                        Rs.{cartItem['cart_items'] && cartItem['cart_items'].length && cartItem['cart_items'][0]['mrp']}
-                                                    </Typography>
-                                                    <Typography
-                                                        variant="body1"
-                                                        color="textSecondary"
-                                                        component="p"
-                                                        className={classes.cartBirthdayMessage}
-                                                    >
-                                                        Happy Birthday Sunil
-                                                    </Typography>
-                                                </Box>
-                                            </Box>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
-                                </Grid>
                             ))
                         }
                         {productLists && productLists.length ? <Grid item xs={12} sm={12} md={5}>
                             <Box className={classes.promo_code_price_details_wrapper}>
-                                <PromocodePriceDetails deliveryDate={true}/>
+                                <PromocodePriceDetails deliveryDate={true} />
                                 <Box>
                                     <Box
                                         className={classes.checkoutBtn}

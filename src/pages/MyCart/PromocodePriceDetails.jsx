@@ -192,6 +192,8 @@ function PromocodePriceDetails({ deliveryDate }) {
     const [deliverytime, setdeliveryTime] = useState("");
     const [selectedDateString, setSelectedDateStirng] = useState("");
 
+    const [taxAmount, setTaxAmount] = useState(0);
+
     useEffect(() => {
         const todaysDate = new Date();
         const currentHour = todaysDate.getHours();
@@ -433,10 +435,7 @@ function PromocodePriceDetails({ deliveryDate }) {
                     </Typography>
                     <Typography variant="body1" className={classes.totalQuantity}>
                         Total Quantity : {cartItems.length &&
-                            cartItems[0]['cart_items'].reduce((quantity, item) => {
-                                quantity = quantity + item.quantity;
-                                return quantity;
-                            }, 0)}
+                            cartItems[0]['cart_items'].reduce((quantity, item) => quantity + item.quantity, 0)}
                     </Typography>
                 </Box>
                 <Box className={classes.cmn_price_discount_amount_main_ceontainer}>
@@ -481,6 +480,22 @@ function PromocodePriceDetails({ deliveryDate }) {
                             variant="body1"
                             className={classes.cmn_price_discount_amount_title}
                         >
+                            Tax
+                        </Typography>
+                        <Typography
+                            variant="body1"
+                            className={classes.cmn_price_discount_amount_value}
+                        >
+                            Rs. { cartItems && cartItems.length && (0.05 * cartItems[0]['total_amout']) }
+                        </Typography>
+                    </Box>
+                    <Box
+                        className={`flex-wraper ${classes.cmn_price_discount_amount_wrapper}`}
+                    >
+                        <Typography
+                            variant="body1"
+                            className={classes.cmn_price_discount_amount_title}
+                        >
                             Discount
                         </Typography>
                         <Typography
@@ -503,7 +518,7 @@ function PromocodePriceDetails({ deliveryDate }) {
                             variant="body1"
                             className={`${classes.cmn_price_discount_amount_value} ${classes.total}`}
                         >
-                            Rs. {cartItems.length && (cartItems[0]['total_amout'] + Number(shipment_price) - 50)}
+                            Rs. {cartItems.length && (cartItems[0]['total_amout'] + Number(shipment_price) + (0.05 * cartItems[0]['total_amout']) - 50)}
                         </Typography>
                     </Box>
                 </Box>
