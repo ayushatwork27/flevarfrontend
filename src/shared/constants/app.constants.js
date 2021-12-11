@@ -8,3 +8,5 @@ export const DELIVERY_TIME_RANGE = 'delivery_time_range';
 export const SHIPMENT_TYPE = 'shipment_type';
 export const SHIPMENT_PRICE = 'shipment_price';
 export const CAKE_MSG = 'cake_msg';
+export const PINCODE = 'pincode';
+export const LOCATION_ID = 'location_id';

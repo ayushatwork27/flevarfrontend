@@ -20,3 +20,4 @@ export const ORDER_DETAIL_API = 'customer/order_details';
 export const CANCEL_ORDER_API = 'customer/cancel_order';
 export const USER_PROFILE_API = 'customer/profile';
 export const ADDRESS_LIST_API = 'customer/address_listing';
+export const LOCATION_LIST_API = 'locations';

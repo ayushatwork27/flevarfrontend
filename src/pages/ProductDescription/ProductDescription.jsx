@@ -13,6 +13,7 @@ import CakesItems from "../../components/CakeItemCard/CakesItems";
 import { useParams } from "react-router-dom";
 import { getProductDetailAction, getProductReviewsAction } from '../../shared/store/actions/product.actions';
 import { addCakeMessageAction, addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
+import { addPincodeAction } from "../../shared/store/actions/app.actions";
 import { useHistory } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -180,8 +181,12 @@ function ProductDescription() {
     };
     const [count, setCount] = useState(1);
     const [openTDView, setTDView] = useState(false);
+    const [openLocationView, setLocationView] = useState(false);
     const [open, setOpen] = useState(false);
     const [cakeMsg, updateCakeMsg] = useState('');
+    const [selectedLocation, setselectedLocation] = useState(null);
+    const [openPincodeView, setPincodeView] = useState(false);
+    const [pincodeVal, updatePincode] = useState('');
 
     const handleClose = () => setOpen(false);
 
@@ -195,6 +200,7 @@ function ProductDescription() {
     ), [id]);
     const { productList, productDetail, productReviewList } = useSelector(state => state.product);
     const { cartItems } = useSelector(state => state.cart);
+    const { locations, pincode } = useSelector(state => state.app);
     let itemIndex = cartItems && cartItems.length && cartItems[0].cart_items && cartItems[0].cart_items.length ? cartItems[0].cart_items.findIndex(item => productDetail && item.product_id === productDetail.id) : -1;
     if (itemIndex > -1) defaultCount = cartItems && cartItems.length && cartItems[0].cart_items && cartItems[0].cart_items[itemIndex]['quantity'];
 
@@ -211,11 +217,13 @@ function ProductDescription() {
             quantity: defaultCount || count,
             mrp: productDetail.mrp,
             cake_weight: 1,
-            pincode: 495689
+            pincode: pincode
         }
-        if (localStorage.getItem('cart_token')) dispatch(updateCartAction(productObj));
-        else dispatch(addToCartAction(productObj));
-        history.push('/mycart');
+        if (pincode) {
+            if (localStorage.getItem('cart_token')) dispatch(updateCartAction(productObj));
+            else dispatch(addToCartAction(productObj));
+            history.push('/mycart');
+        } else setLocationView(true);
     }
 
     const [weight, setWeight] = useState('0');
@@ -241,6 +249,24 @@ function ProductDescription() {
     }
 
     const handleCloseTDView = () => setTDView(false);
+
+    const handleCloseLocationView = () => setLocationView(false);
+
+    const locationSelection = (location) => {
+        handleCloseLocationView();
+        setselectedLocation(location);
+        setPincodeView(true);
+    }
+
+    const checkPincode = (data) => {
+        const pincodeIndex = selectedLocation.location_pincodes.findIndex(prop => prop.pincode === +data);
+        if (pincodeIndex > -1) {
+            dispatch(addPincodeAction({ location_id: selectedLocation.id, pincode: data }));
+            setPincodeView(false);
+        }
+    }
+
+    const handleClosePincodeView = () => setPincodeView(false);
 
     // event loader
     const handleButtonClick = () => {
@@ -411,6 +437,69 @@ function ProductDescription() {
                         alt="A 3D model of an astronaut"
                     >
                     </model-viewer>
+                </DialogContent>
+            </Dialog>
+            <Dialog
+                open={openLocationView}
+                onClose={handleCloseLocationView}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle className={classes.dialog_title}>
+                    {"Please Select Location"}
+                    <HighlightOffIcon onClick={handleCloseLocationView} />
+                </DialogTitle>
+                <DialogContent className={classes.dialog_content}>
+                    <Box className="location-wrapperbox">
+                        <Grid container className="home-onhover-location-right-wrapper" >
+                            {
+                                locations && locations.map((val, i) => {
+                                    return (
+                                        <Grid item sm={6} md={4} className={` home-onhover-location-singlebox ${classes.location_single_box}`} key={i}
+                                            onClick={() => { locationSelection(val) }}>
+                                            <img src={val.image_url} alt="cityimage" />
+                                            <CmnButton btntitle={val.name} />
+                                        </Grid>
+                                    )
+                                })
+                            }
+                        </Grid>
+                    </Box>
+                </DialogContent>
+            </Dialog>
+            <Dialog
+                open={openPincodeView}
+                onClose={handleClosePincodeView}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle className={classes.dialog_title}>
+                    {"Pincode"}
+                    <HighlightOffIcon onClick={handleClosePincodeView} />
+                </DialogTitle>
+                <DialogContent className={classes.dialog_content}>
+                    <form noValidate autoComplete="off">
+                        <Box className={classes.description_messages_wrapper}>
+                            <TextField
+                                id="filled-basic"
+                                fullWidth
+                                variant="filled"
+                                label="Type to check pincode"
+                                type="number"
+                                maxLength={6}
+                                className={classes.description_messages_input}
+                                disableunderline="true"
+                                value={pincodeVal}
+                                onChange={e => updatePincode(e.target.value)}
+                            />
+                            <CmnButton
+                                variant="outlined"
+                                className={classes.send_btn}
+                                startIcon={<ArrowForwardIcon />}
+                                onClick={() => checkPincode(pincodeVal)}
+                            />
+                        </Box>
+                    </form>
                 </DialogContent>
             </Dialog>
             {/* <Box>

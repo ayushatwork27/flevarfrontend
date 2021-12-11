@@ -21,18 +21,26 @@ import ProfileUpdate from "./pages/ProfileUpdate/Index";
 import SpecialOrderRequest from "./pages/SpecialOrderRequest/Index";
 import SearchPage from "./pages/SearchPage/Index"
 import PageNotFound from "./pages/PageNotFound/Index";
-import { getProductListAction, getCategoryListAction, getProductsAction } from './shared/store/actions/product.actions';
 import { userProfile } from './shared/store/actions/app.actions';
 import { AUTH_TOKEN } from "./shared/constants/app.constants";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import ProductReview from "./pages/Review/ProductReview";
+import { getLocationAction } from './shared/store/actions/app.actions';
+import {
+    getProductListAction,
+    getCategoryListAction,
+    getProductsAction
+} from './shared/store/actions/product.actions';
 
 function App() {
     const token = localStorage.getItem(AUTH_TOKEN);
     const dispatch = useDispatch();
-    
-    useEffect(() => token && dispatch(userProfile(token)), [token, dispatch]);
-    
+
+    useEffect(() => {
+        token && dispatch(userProfile(token));
+        dispatch(getLocationAction());
+    }, [token, dispatch]);
+
     useEffect(() => {
         dispatch(getProductListAction({
             filterkey: '',

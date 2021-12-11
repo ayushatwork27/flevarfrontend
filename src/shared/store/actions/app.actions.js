@@ -1,5 +1,16 @@
-import { SEND_OTP_API, LOGOUT_API, VERIFY_OTP_API, USER_PROFILE_API, REGISTER_API, PROFILE_UPDATE_API, ADDRESS_LIST_API, ADDRESS_API } from '../../constants/api-routes.constants';
+import {
+    SEND_OTP_API,
+    LOGOUT_API,
+    VERIFY_OTP_API,
+    USER_PROFILE_API,
+    REGISTER_API,
+    PROFILE_UPDATE_API,
+    ADDRESS_LIST_API,
+    ADDRESS_API,
+    LOCATION_LIST_API
+} from '../../constants/api-routes.constants';
 import * as actionTypes from '../types/app.types';
+import { PINCODE, LOCATION_ID } from '../../constants/app.constants';
 import flevar from '../../../api/api';
 
 export const authenticateLogin = payload => dispatch => {
@@ -12,7 +23,6 @@ export const authenticateLogin = payload => dispatch => {
 };
 
 export const verifyOtpOnServer = payload => {
-    // dispatch({ type: actionTypes.VERIFY_OTP, payload: undefined });
     return flevar.post(VERIFY_OTP_API, payload).then(response => response);
 };
 
@@ -104,3 +114,18 @@ export const getAddressAction = payload => async (dispatch) => {
         else dispatch({ type: actionTypes.GET_ADDRESS_FAILURE, payload: response });
     });
 };
+
+export const getLocationAction = () => async (dispatch) => {
+    dispatch({ type: actionTypes.GET_LOCATION, payload: [] });
+    return flevar.get(LOCATION_LIST_API).then(response => {
+        const { success, data } = response['data'];
+        if (success) dispatch({ type: actionTypes.GET_LOCATION_SUCCESS, payload: data['data'] });
+        else dispatch({ type: actionTypes.GET_LOCATION_FAILURE, payload: response });
+    });
+};
+
+export const addPincodeAction = ({ pincode, location_id }) => dispatch => {
+    localStorage.setItem(PINCODE, pincode);
+    localStorage.setItem(LOCATION_ID, location_id);
+    dispatch({ type: actionTypes.ADD_PINCODE, payload: pincode });
+}

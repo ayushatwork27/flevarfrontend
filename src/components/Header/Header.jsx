@@ -20,9 +20,16 @@ import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Hidden from "@material-ui/core/Hidden";
 import Grid from "@material-ui/core/Grid";
 import CmnButton from '../../components/CmnButton/CmnButton';
-import { authenticateLogOut } from "../../shared/store/actions/app.actions";
+import { authenticateLogOut, addPincodeAction } from "../../shared/store/actions/app.actions";
 import CustomeContainer from "../CustomeContainer/CustomeContainer"
 import { getCartAction } from "../../shared/store/actions/cart.actions";
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import TextField from "@material-ui/core/TextField";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import { LOCATION_ID } from '../../shared/constants/app.constants';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -177,32 +184,65 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down("md")]: {
             display: "block"
         }
+    },
+    selectedLocation: {
+        backgroundColor: "#E8657D !important",
+        color: "#fff !important"
+    },
+    dialog_title: {
+        padding: "10px 15px",
+        borderBottom: "1px solid #80808059",
+        "& h2": {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+        },
+        "& svg": {
+            cursor: "pointer",
+            paddingLeft: "5px"
+        }
+    },
+    dialog_content: {
+        padding: "50px"
+    },
+    description_messages_wrapper: {
+        display: "flex",
+        alignItems: "center",
+        backgroundColor: "#F4F4F4",
+        marginTop: "40px",
+    },
+    send_btn: {
+        border: "none",
+        borderLeft: "1px solid rgba(0, 0, 0, 0.23)",
+        borderRadius: "0",
+        paddingLeft: "30px",
+    },
+    description_messages_input: {
+        borderRadius: "0px",
+        "& .MuiFilledInput-root": {
+            borderRadius: "0px",
+            backgroundColor: "#F4F4F4",
+        },
+        "& .Mui-focused": {
+            color: "#000;",
+            fontFamily: "Montserrat",
+        },
     }
-
 }));
-const locationData = [
-    {
-        imgsrc: "assets/images/cityimage4.jpg",
-        btnlable: "Calcutta"
-    },
-    {
-        imgsrc: "assets/images/cityimage4.jpg",
-        btnlable: "JAMSHEDPUR"
-    },
-    {
-        imgsrc: "assets/images/cityimage4.jpg",
-        btnlable: "RANCHI"
-    },
-]
+
 export default function PrimarySearchAppBar() {
 
+    const defaultLocatioId = localStorage.getItem(LOCATION_ID);
     // const renderMobileMenu = null;
     const { cartItems } = useSelector(state => state.cart);
 
     const classes = useStyles();
     const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = useState(null);
+    const [openPincodeView, setPincodeView] = useState(false);
+    const [selectedLocation, setselectedLocation] = useState(defaultLocatioId ? { id: +defaultLocatioId } : null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+    const [pincode, updatePincode] = useState('');
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -230,7 +270,26 @@ export default function PrimarySearchAppBar() {
         dispatch(authenticateLogOut({ mobile }));
     }
 
-    const { user } = useSelector(state => state.app);
+    const { user, locations } = useSelector(state => state.app);
+
+    const locationSelection = (location) => {
+        setselectedLocation(location);
+        setPincodeView(true);
+    }
+
+    const handleClosePincodeView = () => {
+        setPincodeView(false);
+        if (defaultLocatioId) setselectedLocation({ id: +defaultLocatioId });
+        else setselectedLocation(null);
+    }
+
+    const checkPincode = (data) => {
+        const pincodeIndex = selectedLocation.location_pincodes.findIndex(prop => prop.pincode === +data);
+        if (pincodeIndex > -1) {
+            dispatch(addPincodeAction({ location_id: selectedLocation.id, pincode: data }));
+            setPincodeView(false);
+        }
+    }
 
     const menuId = "primary-search-account-menu";
 
@@ -343,11 +402,13 @@ export default function PrimarySearchAppBar() {
                             <Box className="location-wrapperbox">
                                 <Grid container className="home-onhover-location-right-wrapper" >
                                     {
-                                        locationData.map((val, i) => {
+                                        locations && locations.map((val, i) => {
                                             return (
                                                 <Grid item sm={6} md={4} className={` home-onhover-location-singlebox ${classes.location_single_box}`} key={i}>
-                                                    <img src={val.imgsrc} alt="cityimage" />
-                                                    <CmnButton btntitle={val.btnlable} />
+                                                    <img src={val.image_url} alt="cityimage" />
+                                                    <CmnButton btntitle={val.name}
+                                                        className={selectedLocation && selectedLocation.id === val.id ? classes.selectedLocation : null}
+                                                        onClick={() => { locationSelection(val) }} />
                                                 </Grid>
                                             )
                                         })
@@ -468,6 +529,41 @@ export default function PrimarySearchAppBar() {
                         </div>
                     </Toolbar>
                 </AppBar>
+                <Dialog
+                    open={openPincodeView}
+                    onClose={handleClosePincodeView}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle className={classes.dialog_title}>
+                        {"Pincode"}
+                        <HighlightOffIcon onClick={handleClosePincodeView} />
+                    </DialogTitle>
+                    <DialogContent className={classes.dialog_content}>
+                        <form noValidate autoComplete="off">
+                            <Box className={classes.description_messages_wrapper}>
+                                <TextField
+                                    id="filled-basic"
+                                    fullWidth
+                                    variant="filled"
+                                    label="Type to check pincode"
+                                    type="number"
+                                    maxLength={6}
+                                    className={classes.description_messages_input}
+                                    disableunderline="true"
+                                    value={pincode}
+                                    onChange={e => updatePincode(e.target.value)}
+                                />
+                                <CmnButton
+                                    variant="outlined"
+                                    className={classes.send_btn}
+                                    startIcon={<ArrowForwardIcon />}
+                                    onClick={() => checkPincode(pincode)}
+                                />
+                            </Box>
+                        </form>
+                    </DialogContent>
+                </Dialog>
             </CustomeContainer>
             {renderMobileMenu}
             {renderMenu}
