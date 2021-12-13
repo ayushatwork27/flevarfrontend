@@ -60,7 +60,7 @@ function SingleCakeItem(props) {
                         <Typography gutterBottom variant="h6" style={{ textTransform: 'capitalize' }}>
                             {props.productname}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
+                        <Typography variant="body2" color="textSecondary" style={{textTransform: 'capitalize'}} component="p">
                             {props.category}
                         </Typography>
                         <Box className={classes.popolarcakepricing}>

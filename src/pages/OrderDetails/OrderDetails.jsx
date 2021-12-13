@@ -189,7 +189,7 @@ function OrderDetails() {
   const { orderDetail } = useSelector(state => state.order);
 
   useEffect(() => {
-    dispatch(getOrderDetailAction(params.orderId));
+    dispatch(getOrderDetailAction(params.id));
   }, [])
   return (
     <CustomeContainer>

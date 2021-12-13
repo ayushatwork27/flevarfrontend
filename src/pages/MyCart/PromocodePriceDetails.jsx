@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Box, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import DateRangeIcon from "@material-ui/icons/DateRange";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -10,16 +9,15 @@ import DateFnsUtils from "@date-io/date-fns";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import SelectSlote from "../../components/BuyNowDateTime/SelectSlote";
 import SelectTime from "../../components/BuyNowDateTime/SelectTime";
+import CmnButton from "../../components/CmnButton/CmnButton";
 import slot_types from "./slot_types";
 import main_slot_types from "./main_slot_types";
 import "date-fns";
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker,
-} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import { useDispatch } from "react-redux";
 import { addDeliveryDateAction, addDeliveryTimeRangeAction, addShipmentPriceAction, addShipmentTypeAction } from "../../shared/store/actions/cart.actions";
 import { useSelector } from "react-redux";
+
 const useStyles = makeStyles((theme) => ({
     promo_code_price_details_wrapper: {
         marginTop: "30px",
@@ -192,6 +190,12 @@ function PromocodePriceDetails({ deliveryDate }) {
     const [deliverytime, setdeliveryTime] = useState("");
     const [selectedDateString, setSelectedDateStirng] = useState("");
 
+    const [taxAmount, setTaxAmount] = useState(0);
+
+    useEffect(() => {
+        setSelectedDateStirng(() => (delivery_date && setSelectedDateStirng(monthNames[new Date(delivery_date).getMonth()] + ", " + new Date(delivery_date).getDate()) || ''));
+        setdeliveryTime(() => (delivery_time_range || ''));
+    }, [])
     useEffect(() => {
         const todaysDate = new Date();
         const currentHour = todaysDate.getHours();
@@ -243,7 +247,6 @@ function PromocodePriceDetails({ deliveryDate }) {
                     );
                 }
             });
-
             setTodysSlotType(filteredSlots);
         } else if (currentHour >= 18) {
             const tomorrowDate = new Date(todaysDate.setDate(todaysDate.getDate() + 1));
@@ -315,22 +318,19 @@ function PromocodePriceDetails({ deliveryDate }) {
                 {deliveryDate ? (
                     <Box className={classes.promo_code_wrapper}>
                         <Typography variant="h5" className={classes.promo_code_title}>
-                            Choose Date
+                            Choose Date & Time
                         </Typography>
                         <Box className={classes.promocode_wrapper}>
-                            <form noValidate autoComplete="off">
-                                <Box
-                                    className={classes.date_shown_box}
-                                    onClick={handleClickOpen}
-                                >
-                                    <Typography>
-                                        {" "}
-                                        {selectedDateString} {", "}
-                                        {deliverytime}
-                                    </Typography>
-                                    <DateRangeIcon className={classes.calender_icon} />
-                                </Box>
-                            </form>
+                            <CmnButton
+                                btntitle="Date & Time"
+                                variant="contained"
+                                className="theme-contained-btn"
+                                onClick={handleClickOpen}
+                            />
+                            <Typography>
+                                {selectedDateString} {selectedDateString ? ", " : ""}
+                                {deliverytime}
+                            </Typography>
                         </Box>
                     </Box>
                 ) : null}
@@ -370,7 +370,6 @@ function PromocodePriceDetails({ deliveryDate }) {
                         </DialogContentText>
                     </DialogContent>
                 </Dialog>
-
                 {/*Select Select Slot Type */}
                 <Dialog
                     open={openSloat}
@@ -433,10 +432,7 @@ function PromocodePriceDetails({ deliveryDate }) {
                     </Typography>
                     <Typography variant="body1" className={classes.totalQuantity}>
                         Total Quantity : {cartItems.length &&
-                            cartItems[0]['cart_items'].reduce((quantity, item) => {
-                                quantity = quantity + item.quantity;
-                                return quantity;
-                            }, 0)}
+                            cartItems[0]['cart_items'].reduce((quantity, item) => quantity + item.quantity, 0)}
                     </Typography>
                 </Box>
                 <Box className={classes.cmn_price_discount_amount_main_ceontainer}>
@@ -481,6 +477,22 @@ function PromocodePriceDetails({ deliveryDate }) {
                             variant="body1"
                             className={classes.cmn_price_discount_amount_title}
                         >
+                            Tax
+                        </Typography>
+                        <Typography
+                            variant="body1"
+                            className={classes.cmn_price_discount_amount_value}
+                        >
+                            Rs. {cartItems && cartItems.length && (0.05 * cartItems[0]['total_amout'])}
+                        </Typography>
+                    </Box>
+                    <Box
+                        className={`flex-wraper ${classes.cmn_price_discount_amount_wrapper}`}
+                    >
+                        <Typography
+                            variant="body1"
+                            className={classes.cmn_price_discount_amount_title}
+                        >
                             Discount
                         </Typography>
                         <Typography
@@ -503,7 +515,7 @@ function PromocodePriceDetails({ deliveryDate }) {
                             variant="body1"
                             className={`${classes.cmn_price_discount_amount_value} ${classes.total}`}
                         >
-                            Rs. {cartItems.length && (cartItems[0]['total_amout'] + Number(shipment_price) - 50)}
+                            Rs. {cartItems.length && (cartItems[0]['total_amout'] + Number(shipment_price) + (0.05 * cartItems[0]['total_amout']) - 50)}
                         </Typography>
                     </Box>
                 </Box>

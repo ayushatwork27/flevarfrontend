@@ -1,5 +1,5 @@
 import { Typography, Box, Grid } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import CustomeContainer from "../../components/CustomeContainer/CustomeContainer";
 import { makeStyles } from "@material-ui/core/styles";
@@ -108,6 +108,11 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: "20px",
         },
     },
+    qtyLabel: {
+        paddingBottom: "5px",
+        fontSize: "15px",
+        fontWeight: "600"
+    },
     checkoutBtn: {
         textAlign: "right",
         marginTop: "15px",
@@ -115,24 +120,29 @@ const useStyles = makeStyles((theme) => ({
         display: "inherit",
     },
 }));
+
+const productLists = [];
+
 function MyCart() {
-    const productLists = [];
     const classes = useStyles();
-    const [value, setValue] = useState(4);
-    const { products } = useSelector(state => state.product);
-    const { cartItems } = useSelector(state => state.cart);
-    cartItems.forEach(item => {
-        const prodIndex = item['cart_items'] && item['cart_items'].length && products.findIndex(prod => prod.id === item['cart_items'][0]['product_id']);
-        if (prodIndex > -1 && item['cart_items'] && item['cart_items'].length) productLists.push(products[prodIndex]);
-    });
     const dispatch = useDispatch();
-    const removeItemFromCart = (product_id) => {
-        dispatch(deleteItemFromCartAction(product_id));
-    }
 
     useEffect(() => {
         dispatch(getCartAction());
     }, []);
+
+    const { products } = useSelector(state => state.product);
+    const { cartItems } = useSelector(state => state.cart);
+
+    cartItems.forEach(item => {
+        const prodIndex = item['cart_items'] && item['cart_items'].length && products.findIndex(prod => prod.id === item['cart_items'][0]['product_id']);
+        if (prodIndex > -1 && item['cart_items'] && item['cart_items'].length) productLists.push(products[prodIndex]);
+    });
+
+    const removeItemFromCart = (product_id) => {
+        dispatch(deleteItemFromCartAction(product_id));
+    }
+
 
     return (
         <CustomeContainer>
@@ -143,73 +153,99 @@ function MyCart() {
                 <Box>
                     <Grid container>
                         {
-                            cartItems.map(cartItem => (
+                            cartItems && cartItems.length && cartItems[0]['cart_items'].map(cartItem => (
                                 cartItem['cart_items'] && !cartItem['cart_items'].length ? null :
-                                <Grid item key={cartItem.id} xs={12} sm={12} md={7}>
-                                    <Grid container className={classes.mycart_product}>
-                                        <Grid item xs={12} sm={4} md={4}>
-                                            <img src="/assets/images/description.png" alt="description" />
-                                        </Grid>
-                                        <Grid item xs={12} sm={8} md={8}>
-                                            <Box className={classes.price_title_message_wrapper}>
-                                                <Box className={classes.cart_product_title_with_btn}>
-                                                    <Typography
-                                                        variant="h3"
-                                                        className={classes.cart_product_title}
+                                    <Grid item key={cartItem.id} xs={12} sm={12} md={7}
+                                        style={{ paddingBottom: '5px' }}>
+                                        <Grid container className={classes.mycart_product}>
+                                            <Grid item xs={12} sm={4} md={4}
+                                                component={Link}
+                                                to={{
+                                                    pathname: "/productdescription/" + cartItem.product_id
+                                                }}
+                                            >
+                                                <img src="/assets/images/description.png" alt="description" />
+                                            </Grid>
+                                            <Grid item xs={12} sm={8} md={8}>
+                                                <Box className={classes.price_title_message_wrapper}>
+                                                    <Box className={classes.cart_product_title_with_btn}>
+                                                        <Typography
+                                                            variant="h3"
+                                                            className={classes.cart_product_title}
+                                                        >
+                                                            {cartItem['product_name']}
+                                                        </Typography>
+                                                        <CmnButton
+                                                            btntitle="Remove"
+                                                            className={classes.removeBtn}
+                                                            onClick={() => removeItemFromCart(cartItem['id'])}
+                                                        />
+                                                    </Box>
+                                                    <Box
+                                                        component="fieldset"
+                                                        borderColor="transparent"
+                                                        className={classes.ratinbox}
                                                     >
-                                                        {cartItem['cart_items'] && cartItem['cart_items'].length && cartItem['cart_items'][0]['product_name']}
-                                                    </Typography>
-                                                    <CmnButton
-                                                        btntitle="Remove"
-                                                        className={classes.removeBtn}
-                                                        onClick={() => removeItemFromCart(cartItem['cart_items'][0]['id'])}
-                                                    />
+                                                        <Rating name="read-only" value={cartItem['product_rating']} readOnly />
+                                                        <Typography variant="body2">{cartItem['total_rated_by']} Ratings</Typography>
+                                                    </Box>
+                                                    <Box
+                                                        className={`flex-wraper ${classes.popolarcakepricing}`}
+                                                    >
+                                                        <Typography
+                                                            variant="h5"
+                                                            color="textSecondary"
+                                                            component="p"
+                                                            className={classes.sellingprice}
+                                                        >
+                                                            Rs.{cartItem['mrp']}
+                                                        </Typography>
+                                                        <Typography
+                                                            variant="body1"
+                                                            color="textSecondary"
+                                                            component="p"
+                                                            className={classes.originalprice}
+                                                        >
+                                                            Rs.{cartItem['rate']}
+                                                        </Typography>
+                                                        {
+                                                            cartItem && <Typography
+                                                                variant="body1"
+                                                                color="textSecondary"
+                                                                component="p"
+                                                                className={classes.cartBirthdayMessage}
+                                                            >
+                                                                {cartItem['cake_message'] || 'NA'}
+                                                            </Typography>
+                                                        }
+                                                    </Box>
+                                                    <Box>
+                                                        <Typography
+                                                            variant="body1"
+                                                            color="textSecondary"
+                                                            component="p"
+                                                            className={classes.qtyLabel}
+                                                        >
+                                                            QTY - {cartItem['quantity']}
+                                                        </Typography>
+                                                        <Typography
+                                                            variant="body1"
+                                                            color="textSecondary"
+                                                            component="p"
+                                                            className={classes.qtyLabel}
+                                                        >
+                                                            Weight - {cartItem['cake_weight']} KG
+                                                        </Typography>
+                                                    </Box>
                                                 </Box>
-                                                <Box
-                                                    component="fieldset"
-                                                    borderColor="transparent"
-                                                    className={classes.ratinbox}
-                                                >
-                                                    <Rating name="read-only" value={value} readOnly />
-                                                    <Typography variant="body2">32 Ratings</Typography>
-                                                </Box>
-                                                <Box
-                                                    className={`flex-wraper ${classes.popolarcakepricing}`}
-                                                >
-                                                    <Typography
-                                                        variant="h5"
-                                                        color="textSecondary"
-                                                        component="p"
-                                                        className={classes.sellingprice}
-                                                    >
-                                                        Rs.{cartItem['cart_items'] && cartItem['cart_items'].length && cartItem['cart_items'][0]['mrp']}
-                                                    </Typography>
-                                                    <Typography
-                                                        variant="body1"
-                                                        color="textSecondary"
-                                                        component="p"
-                                                        className={classes.originalprice}
-                                                    >
-                                                        Rs.{cartItem['cart_items'] && cartItem['cart_items'].length && cartItem['cart_items'][0]['mrp']}
-                                                    </Typography>
-                                                    <Typography
-                                                        variant="body1"
-                                                        color="textSecondary"
-                                                        component="p"
-                                                        className={classes.cartBirthdayMessage}
-                                                    >
-                                                        Happy Birthday Sunil
-                                                    </Typography>
-                                                </Box>
-                                            </Box>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
-                                </Grid>
                             ))
                         }
                         {productLists && productLists.length ? <Grid item xs={12} sm={12} md={5}>
                             <Box className={classes.promo_code_price_details_wrapper}>
-                                <PromocodePriceDetails deliveryDate={true}/>
+                                <PromocodePriceDetails deliveryDate={true} />
                                 <Box>
                                     <Box
                                         className={classes.checkoutBtn}

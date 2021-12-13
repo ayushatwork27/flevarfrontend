@@ -1,4 +1,4 @@
-import { ADDRESS_ID, CAKE_MSG, CART_ID, CART_TOKEN, COUPON_CODE, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_PRICE, SHIPMENT_TYPE } from '../../constants/app.constants';
+import { ADDRESS_ID, CAKE_MSG, CAKE_WEIGHT, CART_ID, CART_TOKEN, COUPON_CODE, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_PRICE, SHIPMENT_TYPE } from '../../constants/app.constants';
 import * as actionTypes from '../types/cart.types';
 
 const cart_id = localStorage.getItem(CART_ID);
@@ -10,6 +10,7 @@ const delivery_date = localStorage.getItem(DELIVERY_DATE);
 const delivery_time_range = localStorage.getItem(DELIVERY_TIME_RANGE);
 const shipment_type = localStorage.getItem(SHIPMENT_TYPE);
 const shipment_price = localStorage.getItem(SHIPMENT_PRICE);
+const cake_weight = localStorage.getItem(CAKE_WEIGHT);
 
 const initialState = {
     cartItems: [],
@@ -21,7 +22,8 @@ const initialState = {
     delivery_date: delivery_date || '',
     delivery_time_range: delivery_time_range || '',
     shipment_type: shipment_type || '',
-    shipment_price: shipment_price || ''
+    shipment_price: shipment_price || '',
+    cake_weight: cake_weight || ''
 };
 
 export const cartReducer = (state = initialState, action) => {
@@ -50,8 +52,10 @@ export const cartReducer = (state = initialState, action) => {
             return { ...state, shipment_type: action.payload };
         case actionTypes.ADD_SHIPMENT_PRICE:
             return { ...state, shipment_price: action.payload };
+        case actionTypes.ADD_CAKE_WEIGHT:
+            return { ...state, cake_weight: action.payload };
         case actionTypes.CLEAR_CART:
-            return { ...state, cartItems: [], message: '', coupon_code: '', address_id: '', delivery_date: '', delivery_time_range: '', shipment_type: '', shipment_price: '' };
+            return { ...state, cartItems: [], message: '', coupon_code: '', address_id: '', delivery_date: '', delivery_time_range: '', shipment_type: '', shipment_price: '', cake_weight: '' };
         case actionTypes.DELETE_ITEM_FROM_CART:
             return { ...state, cartItems: state.cartItems.filter(item => item['cart_items'][0]['product_id'] !== action.payload) };
         default:

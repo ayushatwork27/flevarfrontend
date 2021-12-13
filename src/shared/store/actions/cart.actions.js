@@ -1,5 +1,5 @@
 import { CART_API, CART_ITEM_SAVE_API } from '../../constants/api-routes.constants';
-import { ADDRESS_ID, CAKE_MSG, CART_ID, CART_TOKEN, COUPON_CODE, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_PRICE, SHIPMENT_TYPE } from '../../constants/app.constants';
+import { ADDRESS_ID, CAKE_MSG, CAKE_WEIGHT, CART_ID, CART_TOKEN, COUPON_CODE, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_PRICE, SHIPMENT_TYPE } from '../../constants/app.constants';
 import * as actionTypes from '../types/cart.types';
 import flevar from '../../../api/api';
 
@@ -84,6 +84,11 @@ export const addShipmentTypeAction = payload => dispatch => {
 export const addShipmentPriceAction = payload => dispatch => {
     localStorage.setItem(SHIPMENT_PRICE, payload);
     dispatch({ type: actionTypes.ADD_SHIPMENT_PRICE, payload });
+}
+
+export const addWeightAction = payload => dispatch => {
+    localStorage.setItem(CAKE_WEIGHT, payload);
+    dispatch({ type: actionTypes.ADD_CAKE_WEIGHT, payload });
 }
 
 export const clearCartAction = payload => dispatch => {

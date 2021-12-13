@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid, Typography } from "@material-ui/core";
 import { Button } from "@material-ui/core";
@@ -12,14 +12,14 @@ import DescriptionTabs from "./DescriptionTabs";
 import CakesItems from "../../components/CakeItemCard/CakesItems";
 import { useParams } from "react-router-dom";
 import { getProductDetailAction, getProductReviewsAction } from '../../shared/store/actions/product.actions';
-import { addCakeMessageAction, addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
 import { addPincodeAction } from "../../shared/store/actions/app.actions";
+import { addCakeMessageAction, addToCartAction, addWeightAction, updateCartAction } from '../../shared/store/actions/cart.actions';
 import { useHistory } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from "@material-ui/core/DialogTitle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import DialogContent from "@material-ui/core/DialogContent";
-import clsx from 'clsx';
+import Loader from "../../components/Loader/Loader";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
@@ -142,67 +142,81 @@ const useStyles = makeStyles((theme) => ({
         height: "100%",
         width: "auto"
 
+    },
+    buyNow: {
+        padding: "10px 20px"
     }
 }));
 
 const weightData = [
     {
-        id: "0",
+        id: 0,
         weight: "0.5"
     },
     {
-        id: "1",
+        id: 1,
         weight: "1"
     },
     {
-        id: "2",
+        id: 2,
         weight: "2"
     },
     {
-        id: "3",
+        id: 3,
         weight: "3"
     }
 ]
 
 function ProductDescription() {
-    let defaultCount = null;
-    const history = useHistory();
     const classes = useStyles();
-    const handleIncrement = () => {
-        defaultCount = null;
-        setCount((prevCount) => prevCount + 1);
-    }
+    const history = useHistory();
+    const dispatch = useDispatch();
 
-    const handleDecrement = () => {
-        defaultCount = null;
-        if (count < 2) setCount(1);
-        else setCount((prevCount) => prevCount - 1);
-
-    };
-    const [count, setCount] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [loader, setLoader] = useState(false);
     const [openTDView, setTDView] = useState(false);
     const [openLocationView, setLocationView] = useState(false);
-    const [open, setOpen] = useState(false);
-    const [cakeMsg, updateCakeMsg] = useState('');
     const [selectedLocation, setselectedLocation] = useState(null);
     const [openPincodeView, setPincodeView] = useState(false);
-    const [pincodeVal, updatePincode] = useState('');
-
-    const handleClose = () => setOpen(false);
+    const [pincodeVal, updatePincode] = useState(null);
+    const [weight, setWeight] = useState(0);
+    const [rating, setRating] = useState(0);
+    const [count, setCount] = useState(1);
+    const [cakeMsg, updateCakeMsg] = useState('');
 
     const { id } = useParams();
-    const dispatch = useDispatch();
+
+    const handleIncrement = () => {
+        setCount((prevCount) => prevCount + 1);
+    }
+    const handleDecrement = () => {
+        setCount((prevCount) => prevCount - 1);
+    };
+
+    const chooseWeight = (e) => {
+        setWeight(e.id);
+        dispatch(addWeightAction(e.id));
+    };
+
     useEffect(() => dispatch(
         getProductDetailAction(id),
+        getProductReviewsAction(id),
+        addWeightAction(weightData[0]['weight'])
     ), [id]);
-    useEffect(() => dispatch(
-        getProductReviewsAction(id)
-    ), [id]);
+
     const { productList, productDetail, productReviewList } = useSelector(state => state.product);
-    const { cartItems } = useSelector(state => state.cart);
     const { locations, pincode } = useSelector(state => state.app);
-    let itemIndex = cartItems && cartItems.length && cartItems[0].cart_items && cartItems[0].cart_items.length ? cartItems[0].cart_items.findIndex(item => productDetail && item.product_id === productDetail.id) : -1;
-    if (itemIndex > -1) defaultCount = cartItems && cartItems.length && cartItems[0].cart_items && cartItems[0].cart_items[itemIndex]['quantity'];
+    const { cartItems, cake_weight } = useSelector(state => state.cart);
+
+    useEffect(() => {
+        setTimeout(() => setLoader(() => true), 0);
+        const cartItem = cartItems[0] && cartItems[0]['cart_items'].filter(prop => prop.product_id === +id);
+        setRating(() => (productDetail && productDetail.product_rating || 0));
+        setCount(() => cartItem && cartItem.length && cartItem[0]['quantity'] || 1);
+        updateCakeMsg(() => cartItem && cartItem.length && cartItem[0]['cake_message'] || '');
+        setWeight(() => cartItem && cartItem.length && +cartItem[0]['cake_weight'] || 0);
+        if (loader) setTimeout(() => setLoader(() => false), 2000);
+    }, [productDetail, id]);
 
     const buyNow = () => {
         let authToken = localStorage.getItem('token');
@@ -210,13 +224,12 @@ function ProductDescription() {
             history.push('/login');
             return;
         }
-        setOpen(true);
         const productObj = {
             product_id: productDetail.id,
             cake_message: cakeMsg,
-            quantity: defaultCount || count,
+            cake_weight,
+            quantity: count,
             mrp: productDetail.mrp,
-            cake_weight: 1,
             pincode: pincode
         }
         if (pincode) {
@@ -226,27 +239,7 @@ function ProductDescription() {
         } else setLocationView(true);
     }
 
-    const [weight, setWeight] = useState('0');
-    const chooseWeight = (e) => {
-        setWeight(e.id);
-    }
-
-    const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState(false);
-    const timer = useRef();
-
-    const buttonClassname = clsx({
-        [classes.buttonSuccess]: success,
-    });
-    useEffect(() => {
-        return () => {
-            clearTimeout(timer.current);
-        };
-    }, []);
-
-    const viewTd = () => {
-        setTDView(true)
-    }
+    const viewTd = () => setTDView(true);
 
     const handleCloseTDView = () => setTDView(false);
 
@@ -268,20 +261,9 @@ function ProductDescription() {
 
     const handleClosePincodeView = () => setPincodeView(false);
 
-    // event loader
-    const handleButtonClick = () => {
-        if (!loading) {
-            setSuccess(false);
-            setLoading(true);
-            timer.current = window.setTimeout(() => {
-                setSuccess(true);
-                setLoading(false);
-            }, 2000);
-        }
-    };
-
     return (
         <CustomeContainer>
+            {loader ? <Loader /> : null}
             <Box className={classes.Product_description_wrapper}>
                 <Grid container>
                     <Grid item sm={12} md={6}>
@@ -307,14 +289,14 @@ function ProductDescription() {
                                 borderColor="transparent"
                                 className={classes.ratinbox}
                             >
-                                <Rating name="read-only" value={productDetail && productDetail.product_rating} readOnly />
+                                <Rating name="read-only" value={rating} readOnly />
                                 <Typography variant="body2">{productDetail && productDetail.total_rated_by} Ratings</Typography>
                             </Box>
                             <Box className={classes.popolarcakepricing} display="flex">
                                 <Typography
                                     variant="h5"
                                     color="textSecondary"
-                                    component="p"
+                                    component="span"
                                     className={classes.sellingprice}
                                 >
                                     Rs.{productDetail && productDetail.mrp}
@@ -322,15 +304,15 @@ function ProductDescription() {
                                 <Typography
                                     variant="body1"
                                     color="textSecondary"
-                                    component="p"
+                                    component="span"
                                     className={classes.originalprice}
                                 >
                                     Rs.{productDetail && productDetail.rate}
                                 </Typography>
                             </Box>
                             <Box className={classes.counter_box}>
-                                <Button onClick={handleDecrement} disabled={(defaultCount || count) === 1}>-</Button>
-                                <Typography variant="h6">{defaultCount || count}</Typography>
+                                <Button onClick={handleDecrement} disabled={+count === 1}>-</Button>
+                                <Typography variant="h6">{count}</Typography>
                                 <Button onClick={handleIncrement}>+</Button>
                             </Box>
                             <Box className={classes.weight_btn_wrapper}>
@@ -345,38 +327,31 @@ function ProductDescription() {
                                                 onClick={() => chooseWeight(val)}
 
                                             >
-                                                {val.weight}Kg
+                                                {val.weight} Kg
                                             </Button>
                                         );
                                     })
                                 }
                             </Box>
                             <Box>
-                                <CmnButton
-                                    btntitle="Buy Now"
-                                    variant="contained"
-                                    className="theme-contained-btn"
-                                    onClick={buyNow}
-                                />
-                                <CmnButton
-                                    variant="outlined"
-                                    btntitle="View in 3D"
-                                    className={classes.view3d}
-                                    onClick={viewTd}
-                                />
-                                {/* <div className="btn-loader-wrapper">
+                                <div className="btn-loader-wrapper">
                                     <Button
                                         variant="contained"
                                         color="primary"
-                                        className="theme-contained-btn"
+                                        className={`theme-contained-btn ${classes.buyNow}`}
                                         disabled={loading}
-                                        onClick={handleButtonClick}
+                                        onClick={buyNow}
                                     >
-                                        Accept terms
+                                        Buy Now
                                         {loading && <div className="btn-loader-bg"><CircularProgress size={24} className="btn-progress" /> </div>}
                                     </Button>
-
-                                </div> */}
+                                    <CmnButton
+                                        variant="outlined"
+                                        btntitle="View in 3D"
+                                        className={classes.view3d}
+                                        onClick={viewTd}
+                                    />
+                                </div>
                             </Box>
                             <Box>
                                 <form noValidate autoComplete="off">
@@ -401,7 +376,7 @@ function ProductDescription() {
                                 </form>
                             </Box>
                             <Box>
-                                <DescriptionTabs onClose={handleClose} open={open} product={productDetail} reviews={productReviewList} />
+                                <DescriptionTabs product={productDetail} reviews={productReviewList} />
                             </Box>
                         </Box>
                     </Grid>
@@ -502,58 +477,6 @@ function ProductDescription() {
                     </form>
                 </DialogContent>
             </Dialog>
-            {/* <Box>
-                <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                    maxWidth="sm"
-                    fullWidth
-                >
-                    Rs.1079
-                </Dialog>
-            </Box>
-            <Box className={classes.counter_box}>
-                <Button onClick={handleDecrement}>-</Button>
-                <Typography variant="h6">{count}</Typography>
-                <Button onClick={handleIncrement}>+</Button>
-            </Box>
-            <Box>
-                <CmnButton
-                    btntitle="Buy Now"
-                    variant="contained"
-                    className="theme-contained-btn"
-                    onClick={buyNow}
-                />
-                <CmnButton
-                    variant="outlined"
-                    btntitle="View in 3D"
-                    className={classes.view3d}
-                />
-            </Box>
-            <Box>
-                <form noValidate autoComplete="off">
-                    <Box className={classes.description_messages_wrapper}>
-                        <TextField
-                            id="filled-basic"
-                            fullWidth
-                            variant="filled"
-                            label="Type Message on Cake Here"
-                            className={classes.description_messages_input}
-                            disableunderline="true"
-                        />
-                        <CmnButton
-                            variant="outlined"
-                            className={classes.send_btn}
-                            startIcon={<ArrowForwardIcon />}
-                        />
-                    </Box>
-                </form>
-            </Box>
-            <Box>
-                <DescriptionTabs onClose={handleClose} open={open} />
-            </Box> */}
         </CustomeContainer >
     );
 }

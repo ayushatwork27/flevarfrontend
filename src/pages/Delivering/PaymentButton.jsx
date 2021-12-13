@@ -4,7 +4,7 @@ import CmnButton from "../../components/CmnButton/CmnButton";
 import flevar from '../../api/api';
 import { PLACE_ORDER_API, VERIFY_ORDER_API } from '../../shared/constants/api-routes.constants';
 import { useHistory } from 'react-router';
-import { ADDRESS_ID, CAKE_MSG, CART_ID, CART_TOKEN, COUPON_CODE, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_PRICE, SHIPMENT_TYPE } from '../../shared/constants/app.constants';
+import { ADDRESS_ID, CAKE_MSG, CAKE_WEIGHT, CART_ID, CART_TOKEN, COUPON_CODE, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_PRICE, SHIPMENT_TYPE } from '../../shared/constants/app.constants';
 import { clearCartAction } from '../../shared/store/actions/cart.actions';
 
 function PaymentButton() {
@@ -35,22 +35,22 @@ function PaymentButton() {
     const payNow = (payload) => {
         var options = {
             key: "rzp_test_hAVuEDTOKZ8ST0", // Key ID generated from the Dashboard
-            amount: (cartItems[0]['total_amout'] + Number(shipment_price) - payload.total_discount) * 100, // Amount is in currency sub units. Hence, 50000 refers to 50000 paise.
+            amount: (cartItems[0]['total_amout'] + Number(shipment_price) + (0.05 * cartItems[0]['total_amout']) - payload.total_discount) * 100, // Amount is in currency sub units. Hence, 50000 refers to 50000 paise.
             currency: "INR", // Default currency is INR.
             name: "Flevar", // 
             handler: function (response) {
                 // setPaymentToken(response.razorpay_payment_id);
                 payload['online_payment_id'] = response.razorpay_payment_id;
-                payload['cart_items'] = cartItems[0]['cart_items'].map(item => ({
-                    cart_item_id: item.id,
-                    product_id: item.product_id,
-                    price: item.total_mrp,
-                    quantity: item.quantity,
-                    weight: item.cake_weight,
-                    message: item.message || ""
+                payload['cart_items'] = cartItems[0]['cart_items'].map(({ id, product_id, total_mrp, quantity, cake_weight, message }) => ({
+                    cart_item_id: id,
+                    product_id,
+                    quantity,
+                    price: total_mrp,
+                    weight: cake_weight,
+                    message: message || ""
                 }));
                 flevar.post(PLACE_ORDER_API, payload).then(response => {
-                    [CART_TOKEN, CART_ID, CAKE_MSG, COUPON_CODE, ADDRESS_ID, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_TYPE, SHIPMENT_PRICE].forEach(item => localStorage.removeItem(item));
+                    [CART_TOKEN, CART_ID, CAKE_MSG, CAKE_WEIGHT, COUPON_CODE, ADDRESS_ID, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_TYPE, SHIPMENT_PRICE].forEach(item => localStorage.removeItem(item));
                     dispatch(clearCartAction());
                     if (response['data']['success']) history.push('/orders');
                 })
