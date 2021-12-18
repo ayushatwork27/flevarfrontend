@@ -13,9 +13,6 @@ import PaymentButton from "./PaymentButton";
 import { addAddressIdAction } from "../../shared/store/actions/cart.actions";
 
 const useStyles = makeStyles((theme) => ({
-    // mycart_wrapper: {
-    //   marginTop: "3%",
-    // },
     cart_main_title: {
         fontSize: "26px",
         letterSpacing: "0px",
@@ -113,34 +110,6 @@ const Delivering = () => {
                                     </Box>
                                 </Box>
                             ))}
-                            {/* <Box className={classes.addressSingeBox}>
-                                <Box className={classes.address}>
-                                    <Typography variant="h5">My Home</Typography>
-                                    <Typography variant="body2">
-                                        49,VIP Enclave,Baguiati,Kolkata 700959
-                                    </Typography>
-                                </Box>
-                                <Box>
-                                    <CmnButton
-                                        btntitle="Select"
-                                        className={` ${classes.selected_text}`}
-                                    />
-                                </Box>
-                            </Box> */}
-                            {/* <Box className={classes.addressSingeBox}>
-                                <Box className={classes.address}>
-                                    <Typography variant="h5">Friend Home</Typography>
-                                    <Typography variant="body2">
-                                        49,VIP Enclave,Baguiati,Kolkata 700959
-                                    </Typography>
-                                </Box>
-                                <Box>
-                                    <CmnButton
-                                        btntitle="Selected"
-                                        className={` ${classes.notselected_text}`}
-                                    />
-                                </Box>
-                            </Box> */}
                             <Box className={classes.addressSingeBox}>
                                 <Box className={classes.address}>
                                     <Typography variant="h5">Add a new Address</Typography>
@@ -148,6 +117,8 @@ const Delivering = () => {
                                 <Box>
                                     <CmnButton
                                         btntitle="add new"
+                                        component={Link}
+                                        to="/add_new_address"
                                         className={` ${classes.addnewBtn}`}
                                     />
                                 </Box>

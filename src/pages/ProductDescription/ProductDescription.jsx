@@ -13,7 +13,7 @@ import CakesItems from "../../components/CakeItemCard/CakesItems";
 import { useParams } from "react-router-dom";
 import { getProductDetailAction, getProductReviewsAction } from '../../shared/store/actions/product.actions';
 import { addPincodeAction } from "../../shared/store/actions/app.actions";
-import { addCakeMessageAction, addToCartAction, addWeightAction, updateCartAction } from '../../shared/store/actions/cart.actions';
+import { addCakeMessageAction, addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
 import { useHistory } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -148,25 +148,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const weightData = [
-    {
-        id: 0,
-        weight: "0.5"
-    },
-    {
-        id: 1,
-        weight: "1"
-    },
-    {
-        id: 2,
-        weight: "2"
-    },
-    {
-        id: 3,
-        weight: "3"
-    }
-]
-
 function ProductDescription() {
     const classes = useStyles();
     const history = useHistory();
@@ -179,7 +160,9 @@ function ProductDescription() {
     const [selectedLocation, setselectedLocation] = useState(null);
     const [openPincodeView, setPincodeView] = useState(false);
     const [pincodeVal, updatePincode] = useState(null);
-    const [weight, setWeight] = useState(0);
+    const [weight, setWeight] = useState(1);
+    const [mrp, setMrp] = useState(0);
+    const [price, setPrice] = useState(0);
     const [rating, setRating] = useState(0);
     const [count, setCount] = useState(1);
     const [cakeMsg, updateCakeMsg] = useState('');
@@ -195,26 +178,28 @@ function ProductDescription() {
 
     const chooseWeight = (e) => {
         setWeight(e.id);
-        dispatch(addWeightAction(e.id));
+        setMrp(e.mrp);
+        setPrice(e.list_price);
     };
 
     useEffect(() => dispatch(
         getProductDetailAction(id),
-        getProductReviewsAction(id),
-        addWeightAction(weightData[0]['weight'])
+        getProductReviewsAction(id)
     ), [id]);
 
     const { productList, productDetail, productReviewList } = useSelector(state => state.product);
     const { locations, pincode } = useSelector(state => state.app);
-    const { cartItems, cake_weight } = useSelector(state => state.cart);
+    const { cartItems } = useSelector(state => state.cart);
 
     useEffect(() => {
         setTimeout(() => setLoader(() => true), 0);
         const cartItem = cartItems[0] && cartItems[0]['cart_items'].filter(prop => prop.product_id === +id);
-        setRating(() => (productDetail && productDetail.product_rating || 0));
+        setRating(() => (productDetail && productDetail.product_rating || 5));
         setCount(() => cartItem && cartItem.length && cartItem[0]['quantity'] || 1);
         updateCakeMsg(() => cartItem && cartItem.length && cartItem[0]['cake_message'] || '');
-        setWeight(() => cartItem && cartItem.length && +cartItem[0]['cake_weight'] || 0);
+        setWeight(() => cartItem && cartItem.length && +cartItem[0]['cake_weight'] || productDetail.product_variants && productDetail.product_variants[0]['id']);
+        setMrp(() => productDetail.product_variants && productDetail.product_variants[0]['mrp']);
+        setPrice(() => productDetail.product_variants && productDetail.product_variants[0]['list_price']);
         if (loader) setTimeout(() => setLoader(() => false), 2000);
     }, [productDetail, id]);
 
@@ -227,9 +212,9 @@ function ProductDescription() {
         const productObj = {
             product_id: productDetail.id,
             cake_message: cakeMsg,
-            cake_weight,
+            cake_weight: weight,
             quantity: count,
-            mrp: productDetail.mrp,
+            mrp,
             pincode: pincode
         }
         if (pincode) {
@@ -299,7 +284,7 @@ function ProductDescription() {
                                     component="span"
                                     className={classes.sellingprice}
                                 >
-                                    Rs.{productDetail && productDetail.mrp}
+                                    Rs.{mrp}
                                 </Typography>
                                 <Typography
                                     variant="body1"
@@ -307,7 +292,7 @@ function ProductDescription() {
                                     component="span"
                                     className={classes.originalprice}
                                 >
-                                    Rs.{productDetail && productDetail.rate}
+                                    Rs.{price}
                                 </Typography>
                             </Box>
                             <Box className={classes.counter_box}>
@@ -317,7 +302,7 @@ function ProductDescription() {
                             </Box>
                             <Box className={classes.weight_btn_wrapper}>
                                 {
-                                    weightData.map(val => {
+                                    productDetail.product_variants && productDetail.product_variants.map(val => {
                                         return (
                                             <Button
                                                 variant={weight === val.id ? "contained" : "outlined"}
@@ -327,7 +312,7 @@ function ProductDescription() {
                                                 onClick={() => chooseWeight(val)}
 
                                             >
-                                                {val.weight} Kg
+                                                {val.unit_value} {val.unit_code}
                                             </Button>
                                         );
                                     })
