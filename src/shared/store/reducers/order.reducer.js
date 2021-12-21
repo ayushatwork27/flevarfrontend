@@ -2,7 +2,7 @@ import * as actionTypes from '../types/order.types';
 
 const initialState = {
     orderList: [],
-    orderDetail: undefined
+    orderDetail: {}
 };
 
 export const orderReducer = (state = initialState, action) => {

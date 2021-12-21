@@ -73,23 +73,36 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const OrderItemDetail = (props) => {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const { order, isOrder } = props;
-    let orderDetail = order && new OrderModel(order);
+    let orderDetail = order && order['product_name'] ? order : new OrderModel(order);
     const orderDetailLink = order ? 'order_details/' + order.order_id : '';
     const reviewLink = order ? 'product-review/' + order.order_id : '';
     const classes = useStyles();
     const [value, setValue] = React.useState(5);
 
-    const getProductName = orderItems => {
-        if (!orderItems || !orderItems.length) return 'Cake';
-        if (orderItems.length === 1) return orderItems[0]['product_name'];
-        return `${orderItems[0]['product_name']} +${orderItems.length - 1}`;
+    const getProductName = () => {
+        if (!orderDetail) return null;
+        const first_order_item = orderDetail['product_name'] ? orderDetail : orderDetail['order_items'][0];
+        const order_item_count = orderDetail['product_name'] ? 1 : orderDetail['order_items'].length;
+
+        if (order_item_count === 1) return String(first_order_item['product_name']).charAt(0).toUpperCase() + String(first_order_item['product_name']).slice(1);
+        const first_order_item_name = String(first_order_item['product_name']).charAt(0).toUpperCase() + String(first_order_item['product_name']).slice(1);
+        return `${first_order_item_name} +${order_item_count - 1}`;
     }
 
-    const getDeliveryStatus = () => {
-        if (!orderDetail) return;
-        const { current_status, delivery_date, message, created_at, special_instruction, reason } = orderDetail;
+    // const getDeliveryStatus = () => {
+    //     if (!orderDetail) return;
+    //     const { current_status, delivery_date, message, created_at, special_instruction, reason } = orderDetail;
 
+    // }
+
+    const getOrderDeliveryDate = deliveryDate => {
+        const date = new Date(deliveryDate);
+        const delivery_date = date.getDate();
+        const delivery_month = months[date.getMonth()];
+        const delivery_year = date.getFullYear();
+        return `${delivery_date} ${delivery_month}, ${delivery_year}`;
     }
 
     return (
@@ -99,8 +112,9 @@ const OrderItemDetail = (props) => {
             <Box className={classes.order_item_image}>
                 <Link to={orderDetailLink}>
                     {
-                        orderDetail['order_items'][0]['url'] ? <img src={orderDetail['order_items'][0]['url']} alt="description" />
-                            : <img src="/assets/images/description.png" alt="description" />
+                        orderDetail['order_items'] && orderDetail['order_items'][0]['url'] ?
+                            <img src={orderDetail['order_items'][0]['url']} alt="description" /> :
+                            <img src="/assets/images/description.png" alt="description" />
                     }
                 </Link>
             </Box>
@@ -109,18 +123,19 @@ const OrderItemDetail = (props) => {
                     className={`flex-wraper ${classes.d_flex} ${classes.between} `}
                 >
                     <Typography variant="h5" className={classes.fw_bold}>
-                        <Link to={orderDetailLink}>{orderDetail && getProductName(orderDetail.order_items)}</Link>
+                        <Link to={orderDetailLink}>{orderDetail && getProductName()}</Link>
                     </Typography>
-                    <Box className={`flex-wraper ${classes.d_flex}`}>
-                        <Typography
-                            variant="h5"
-                            color="textSecondary"
-                            component="p"
-                            className={classes.sellingprice}
-                        >
-                            Rs. {orderDetail && orderDetail.final_price || 0}
-                        </Typography>
-                        {/* <Typography
+                    {
+                        orderDetail && orderDetail.final_price ? <Box className={`flex-wraper ${classes.d_flex}`}>
+                            <Typography
+                                variant="h5"
+                                color="textSecondary"
+                                component="p"
+                                className={classes.sellingprice}
+                            >
+                                Rs. {orderDetail && orderDetail.final_price || 0}
+                            </Typography>
+                            {/* <Typography
                             variant="body1"
                             color="textSecondary"
                             component="p"
@@ -128,7 +143,8 @@ const OrderItemDetail = (props) => {
                         >
                             Rs. {order && order.price}
                         </Typography> */}
-                    </Box>
+                        </Box> : null
+                    }
                 </Box>
                 <Box
                     component="fieldset"
@@ -145,7 +161,7 @@ const OrderItemDetail = (props) => {
                         component="p"
                         className="delivery_dates_dots"
                     >
-                        Delivered on 19th Aug 2021
+                        Delivered on {getOrderDeliveryDate(orderDetail['delivery_date'])}
                     </Typography>
                     {isOrder && <Box className={`flex-wraper ${classes.d_flex}`}>
                         <CmnButton

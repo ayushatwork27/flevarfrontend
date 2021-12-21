@@ -186,7 +186,11 @@ function OrderDetails() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const params = useParams();
-  const { orderDetail } = useSelector(state => state.order);
+  const { orderDetail } = useSelector(state => {
+    const order = Object.keys(state.order.orderDetail).length ? state.order.orderDetail : null;
+    if (order) order.order_items = order.order_items.map(item => ({ ...item, delivery_date: order.delivery_date, delivery_time_range: order.delivery_time_range }));
+    return { orderDetail: order };
+  });
 
   useEffect(() => {
     dispatch(getOrderDetailAction(params.id));
@@ -249,7 +253,7 @@ function OrderDetails() {
                           variant="body1"
                           className={classes.order_box_smll_title_below_content}
                         >
-                          { orderDetail && orderDetail.message }
+                          {orderDetail && orderDetail.message}
                         </Typography>
                       </Box>
                     </Box>
@@ -282,7 +286,7 @@ function OrderDetails() {
                         variant="body1"
                         className={classes.order_box_smll_title_below_content}
                       >
-                        { orderDetail && orderDetail.order_number }
+                        {orderDetail && orderDetail.order_number}
                       </Typography>
                     </Box>
                   </Grid>
@@ -308,17 +312,29 @@ function OrderDetails() {
                   className={` ${classes.cmn_flex} ${classes.single_summary_box} `}
                 >
                   <Typography variant="body1">Price</Typography>
-                  <Typography variant="h6">Rs. 1,240</Typography>
+                  <Typography variant="h6">Rs. {orderDetail ? orderDetail['total_product_price'] : 0}</Typography>
+                </Box>
+                <Box
+                  className={` ${classes.cmn_flex} ${classes.single_summary_box} `}
+                >
+                  <Typography variant="body1">Shipment Price</Typography>
+                  <Typography variant="h6">Rs. {orderDetail && orderDetail['shipment_price'] || 0}</Typography>
+                </Box>
+                <Box
+                  className={` ${classes.cmn_flex} ${classes.single_summary_box} `}
+                >
+                  <Typography variant="body1">Tax (5%)</Typography>
+                  <Typography variant="h6">Rs. {orderDetail ? 0.05 * orderDetail['total_product_price'] : 0}</Typography>
                 </Box>
                 <Box
                   className={` ${classes.cmn_flex} ${classes.single_summary_box} `}
                 >
                   <Typography variant="body1">Discount</Typography>
-                  <Typography variant="h6">Rs. 50</Typography>
+                  <Typography variant="h6">Rs. {orderDetail ? 50 : 0} </Typography>
                 </Box>
                 <Box className={` ${classes.cmn_flex} ${classes.total_box} `}>
                   <Typography variant="body1">Total</Typography>
-                  <Typography variant="h6">Rs. 50</Typography>
+                  <Typography variant="h6">Rs. {orderDetail ? orderDetail['final_price'] : 0}</Typography>
                 </Box>
               </Box>
             </Box>

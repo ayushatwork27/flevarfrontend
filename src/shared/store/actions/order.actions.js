@@ -18,7 +18,7 @@ export const placeOrderAction = payload => dispatch => {
 
 export const getOrdersListAction = payload => dispatch => {
     dispatch({ type: actionTypes.GET_ORDER_LIST, payload });
-    return flevar.get(ORDER_API).then(response => {
+    return flevar.get(`${ORDER_API}?page=2`).then(response => {
         const { success, data } = response.data;
         if (success) dispatch({ type: actionTypes.GET_ORDER_LIST_SUCCESS, payload: data['data'] });
     });
