@@ -11,7 +11,7 @@ function OrderTabs() {
     dispatch(getOrdersListAction());
   }, []);
   return (
-    orderList && orderList.map((order, index) => <OrderItemDetail isOrder={true} order={order} key={index} />)
+    orderList && orderList.map((order, index) => order['order_items'].length ? <OrderItemDetail isOrder={true} order={order} key={index} /> : null)
   );
 }
 

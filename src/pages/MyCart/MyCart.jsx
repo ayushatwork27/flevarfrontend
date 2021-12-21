@@ -206,10 +206,10 @@ function MyCart() {
                                                             component="p"
                                                             className={classes.originalprice}
                                                         >
-                                                            Rs.{cartItem['rate']}
+                                                            Rs.{cartItem['list_price']}
                                                         </Typography>
                                                         {
-                                                            cartItem && <Typography
+                                                            cartItem && cartItem['cake_message'] && <Typography
                                                                 variant="body1"
                                                                 color="textSecondary"
                                                                 component="p"

@@ -98,7 +98,10 @@ const OrderItemDetail = (props) => {
         >
             <Box className={classes.order_item_image}>
                 <Link to={orderDetailLink}>
-                    <img src="/assets/images/description.png" alt="description" />
+                    {
+                        orderDetail['order_items'][0]['url'] ? <img src={orderDetail['order_items'][0]['url']} alt="description" />
+                            : <img src="/assets/images/description.png" alt="description" />
+                    }
                 </Link>
             </Box>
             <Box className={classes.order_discription}>

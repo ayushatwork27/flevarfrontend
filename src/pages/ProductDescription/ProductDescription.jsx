@@ -169,15 +169,12 @@ function ProductDescription() {
 
     const { id } = useParams();
 
-    const handleIncrement = () => {
-        setCount((prevCount) => prevCount + 1);
-    }
-    const handleDecrement = () => {
-        setCount((prevCount) => prevCount - 1);
-    };
+    const handleIncrement = () => setCount((prevCount) => prevCount + 1);
+    const handleDecrement = () => setCount((prevCount) => prevCount - 1);
+
 
     const chooseWeight = (e) => {
-        setWeight(e.id);
+        setWeight(e.unit_value);
         setMrp(e.mrp);
         setPrice(e.list_price);
     };
@@ -197,7 +194,7 @@ function ProductDescription() {
         setRating(() => (productDetail && productDetail.product_rating || 5));
         setCount(() => cartItem && cartItem.length && cartItem[0]['quantity'] || 1);
         updateCakeMsg(() => cartItem && cartItem.length && cartItem[0]['cake_message'] || '');
-        setWeight(() => cartItem && cartItem.length && +cartItem[0]['cake_weight'] || productDetail.product_variants && productDetail.product_variants[0]['id']);
+        setWeight(() => cartItem && cartItem.length && +cartItem[0]['cake_weight'] || productDetail.product_variants && productDetail.product_variants[0]['unit_value']);
         setMrp(() => productDetail.product_variants && productDetail.product_variants[0]['mrp']);
         setPrice(() => productDetail.product_variants && productDetail.product_variants[0]['list_price']);
         if (loader) setTimeout(() => setLoader(() => false), 2000);
@@ -305,9 +302,9 @@ function ProductDescription() {
                                     productDetail.product_variants && productDetail.product_variants.map(val => {
                                         return (
                                             <Button
-                                                variant={weight === val.id ? "contained" : "outlined"}
+                                                variant={weight === val.unit_value ? "contained" : "outlined"}
                                                 key={val.id}
-                                                className={weight === val.id ? "theme-contained-btn" : " "}
+                                                className={weight === val.unit_value ? "theme-contained-btn" : " "}
                                                 id={val.id}
                                                 onClick={() => chooseWeight(val)}
 
