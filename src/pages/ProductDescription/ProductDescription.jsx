@@ -191,12 +191,13 @@ function ProductDescription() {
     useEffect(() => {
         setTimeout(() => setLoader(() => true), 0);
         const cartItem = cartItems[0] && cartItems[0]['cart_items'].filter(prop => prop.product_id === +id);
+        console.log('data', cartItem);
         setRating(() => (productDetail && productDetail.product_rating || 5));
         setCount(() => cartItem && cartItem.length && cartItem[0]['quantity'] || 1);
         updateCakeMsg(() => cartItem && cartItem.length && cartItem[0]['cake_message'] || '');
-        setWeight(() => cartItem && cartItem.length && +cartItem[0]['cake_weight'] || productDetail.product_variants && productDetail.product_variants[0]['unit_value']);
-        setMrp(() => productDetail.product_variants && productDetail.product_variants[0]['mrp']);
-        setPrice(() => productDetail.product_variants && productDetail.product_variants[0]['list_price']);
+        setWeight(() => cartItem && cartItem.length && cartItem[0]['cake_weight'] || productDetail.product_variants && productDetail.product_variants[0]['unit_value']);
+        setMrp(() => cartItem && cartItem.length && cartItem[0]['mrp'] || productDetail.product_variants && productDetail.product_variants[0]['mrp']);
+        setPrice(() => cartItem && cartItem.length && cartItem[0]['list_price'] || productDetail.product_variants && productDetail.product_variants[0]['list_price']);
         if (loader) setTimeout(() => setLoader(() => false), 2000);
     }, [productDetail, id]);
 
