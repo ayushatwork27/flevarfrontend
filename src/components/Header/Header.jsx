@@ -309,7 +309,7 @@ export default function PrimarySearchAppBar() {
             onClose={handleMenuClose}
         >
             {
-                user ?
+                user && user.name ?
 
                     <div>
                         <MenuItem onClick={handleMenuClose}>

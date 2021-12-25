@@ -19,9 +19,6 @@ const otpInitialValues = {
 function LoginViaOTP() {
     let dispatch = useDispatch();
     const [otp, setOtp] = useState('');
-    const onValueChange = (e) => {
-        setOtp({ ...otp, [e.target.name]: e.target.value });
-    }
     const history = useHistory();
     const submitOTP = async () => {
         const verifyOtp = {
@@ -65,10 +62,6 @@ function LoginViaOTP() {
                                         onChange={value => setOtp(value)}
                                         numInputs={4}
                                     />
-                                    {/* <TextField variant="filled" className="single-formbox" name="one" onChange={(e) => onValueChange(e)} />
-                                    <TextField variant="filled" className="single-formbox" name="two" onChange={(e) => onValueChange(e)} />
-                                    <TextField variant="filled" className="single-formbox" name="three" onChange={(e) => onValueChange(e)} />
-                                    <TextField variant="filled" className="single-formbox" name="four" onChange={(e) => onValueChange(e)} /> */}
                                     <Typography varinat="body1" className="login-via-otp-error">Please enter valid OTP</Typography>
                                 </Box>
                             </Grid>

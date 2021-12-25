@@ -1,5 +1,5 @@
 import { CART_API, CART_ITEM_SAVE_API } from '../../constants/api-routes.constants';
-import { ADDRESS_ID, CAKE_MSG, CAKE_WEIGHT, CART_ID, CART_TOKEN, COUPON_CODE, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_PRICE, SHIPMENT_TYPE } from '../../constants/app.constants';
+import { ADDRESS_PINCODE, ADDRESS_ID, CAKE_MSG, CAKE_WEIGHT, CART_ID, CART_TOKEN, COUPON_CODE, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_PRICE, SHIPMENT_TYPE } from '../../constants/app.constants';
 import * as actionTypes from '../types/cart.types';
 import flevar from '../../../api/api';
 
@@ -64,6 +64,11 @@ export const addCouponCodeAction = payload => dispatch => {
 export const addAddressIdAction = payload => dispatch => {
     localStorage.setItem(ADDRESS_ID, payload);
     dispatch({ type: actionTypes.ADD_ADDRESS_ID, payload });
+}
+
+export const addAddressPincodeAction = payload => dispatch => {
+    localStorage.setItem(ADDRESS_PINCODE, payload);
+    dispatch({ type: actionTypes.ADD_ADDRESS_PINCODE, payload });
 }
 
 export const addDeliveryDateAction = payload => dispatch => {

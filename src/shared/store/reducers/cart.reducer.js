@@ -1,4 +1,4 @@
-import { ADDRESS_ID, CAKE_MSG, CAKE_WEIGHT, CART_ID, CART_TOKEN, COUPON_CODE, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_PRICE, SHIPMENT_TYPE } from '../../constants/app.constants';
+import { PINCODE, ADDRESS_PINCODE, ADDRESS_ID, CAKE_MSG, CAKE_WEIGHT, CART_ID, CART_TOKEN, COUPON_CODE, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_PRICE, SHIPMENT_TYPE } from '../../constants/app.constants';
 import * as actionTypes from '../types/cart.types';
 
 const cart_id = localStorage.getItem(CART_ID);
@@ -6,6 +6,8 @@ const cart_token = localStorage.getItem(CART_TOKEN);
 const cake_msg = localStorage.getItem(CAKE_MSG);
 const coupon_code = localStorage.getItem(COUPON_CODE);
 const address_id = localStorage.getItem(ADDRESS_ID);
+const address_pincode = localStorage.getItem(ADDRESS_PINCODE);
+const location_pincode = localStorage.getItem(PINCODE);
 const delivery_date = localStorage.getItem(DELIVERY_DATE);
 const delivery_time_range = localStorage.getItem(DELIVERY_TIME_RANGE);
 const shipment_type = localStorage.getItem(SHIPMENT_TYPE);
@@ -18,6 +20,8 @@ const initialState = {
     cart_token: cart_token || '',
     coupon_code: coupon_code || '',
     address_id: address_id || '',
+    address_pincode: address_pincode || '',
+    location_pincode: location_pincode || '',
     message: cake_msg || '',
     delivery_date: delivery_date || '',
     delivery_time_range: delivery_time_range || '',
@@ -44,6 +48,8 @@ export const cartReducer = (state = initialState, action) => {
             return { ...state, coupon_code: action.payload };
         case actionTypes.ADD_ADDRESS_ID:
             return { ...state, address_id: action.payload };
+        case actionTypes.ADD_ADDRESS_PINCODE:
+            return { ...state, address_pincode: action.payload };
         case actionTypes.ADD_DELIVERY_DATE:
             return { ...state, delivery_date: action.payload };
         case actionTypes.ADD_DELIVERY_TIME_RANGE:

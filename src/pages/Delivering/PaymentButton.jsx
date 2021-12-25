@@ -6,13 +6,40 @@ import { PLACE_ORDER_API, VERIFY_ORDER_API } from '../../shared/constants/api-ro
 import { useHistory } from 'react-router';
 import { ADDRESS_ID, CAKE_MSG, CAKE_WEIGHT, CART_ID, CART_TOKEN, COUPON_CODE, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_PRICE, SHIPMENT_TYPE } from '../../shared/constants/app.constants';
 import { clearCartAction } from '../../shared/store/actions/cart.actions';
+import { Box, Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import CustomeContainer from "../../components/CustomeContainer/CustomeContainer";
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from "@material-ui/core/DialogTitle";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import DialogContent from "@material-ui/core/DialogContent";
+
+const useStyles = makeStyles((theme) => ({
+    dialog_title: {
+        padding: "10px 15px",
+        borderBottom: "1px solid #80808059",
+        "& h2": {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between"
+        },
+        "& svg": {
+            cursor: "pointer",
+            paddingLeft: "5px"
+        }
+    },
+    dialog_content: {
+        padding: "50px"
+    }
+}));
 
 function PaymentButton() {
+    const classes = useStyles();
     const history = useHistory();
     const user = useSelector(state => state.app.user);
     const dispatch = useDispatch();
-    const { cartItems, cart_id, message, address_id, shipment_type, shipment_price, delivery_date, delivery_time_range, coupon_code } = useSelector(state => state.cart);
-
+    const [openAlertView, setAlertView] = useState(false);
+    const { cartItems, cart_id, message, location_pincode, address_pincode, address_id, shipment_type, shipment_price, delivery_date, delivery_time_range, coupon_code } = useSelector(state => state.cart);
     const placeOrder = async () => {
         const payload = {
             cart_id: Number(cart_id),
@@ -28,9 +55,13 @@ function PaymentButton() {
             payment_vendor: "razorpay",
             pincode: 700001
         }
-        const order_verification = await flevar.post(VERIFY_ORDER_API, payload);
-        if (order_verification['data']['success']) payNow(payload);
+        if (+location_pincode === address_pincode) {
+            const order_verification = await flevar.post(VERIFY_ORDER_API, payload);
+            if (order_verification['data']['success']) payNow(payload);
+        } else setAlertView(true);
     }
+
+    const handleCloseAlertView = () => setAlertView(false);
 
     const payNow = (payload) => {
         var options = {
@@ -72,12 +103,32 @@ function PaymentButton() {
     }
 
     return (
-        <CmnButton
-            btntitle="pay now"
-            variant="contained"
-            className="theme-contained-btn"
-            onClick={() => placeOrder()}
-        />
+        <CustomeContainer>
+            <Dialog
+                open={openAlertView}
+                onClose={handleCloseAlertView}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle className={classes.dialog_title}>
+                    {"Pincode Validation"}
+                    <HighlightOffIcon onClick={handleCloseAlertView} />
+                </DialogTitle>
+                <DialogContent className={classes.dialog_content}>
+                    <Box className="location-wrapperbox">
+                        <Grid container className="home-onhover-location-right-wrapper" >
+                            Location and selected adress pincode is not same.
+                        </Grid>
+                    </Box>
+                </DialogContent>
+            </Dialog>
+            <CmnButton
+                btntitle="pay now"
+                variant="contained"
+                className="theme-contained-btn"
+                onClick={() => placeOrder()}
+            />
+        </CustomeContainer>
     );
 }
 

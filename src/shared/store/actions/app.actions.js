@@ -50,6 +50,7 @@ export const userProfile = payload => async (dispatch) => {
         if (success) {
             dispatch({ type: actionTypes.USER_PROFILE_SUCCESS, payload: data['data'] });
             dispatch(getAddressListAction(data['data']['id']));
+            dispatch(getLocationAction());
         } else dispatch({ type: actionTypes.USER_PROFILE_FAILURE, payload: response });
     });
 };
@@ -83,7 +84,10 @@ export const userUpdate = payload => dispatch => {
 
 export const getAddressListAction = payload => async (dispatch) => {
     dispatch({ type: actionTypes.GET_ADDRESS_LIST, payload: undefined });
-    return flevar.get(`${ADDRESS_LIST_API}/${payload}`).then(response => {
+    const options = {
+        headers: { 'Authorization': "Bearer " + localStorage.getItem('token') }
+    };
+    return flevar.get(`${ADDRESS_LIST_API}/${payload}`, options).then(response => {
         const { success, data } = response['data'];
         if (success) dispatch({ type: actionTypes.GET_ADDRESS_LIST_SUCCESS, payload: data['data'] });
         else dispatch({ type: actionTypes.GET_ADDRESS_LIST_FAILURE, payload: response });

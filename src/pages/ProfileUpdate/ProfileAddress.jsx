@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import CmnButton from "../../components/CmnButton/CmnButton"
 import { Grid, Typography } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
+import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
     addressSingeBox: {
         display: "flex",
@@ -46,6 +48,11 @@ const useStyles = makeStyles((theme) => ({
 
 function ProfileAddress({ addressList }) {
     const classes = useStyles();
+    const history = useHistory();
+    const EditAddress = id => {
+        history.push(`/add_new_address/${id}`);
+    }
+
     return (
         <div>
             <Grid container>
@@ -61,8 +68,9 @@ function ProfileAddress({ addressList }) {
                                 </Box>
                                 <Box>
                                     <CmnButton
-                                        btntitle={i === 0 ? "Default" : null}
-                                        className={i === 0 ? `${classes.selected_text}` : null}
+                                        onClick={() => EditAddress(val.id)}
+                                        btntitle={"Edit"}
+                                        className={classes.selected_text}
                                     />
                                 </Box>
                             </Box>

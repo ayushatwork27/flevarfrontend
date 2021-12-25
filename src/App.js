@@ -1,7 +1,7 @@
 import "./Style/style.scss";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Home from "./pages/Home/Index";
 import About from "./pages/About/Index";
 import Contact from "./pages/Contact/Index";
@@ -35,10 +35,11 @@ import {
 function App() {
     const token = localStorage.getItem(AUTH_TOKEN);
     const dispatch = useDispatch();
+    const { user } = useSelector(state => state.app);
 
     useEffect(() => {
         token && dispatch(userProfile(token));
-        dispatch(getLocationAction());
+        token && dispatch(getLocationAction());
     }, [token, dispatch]);
 
     useEffect(() => {
@@ -62,24 +63,24 @@ function App() {
                 <Route exact path="/" component={Home}></Route>
                 <Route exact path="/about" component={About}></Route>
                 <Route exact path="/contact" component={Contact}></Route>
-                {!token && <Route exact path="/register" component={Register}></Route>}
-                {!token && <Route exact path="/login" component={Login}></Route>}
-                {!token && <Route exact path="/loginviaotp" component={LoginViaOTP}></Route>}
+                {!user?.name && <Route exact path="/register" component={Register}></Route>}
+                {!user?.name && <Route exact path="/login" component={Login}></Route>}
+                {!user?.name && <Route exact path="/loginviaotp" component={LoginViaOTP}></Route>}
                 <Route exact path="/categories" component={Categories}></Route>
                 <Route exact path="/products" component={Products}></Route>
-                {token && <Route exact path="/add_new_address" component={AddNewAdderess}></Route>}
-                {token && <Route exact path="/add_new_address/:id" component={AddNewAdderess}></Route>}
-                {token && <Route exact path="/profile_update" component={ProfileUpdate}></Route>}
+                {user && user.name && <Route exact path="/add_new_address" component={AddNewAdderess}></Route>}
+                {user && user.name && <Route exact path="/add_new_address/:id" component={AddNewAdderess}></Route>}
+                {user && user.name && <Route exact path="/profile_update" component={ProfileUpdate}></Route>}
                 <Route exact path="/searchpage" component={SearchPage}></Route>
                 <Route exact path="/pagenotfound" component={PageNotFound}></Route>
-                {token && <Route exact path="/specail_order_request" component={SpecialOrderRequest}></Route>}
+                {user && user.name && <Route exact path="/specail_order_request" component={SpecialOrderRequest}></Route>}
                 <Route exact path="/categories_details/:id" component={CategoriesDetails}></Route>
                 <Route exact path="/productdescription/:id" component={ProductDescription}></Route>
-                {token && <Route exact path="/mycart" component={MyCart}></Route>}
-                {token && <Route exact path="/delevering" component={Delivering}></Route>}
-                {token && <Route exact path="/orders" component={Order}></Route>}
-                {token && <Route exact path="/product-review/:id" component={ProductReview}></Route>}
-                {token && <Route exact path="/order_details/:id" component={OrderDetails}></Route>}
+                {user && user.name && <Route exact path="/mycart" component={MyCart}></Route>}
+                {user && user.name && <Route exact path="/delevering" component={Delivering}></Route>}
+                {user && user.name && <Route exact path="/orders" component={Order}></Route>}
+                {user && user.name && <Route exact path="/product-review/:id" component={ProductReview}></Route>}
+                {user && user.name && <Route exact path="/order_details/:id" component={OrderDetails}></Route>}
                 <Redirect from='*' to='/pagenotfound' />
             </Switch>
         </Router>

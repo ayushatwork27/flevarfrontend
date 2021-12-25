@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ProfileAddress from "../ProfileUpdate/ProfileAddress";
 import { verifyOrderAction } from "../../shared/store/actions/order.actions";
 import PaymentButton from "./PaymentButton";
-import { addAddressIdAction } from "../../shared/store/actions/cart.actions";
+import { addAddressIdAction, addAddressPincodeAction } from "../../shared/store/actions/cart.actions";
 
 const useStyles = makeStyles((theme) => ({
     cart_main_title: {
@@ -77,6 +77,7 @@ const Delivering = () => {
     });
 
     const selectAddress = address => {
+        dispatch(addAddressPincodeAction(address.pincode));
         dispatch(addAddressIdAction(address.id));
     }
 

@@ -17,6 +17,7 @@ export const DELETE_ITEM_FROM_CART_FAILURE = '[Cart] Delete Item From Cart Failu
 export const ADD_CAKE_MESSAGE = '[Cart] Add Cake Message';
 export const ADD_COUPON_CODE = '[Cart] Add Coupon Code';
 export const ADD_ADDRESS_ID = '[Cart] Add Address ID';
+export const ADD_ADDRESS_PINCODE = '[Cart] Add Address Pincode';
 export const ADD_DELIVERY_DATE = '[Cart] Add Delivery Date';
 export const ADD_DELIVERY_TIME_RANGE = '[Cart] Add Delivery Time Range';
 export const ADD_SHIPMENT_TYPE = '[Cart] Add Shipment Type';

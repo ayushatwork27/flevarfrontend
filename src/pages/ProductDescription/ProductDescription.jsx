@@ -191,7 +191,6 @@ function ProductDescription() {
     useEffect(() => {
         setTimeout(() => setLoader(() => true), 0);
         const cartItem = cartItems[0] && cartItems[0]['cart_items'].filter(prop => prop.product_id === +id);
-        console.log('data', cartItem);
         setRating(() => (productDetail && productDetail.product_rating || 5));
         setCount(() => cartItem && cartItem.length && cartItem[0]['quantity'] || 1);
         updateCakeMsg(() => cartItem && cartItem.length && cartItem[0]['cake_message'] || '');

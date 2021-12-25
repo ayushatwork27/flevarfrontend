@@ -18,7 +18,10 @@ export const placeOrderAction = payload => dispatch => {
 
 export const getOrdersListAction = payload => dispatch => {
     dispatch({ type: actionTypes.GET_ORDER_LIST, payload });
-    return flevar.get(ORDER_API).then(response => {
+    const options = {
+        headers: { 'Authorization': "Bearer " + localStorage.getItem('token') }
+    };
+    return flevar.get(ORDER_API, options).then(response => {
         const { success, data } = response.data;
         if (success) dispatch({ type: actionTypes.GET_ORDER_LIST_SUCCESS, payload: data['data'] });
     });

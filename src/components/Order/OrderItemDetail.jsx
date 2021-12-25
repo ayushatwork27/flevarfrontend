@@ -171,11 +171,11 @@ const OrderItemDetail = (props) => {
                             component={Link}
                             to={reviewLink}
                         />
-                        <CmnButton
+                        {/* <CmnButton
                             btntitle="Re-Order"
                             variant="contained"
                             className="theme-contained-btn"
-                        />
+                        /> */}
                     </Box>}
                 </Box>
             </Box>

@@ -2,6 +2,7 @@ export const AUTH_TOKEN = 'token';
 export const CART_TOKEN = 'cart_token';
 export const CART_ID = 'cart_id';
 export const ADDRESS_ID = 'address_id';
+export const ADDRESS_PINCODE = 'address_pincode';
 export const COUPON_CODE = 'coupon_code';
 export const DELIVERY_DATE = 'delivery_date';
 export const DELIVERY_TIME_RANGE = 'delivery_time_range';
