@@ -225,7 +225,6 @@ const useStyles = makeStyles((theme) => ({
         },
         "& .Mui-focused": {
             color: "#000;",
-            fontFamily: "Montserrat",
         },
     }
 }));

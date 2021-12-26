@@ -251,7 +251,7 @@ function ProductDescription() {
                     <Grid item sm={12} md={6}>
                         {productDetail && productDetail.product_gallery_images && productDetail.product_gallery_images.map(img => {
                             return (
-                                <Box className={classes.Product_description_largerimage}>
+                                <Box className={classes.Product_description_largerimage} key={img.id}>
                                     <img src={img.url} />
                                 </Box>
                             )

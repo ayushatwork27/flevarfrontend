@@ -7,7 +7,7 @@ import PromocodePriceDetails from "../MyCart/PromocodePriceDetails";
 import { Link } from "react-router-dom";
 import { getAddressListAction } from "../../shared/store/actions/app.actions";
 import { useDispatch, useSelector } from "react-redux";
-import ProfileAddress from "../ProfileUpdate/ProfileAddress";
+// import ProfileAddress from "../ProfileUpdate/ProfileAddress";
 import { verifyOrderAction } from "../../shared/store/actions/order.actions";
 import PaymentButton from "./PaymentButton";
 import { addAddressIdAction, addAddressPincodeAction } from "../../shared/store/actions/cart.actions";

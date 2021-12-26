@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 
 function About() {
     return (
-        <div class="parent-min-height">
+        <div className="parent-min-height">
             <Box className="cmn-formbox-wraapper">
                 <Grid container>
                     <div>About</div>

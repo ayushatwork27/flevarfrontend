@@ -12,16 +12,16 @@ const theme = createTheme({
         },
       },
     },
-    MuiButton: {
-      padding: "20px 30px",
-    },
-    MuiTypography: {
-      fontFamily: "Montserrat, sans-serif",
-    },
+    // MuiButton: {
+    //   padding: "20px 30px",
+    // },
+    // MuiTypography: {
+    //   fontFamily: "Montserrat, sans-serif",
+    // },
   },
-  typography: {
-    fontFamily: ['"Montserrat"', "sans-serif"].join(","),
-  },
+  // typography: {
+  //   fontFamily: ['"Montserrat"', "sans-serif"].join(","),
+  // },
   // palette: {
   //   primary: {
   //     main: "#fff",

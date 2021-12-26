@@ -173,12 +173,15 @@ function DescriptionTabs({ product, reviews }) {
                             </Box>
                         </Grid>
                     </Grid> */}
-                    <Typography
-                        variant="body1"
-                        className={classes.image_with_bottom_details}
-                    >
-                        {product && product.description}
-                    </Typography>
+                    <Box>
+
+                        <Typography
+                            component={'span'} variant={'body2'}
+                            className={classes.image_with_bottom_details}
+                        >
+                            {product && product.description}
+                        </Typography>
+                    </Box>
                 </Box>
             </TabPanel>
             <TabPanel value={value} index={1}>
@@ -186,7 +189,7 @@ function DescriptionTabs({ product, reviews }) {
                     return (
                         <Box className={classes.reviews_wrapper}>
                             <Avatar alt="Remy Sharp" src="/assets/images/review_tabs.png" />
-                            <Typography variant="body1">
+                            <Typography variant={'body2'} component={'span'}>
                                 {review && review.review_message || 'NA'}
                             </Typography>
                         </Box>
@@ -204,7 +207,7 @@ function DescriptionTabs({ product, reviews }) {
                         onChange={(e) => onValueChange(e)}
                     />
                     <CmnButton
-                        variant="conatained"
+                        variant="contained"
                         btntitle="Post Review"
                         className={classes.post_review_btn}
                         onClick={() => submitReview()}
