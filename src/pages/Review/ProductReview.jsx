@@ -1,9 +1,12 @@
-import React from 'react';
+import React from 'react'
+import Index from '../CustomeReview/Index'
 
-const ProductReview = () => {
+function ProductReview() {
     return (
-        <h3>Review Page</h3>
-    );
+        <div>
+            <Index />
+        </div>
+    )
 }
 
-export default ProductReview;
+export default ProductReview

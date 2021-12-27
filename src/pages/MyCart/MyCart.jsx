@@ -180,12 +180,11 @@ function MyCart() {
                 </Typography>
                 <Box>
                     <Grid container>
-                        {
-                            cartItems && cartItems.length && cartItems[0]['cart_items'].map(cartItem => (
-                                cartItem['cart_items'] && !cartItem['cart_items'].length ? null :
-                                    <Grid item key={cartItem.id} xs={12} sm={12} md={7}
-                                        style={{ paddingBottom: '5px' }}>
-                                        <Grid container className={classes.mycart_product}>
+                        <Grid item xs={12} sm={12} md={7}>
+                            {
+                                cartItems && cartItems.length && cartItems[0]['cart_items'].map(cartItem => (
+                                    cartItem['cart_items'] && !cartItem['cart_items'].length ? null :
+                                        <Grid container key={cartItem.id} className={classes.mycart_product} style={{ marginBottom: '8px' }}>
                                             <Grid item xs={12} sm={4} md={4}
                                                 component={Link}
                                                 to={{
@@ -268,9 +267,10 @@ function MyCart() {
                                                 </Box>
                                             </Grid>
                                         </Grid>
-                                    </Grid>
-                            ))
-                        }
+
+                                ))
+                            }
+                        </Grid>
                         {cartItems && cartItems.length && cartItems[0]['cart_items'].length ? <Grid item xs={12} sm={12} md={5}>
                             <Box className={classes.promo_code_price_details_wrapper}>
                                 <PromocodePriceDetails deliveryDate={true} />

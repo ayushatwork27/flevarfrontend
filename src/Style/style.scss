@@ -796,5 +796,37 @@ input::-webkit-inner-spin-button {
   min-height: 300px
 }
 
+.product-rating-box {
+  margin-bottom: 20px
+}
+
+.product_Order_rating {
+  display: flex;
+  flex-flow: row !important;
+
+  span {
+    font-weight: 600;
+  }
+}
+
+.MuiRadio-colorSecondary.Mui-checked {
+  color: #ec8287 !important
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto
+}
+
+.product-reviw-enter {
+  border-bottom: 1px solid #F4F4F4;
+  padding-bottom: 20px;
+  padding-left: 20px;
+
+  textarea {
+    width: 100%;
+  }
+}
+
 /* on hover componetnt home end */
 @import "responsive";
