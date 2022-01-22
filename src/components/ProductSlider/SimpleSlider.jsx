@@ -7,14 +7,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CmnButton from "../CmnButton/CmnButton";
 import Circle from "../CircularText/CircularText";
-const useStyles = makeStyles((theme) => ({
-  homemainsliderimage: {
-    marginLeft: "auto",
-    [theme.breakpoints.up("md")]: {
-      marginLeft: "auto",
-    },
-  },
-}));
 
 function SampleNextArrow(props) {
   const { className, onClick } = props;
@@ -43,7 +35,6 @@ function SamplePrevArrow(props) {
 }
 
 export default function SimpleSlider(props) {
-  const classes = useStyles();
   var commanSetting = {
     dots: true,
     infinite: true,
@@ -109,22 +100,28 @@ export default function SimpleSlider(props) {
                     <Grid item xs={12} md={6} lg={6} className="order-md-1">
                       <Box>
                         <Box className="wrapper">
-                          <img
-                            src={val.imagesrc}
-                            alt="sliderpicture"
-                            className={classes.homemainsliderimage}
-                          />
-                          <img
-                            src="/assets/images/icons/left-slider-arrow.svg"
-                            alt="sliderpicture"
-                            className="home_circular_arrow"
-                          />
+                          <div className="home_slider_main_image_box">
+                            <img
+                              src={val.imagesrc}
+                              alt="sliderpicture"
+                              className="home_slider_main_image"
+                            />
+                            <div>
+                              <img
+                                src="/assets/images/icons/left-slider-arrow.svg"
+                                alt="sliderpicture"
+                                className="home_circular_arrow"
+                              />
 
-                          <Circle
-                            text="Loremipsumsliderpicture"
-                            arc={360}
-                            radius={100}
-                          />
+                              <Circle
+                                text="Loremipsumsliderpicture"
+                                arc={360}
+                                radius={100}
+                              />
+
+                            </div>
+                          </div>
+
                         </Box>
                       </Box>
                     </Grid>

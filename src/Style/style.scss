@@ -335,9 +335,18 @@ body {
   line-height: 70px !important;
   letter-spacing: 0px !important;
   color: #222222 !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
   margin: 38px 0px 45px 0px !important;
 }
+
+
+.home_slider_main_image_box {
+  max-width: 648px;
+  width: 100%;
+  margin-left: auto;
+  position: relative;
+}
+
 
 .watch-video-btn {
   margin-left: 10px !important;
@@ -359,6 +368,21 @@ body {
     margin-bottom: 10px;
   }
 }
+
+/* popolar cake items card  start*/
+.cart_items_name_home {
+  font-weight: 500 !important;
+  margin-bottom: 0px !important;
+}
+
+/* popular cake items card end */
+
+/* shop by category start */
+.cmn-categotybtn span {
+  font-weight: 600 !important;
+}
+
+/* shop by category end */
 
 /* Home page end */
 /* cmn btn class */

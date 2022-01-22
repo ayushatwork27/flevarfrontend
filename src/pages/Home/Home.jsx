@@ -24,6 +24,7 @@ function Home() {
         fade: true,
         slidesToScroll: 1,
         slidesToShow: 1,
+        dots: false,
         responsive: [
             {
                 breakpoint: 1900,
@@ -43,6 +44,16 @@ function Home() {
         dots: false,
         className: "customer-review-slidersetting",
         responsive: [
+
+            {
+                breakpoint: 1100,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: true,
+                    dots: false,
+                },
+            },
 
             {
                 breakpoint: 600,
@@ -129,7 +140,6 @@ function Home() {
                 <Box>
                     <Box className="title_with_btn">
                         <Typography variant="h5">SHOP BY CATEGORY</Typography>
-
                         <CmnButton
                             variant="contained"
                             className="cmn_btn_with-title"

@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     flexFlow: "column",
     alignItems: "center",
     minWidth: "155px",
+
     marginBottom: "10px",
     [theme.breakpoints.down("md")]: {
       marginBottom: "22px",
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
       color: "rgba(75, 70, 46, 1)",
       fontSize: "16px",
       display: "inline-block",
+      fontWeight: "600"
     },
   },
 }));

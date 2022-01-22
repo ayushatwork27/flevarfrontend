@@ -19,6 +19,7 @@
 .wrapper h1 span {
   position: absolute;
   z-index: 55;
+  font-weight: 700;
 }
 
 /* contact page circle start */
