@@ -176,8 +176,8 @@ function DescriptionTabs({ product, reviews }) {
                     <Typography
                         variant="body1"
                         className={classes.image_with_bottom_details}
+                        dangerouslySetInnerHTML={{ __html: `${product && product.description}` }}
                     >
-                        {product && product.description}
                     </Typography>
                 </Box>
             </TabPanel>
