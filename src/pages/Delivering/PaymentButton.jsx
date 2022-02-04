@@ -66,7 +66,7 @@ function PaymentButton() {
     const payNow = (payload) => {
         var options = {
             key: "rzp_test_hAVuEDTOKZ8ST0", // Key ID generated from the Dashboard
-            amount: (cartItems[0]['total_amout'] + Number(shipment_price) + (0.05 * cartItems[0]['total_amout']) - payload.total_discount) * 100, // Amount is in currency sub units. Hence, 50000 refers to 50000 paise.
+            amount: (cartItems[0]['total_amount'] + Number(shipment_price) + (0.05 * cartItems[0]['total_amount']) - payload.total_discount) * 100, // Amount is in currency sub units. Hence, 50000 refers to 50000 paise.
             currency: "INR", // Default currency is INR.
             name: "Flevar", // 
             handler: function (response) {

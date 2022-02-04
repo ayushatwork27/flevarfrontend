@@ -449,7 +449,7 @@ function PromocodePriceDetails({ deliveryDate }) {
                             variant="body1"
                             className={classes.cmn_price_discount_amount_value}
                         >
-                            Rs. {cartItems.length && cartItems[0]['total_amout']}
+                            Rs. {cartItems.length && cartItems[0]['total_amount']}
                         </Typography>
                     </Box>
                     {shipment_price && (
@@ -483,7 +483,7 @@ function PromocodePriceDetails({ deliveryDate }) {
                             variant="body1"
                             className={classes.cmn_price_discount_amount_value}
                         >
-                            Rs. {cartItems && cartItems.length && (0.05 * cartItems[0]['total_amout'])}
+                            Rs. {cartItems && cartItems.length && (0.05 * cartItems[0]['total_amount'])}
                         </Typography>
                     </Box>
                     <Box
@@ -515,7 +515,7 @@ function PromocodePriceDetails({ deliveryDate }) {
                             variant="body1"
                             className={`${classes.cmn_price_discount_amount_value} ${classes.total}`}
                         >
-                            Rs. {cartItems.length && (cartItems[0]['total_amout'] + Number(shipment_price) + (0.05 * cartItems[0]['total_amout']) - 50)}
+                            Rs. {cartItems.length && (cartItems[0]['total_amount'] + Number(shipment_price) + (0.05 * cartItems[0]['total_amount']) - 50)}
                         </Typography>
                     </Box>
                 </Box>
