@@ -21,6 +21,8 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import DialogContent from "@material-ui/core/DialogContent";
 import Loader from "../../components/Loader/Loader";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import SimpleSlider from "../../components/ProductSlider/SimpleSlider";
+import DataInstaFameSlider from "../../components/Data/DataInstaFameSlider";
 
 const useStyles = makeStyles((theme) => ({
     Product_description_main_title: {
@@ -147,6 +149,22 @@ const useStyles = makeStyles((theme) => ({
         padding: "10px 20px"
     }
 }));
+const CustomerReviewSliderSetting = {
+    dots: false,
+    className: "customer-review-slidersetting",
+    responsive: [
+
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                dots: true,
+            },
+        },
+    ],
+};
 
 function ProductDescription() {
     const classes = useStyles();
@@ -175,8 +193,8 @@ function ProductDescription() {
 
     const chooseWeight = (e) => {
         setWeight(e.unit_value);
-        setMrp(e.mrp);
-        setPrice(e.list_price);
+        setMrp(e.list_price);
+        setPrice(e.mrp);
     };
 
     useEffect(() => dispatch(
@@ -195,8 +213,8 @@ function ProductDescription() {
         setCount(() => cartItem && cartItem.length && cartItem[0]['quantity'] || 1);
         updateCakeMsg(() => cartItem && cartItem.length && cartItem[0]['cake_message'] || '');
         setWeight(() => cartItem && cartItem.length && cartItem[0]['cake_weight'] || productDetail.product_variants && productDetail.product_variants[0]['unit_value']);
-        setMrp(() => cartItem && cartItem.length && cartItem[0]['mrp'] || productDetail.product_variants && productDetail.product_variants[0]['mrp']);
-        setPrice(() => cartItem && cartItem.length && cartItem[0]['list_price'] || productDetail.product_variants && productDetail.product_variants[0]['list_price']);
+        setMrp(() => cartItem && cartItem.length && cartItem[0]['list_price'] || productDetail.product_variants && productDetail.product_variants[0]['list_price']);
+        setPrice(() => cartItem && cartItem.length && cartItem[0]['mrp'] || productDetail.product_variants && productDetail.product_variants[0]['mrp']);
         if (loader) setTimeout(() => setLoader(() => false), 2000);
     }, [productDetail, id]);
 
@@ -241,6 +259,10 @@ function ProductDescription() {
         }
     }
 
+    const renderGallery = (images) => {
+        return images && images.length && images.map(img => ({ imagesrc: img.url, intafamSlider: true }) );
+    }
+
     const handleClosePincodeView = () => setPincodeView(false);
 
     return (
@@ -249,13 +271,21 @@ function ProductDescription() {
             <Box className={classes.Product_description_wrapper}>
                 <Grid container>
                     <Grid item sm={12} md={6}>
-                        {productDetail && productDetail.product_gallery_images && productDetail.product_gallery_images.map(img => {
+                        <CustomeContainer>
+                            <Box className="review-slider-component-wrapper">
+                                <SimpleSlider
+                                    sliderData={renderGallery(productDetail && productDetail.product_gallery_images && productDetail.product_gallery_images)}
+                                    settings={CustomerReviewSliderSetting}
+                                />
+                            </Box>
+                        </CustomeContainer>
+                        {/* {productDetail && productDetail.product_gallery_images && productDetail.product_gallery_images.map(img => {
                             return (
                                 <Box className={classes.Product_description_largerimage}>
                                     <img src={img.url} />
                                 </Box>
                             )
-                        })}
+                        })} */}
                     </Grid>
                     <Grid item sm={12} md={6}>
                         <Box className={classes.Product_description_details_wrapper}>
@@ -357,10 +387,12 @@ function ProductDescription() {
                                     </Box>
                                 </form>
                             </Box>
-                            <Box>
-                                <DescriptionTabs product={productDetail} reviews={productReviewList} />
-                            </Box>
                         </Box>
+                    </Grid>
+                </Grid>
+                <Grid container>
+                    <Grid item sm={12} md={12}>
+                        <DescriptionTabs product={productDetail} reviews={productReviewList} />
                     </Grid>
                 </Grid>
             </Box>

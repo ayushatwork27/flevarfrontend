@@ -226,7 +226,7 @@ function MyCart() {
                                                             component="p"
                                                             className={classes.sellingprice}
                                                         >
-                                                            Rs.{cartItem['mrp']}
+                                                            Rs.{cartItem['list_price']}
                                                         </Typography>
                                                         <Typography
                                                             variant="body1"
@@ -234,7 +234,7 @@ function MyCart() {
                                                             component="p"
                                                             className={classes.originalprice}
                                                         >
-                                                            Rs.{cartItem['list_price']}
+                                                            Rs.{cartItem['mrp']}
                                                         </Typography>
                                                         {
                                                             cartItem && cartItem['cake_message'] && <Typography
