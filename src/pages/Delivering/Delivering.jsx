@@ -7,8 +7,6 @@ import PromocodePriceDetails from "../MyCart/PromocodePriceDetails";
 import { Link } from "react-router-dom";
 import { getAddressListAction } from "../../shared/store/actions/app.actions";
 import { useDispatch, useSelector } from "react-redux";
-import ProfileAddress from "../ProfileUpdate/ProfileAddress";
-import { verifyOrderAction } from "../../shared/store/actions/order.actions";
 import PaymentButton from "./PaymentButton";
 import { addAddressIdAction, addAddressPincodeAction } from "../../shared/store/actions/cart.actions";
 
@@ -62,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 const Delivering = () => {
     const classes = useStyles();
     const { user, addressList } = useSelector(state => state.app);
-    const { cartItems, cart_id, cart_token, address_id } = useSelector(state => state.cart);
+    const { address_id } = useSelector(state => state.cart);
     let dispatch = useDispatch();
     useEffect(() => {
         if (user && user.id) dispatch(getAddressListAction(user.id));
@@ -104,8 +102,8 @@ const Delivering = () => {
                                     </Box>
                                     <Box>
                                         <CmnButton
-                                            btntitle={address.id == address_id ? 'Selected' : 'Select'}
-                                            className={` ${address.id == address_id ? classes.selected_text : classes.notselected_text}`}
+                                            btntitle={address.id === address_id ? 'Selected' : 'Select'}
+                                            className={` ${address.id === address_id ? classes.selected_text : classes.notselected_text}`}
                                             onClick={() => selectAddress(address)}
                                         />
                                     </Box>

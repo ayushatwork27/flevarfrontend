@@ -6,7 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
-import { Box, Grid } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import TextField from "@material-ui/core/TextField";
 import CmnButton from "../../components/CmnButton/CmnButton";
@@ -144,35 +144,6 @@ function DescriptionTabs({ product, reviews }) {
             </AppBar>
             <TabPanel value={value} index={0}>
                 <Box>
-                    {/* <Grid container>
-                        <Grid sm={4} md={4} item>
-                            <Box className={classes.image_with_description}>
-                                <img
-                                    src="/assets/images/description_tabs.png"
-                                    alt="description_tabs"
-                                />
-                                <Typography variant="body2">Freshly sourced</Typography>
-                            </Box>
-                        </Grid>
-                        <Grid sm={4} md={4} item>
-                            <Box className={classes.image_with_description}>
-                                <img
-                                    src="/assets/images/description_tabs.png"
-                                    alt="description_tabs"
-                                />
-                                <Typography variant="body2">Freshly sourced</Typography>
-                            </Box>
-                        </Grid>
-                        <Grid sm={4} md={4}>
-                            <Box className={classes.image_with_description}>
-                                <img
-                                    src="/assets/images/description_tabs.png"
-                                    alt="description_tabs"
-                                />
-                                <Typography variant="body2">Freshly sourced</Typography>
-                            </Box>
-                        </Grid>
-                    </Grid> */}
                     <Typography
                         variant="body1"
                         className={classes.image_with_bottom_details}
@@ -187,7 +158,7 @@ function DescriptionTabs({ product, reviews }) {
                         <Box className={classes.reviews_wrapper}>
                             <Avatar alt="Remy Sharp" src="/assets/images/review_tabs.png" />
                             <Typography variant="body1">
-                                {review && review.review_message || 'NA'}
+                                {(review && review.review_message) || 'NA'}
                             </Typography>
                         </Box>
                     )

@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { makeStyles } from "@material-ui/core/styles";
 import CmnButton from "../../components/CmnButton/CmnButton"
 import { Grid, TextField } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
@@ -8,53 +7,7 @@ import { useHistory } from "react-router-dom";
 import { userUpdate } from "../../shared/store/actions/app.actions";
 import { useSelector } from 'react-redux';
 
-const useStyles = makeStyles((theme) => ({
-    add_new_address_container: {
-        maxWidth: "863px"
-    },
-    fl_right: {
-        flot: "none",
-        [theme.breakpoints.up("md")]: {
-            float: "right",
-        }
-    },
-    w_50: {
-        minWidth: "340px",
-        maxWidth: "422px",
-        width: "100%",
-
-        [theme.breakpoints.down('md')]: {
-            maxWidth: "400px",
-            width: "100%",
-        },
-        [theme.breakpoints.down('xs')]: {
-            minWidth: "280px",
-            width: "100%",
-        }
-    },
-    add_new_address_title: {
-        color: "#222222",
-        fontWeight: "600",
-        fontSize: "26px",
-        margin: "30px 0px 30px 0px"
-    },
-    addbtn_addNewAddress: {
-        backgroundColor: "#222222",
-        color: "#fff",
-        padding: "15px 80px !important",
-        "&:hover": {
-            backgroundColor: "#222222",
-        },
-        flot: "none",
-        [theme.breakpoints.up("md")]: {
-            float: "right",
-        }
-    }
-
-}));
-
 function EditProfile() {
-    const classes = useStyles();
     let dispatch = useDispatch();
     const history = useHistory();
     const [userDetail, setUserDetail] = useState(null);

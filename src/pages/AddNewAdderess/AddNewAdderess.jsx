@@ -7,7 +7,7 @@ import LogoutButton from "../../components/LogOutButton/LogoutButton";
 import Profile from '../../components/Pofile/Profile';
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { getAddressListAction, getAddressAction, updateAddressAction } from "../../shared/store/actions/app.actions";
+import { getAddressListAction, getAddressAction } from "../../shared/store/actions/app.actions";
 import { useParams } from "react-router-dom";
 import flevar from '../../api/api';
 import { useHistory } from "react-router-dom";

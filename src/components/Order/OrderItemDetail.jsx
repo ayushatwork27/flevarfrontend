@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
     },
     sellingprice: {
-        marginRight: "5px",
         color: "#222",
         fontWeight: 600,
         fontSize: "27px",
@@ -85,17 +84,10 @@ const OrderItemDetail = (props) => {
         if (!orderDetail) return null;
         const first_order_item = orderDetail['product_name'] ? orderDetail : orderDetail['order_items'][0];
         const order_item_count = orderDetail['product_name'] ? 1 : orderDetail['order_items'].length;
-
         if (order_item_count === 1) return String(first_order_item['product_name']).charAt(0).toUpperCase() + String(first_order_item['product_name']).slice(1);
         const first_order_item_name = String(first_order_item['product_name']).charAt(0).toUpperCase() + String(first_order_item['product_name']).slice(1);
         return `${first_order_item_name} +${order_item_count - 1}`;
     }
-
-    // const getDeliveryStatus = () => {
-    //     if (!orderDetail) return;
-    //     const { current_status, delivery_date, message, created_at, special_instruction, reason } = orderDetail;
-
-    // }
 
     const getOrderDeliveryDate = deliveryDate => {
         const date = new Date(deliveryDate);
@@ -133,16 +125,8 @@ const OrderItemDetail = (props) => {
                                 component="p"
                                 className={classes.sellingprice}
                             >
-                                Rs. {orderDetail && orderDetail.final_price || 0}
+                                Rs. {(orderDetail && orderDetail.final_price) || 0}
                             </Typography>
-                            {/* <Typography
-                            variant="body1"
-                            color="textSecondary"
-                            component="p"
-                            className={classes.originalprice}
-                        >
-                            Rs. {order && order.price}
-                        </Typography> */}
                         </Box> : null
                     }
                 </Box>
@@ -152,7 +136,6 @@ const OrderItemDetail = (props) => {
                     className={classes.ratinbox}
                 >
                     <Rating name="read-only" value={value} readOnly />
-                    {/* <Typography variant="body2">32 Ratings</Typography> */}
                 </Box>
                 <Box className={`flex-wraper ${classes.d_flex} ${classes.between}`}>
                     <Typography
@@ -171,11 +154,6 @@ const OrderItemDetail = (props) => {
                             component={Link}
                             to={reviewLink}
                         />
-                        {/* <CmnButton
-                            btntitle="Re-Order"
-                            variant="contained"
-                            className="theme-contained-btn"
-                        /> */}
                     </Box>}
                 </Box>
             </Box>

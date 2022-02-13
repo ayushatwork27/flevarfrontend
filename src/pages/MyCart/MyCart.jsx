@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     sellingprice: {
-        marginRight: "5px",
         color: "#222",
         fontWeight: 600,
         fontSize: "40px",
@@ -151,7 +150,7 @@ function MyCart() {
 
     useEffect(() => {
         dispatch(getCartAction());
-    }, []);
+    }, [dispatch]);
 
     const { products } = useSelector(state => state.product);
     const { cartItems, delivery_date, delivery_time_range } = useSelector(state => state.cart);

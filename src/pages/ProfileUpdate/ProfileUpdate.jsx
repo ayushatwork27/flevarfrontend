@@ -5,7 +5,6 @@ import Box from "@material-ui/core/Box";
 import CustomeContainer from '../../components/CustomeContainer/CustomeContainer'
 import LogoutButton from "../../components/LogOutButton/LogoutButton";
 import Profile from '../../components/Pofile/Profile';
-import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -13,45 +12,6 @@ import Tab from "@material-ui/core/Tab";
 import ProfileAddress from "./ProfileAddress";
 import EditProfile from "./EditProfile";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-        backgroundColor: theme.palette.background.paper,
-    },
-    add_new_address_container: {
-        maxWidth: "863px"
-    },
-    fl_right: {
-        flot: "none",
-        [theme.breakpoints.up("md")]: {
-            float: "right",
-        }
-    },
-    w_50: {
-        minWidth: "340px",
-        maxWidth: "422px",
-        width: "100%"
-    },
-    add_new_address_title: {
-        color: "#222222",
-        fontWeight: "600",
-        fontSize: "26px",
-        margin: "30px 0px 30px 0px"
-    },
-    addbtn_addNewAddress: {
-        backgroundColor: "#222222",
-        color: "#fff",
-        padding: "15px 80px !important",
-        "&:hover": {
-            backgroundColor: "#222222",
-        },
-        flot: "none",
-        [theme.breakpoints.up("md")]: {
-            float: "right",
-        }
-    }
-
-}));
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -88,7 +48,6 @@ function a11yProps(index) {
 
 function ProfileUpdate() {
 
-    const classes = useStyles();
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {

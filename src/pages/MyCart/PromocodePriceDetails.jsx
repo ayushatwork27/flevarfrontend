@@ -161,7 +161,7 @@ const useStyles = makeStyles((theme) => ({
 function PromocodePriceDetails({ deliveryDate }) {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const { cartItems, shipment_price, shipment_type, delivery_date, delivery_time_range } = useSelector(state => state.cart);
+    const { cartItems, shipment_price, delivery_date, delivery_time_range } = useSelector(state => state.cart);
     const monthNames = [
         "January",
         "February",
@@ -190,10 +190,8 @@ function PromocodePriceDetails({ deliveryDate }) {
     const [deliverytime, setdeliveryTime] = useState("");
     const [selectedDateString, setSelectedDateStirng] = useState("");
 
-    const [taxAmount, setTaxAmount] = useState(0);
-
     useEffect(() => {
-        setSelectedDateStirng(() => (delivery_date && setSelectedDateStirng(monthNames[new Date(delivery_date).getMonth()] + ", " + new Date(delivery_date).getDate()) || ''));
+        setSelectedDateStirng(() => ((delivery_date && setSelectedDateStirng(monthNames[new Date(delivery_date).getMonth()] + ", " + new Date(delivery_date).getDate())) || ''));
         setdeliveryTime(() => (delivery_time_range || ''));
     }, [])
     useEffect(() => {
@@ -202,49 +200,29 @@ function PromocodePriceDetails({ deliveryDate }) {
         setSlots(slot_types);
         if (currentHour >= 0 && currentHour <= 8) {
             let filteredSlots = slot_types.filter((slot) => slot.key !== "early");
-            filteredSlots.map((slot) => {
-                if (slot.key === "standard") {
-                    slot.time_slots = slot.time_slots.filter(
-                        (time_slot) => time_slot.key !== "9am-12pm"
-                    );
-                } else if (slot.key === "fix") {
-                    slot.time_slots = slot.time_slots.filter(
-                        (time_slot) => time_slot.key > 12
-                    );
-                }
+            filteredSlots.forEach(slot => {
+                if (slot.key === "standard") slot.time_slots = slot.time_slots.filter(time_slot => time_slot.key !== "9am-12pm");
+                else if (slot.key === "fix") slot.time_slots = slot.time_slots.filter(time_slot => time_slot.key > 12);
             });
             setTodysSlotType(filteredSlots);
         } else if (currentHour >= 8 && currentHour <= 12) {
             let filteredSlots = slot_types.filter((slot) => slot.key !== "early");
-            filteredSlots.map((slot) => {
-                if (slot.key === "standard") {
-                    slot.time_slots = slot.time_slots.filter(
-                        (time_slot) =>
-                            time_slot.key !== "9am-12pm" && time_slot.key !== "12pm-3pm"
-                    );
-                } else if (slot.key === "fix") {
+            filteredSlots.forEach(slot => {
+                if (slot.key === "standard") slot.time_slots = slot.time_slots.filter(time_slot => time_slot.key !== "9am-12pm" && time_slot.key !== "12pm-3pm");
+                else if (slot.key === "fix") {
                     const filterTime = currentHour + 4;
-                    slot.time_slots = slot.time_slots.filter(
-                        (time_slot) => time_slot.key > filterTime
-                    );
+                    slot.time_slots = slot.time_slots.filter(time_slot => time_slot.key > filterTime);
                 }
             });
             setTodysSlotType(filteredSlots);
         } else if (currentHour > 12 && currentHour < 18) {
             let filteredSlots = slot_types.filter((slot) => slot.key !== "early");
-            filteredSlots.map((slot) => {
+            filteredSlots.forEach(slot => {
                 if (slot.key === "standard") {
-                    slot.time_slots = slot.time_slots.filter(
-                        (time_slot) =>
-                            time_slot.key !== "9am-12pm" &&
-                            time_slot.key !== "12pm-3pm" &&
-                            time_slot.key !== "3pm-6pm"
-                    );
+                    slot.time_slots = slot.time_slots.filter(time_slot => time_slot.key !== "9am-12pm" && time_slot.key !== "12pm-3pm" && time_slot.key !== "3pm-6pm");
                 } else if (slot.key === "fix") {
                     const filterTime = currentHour + 4;
-                    slot.time_slots = slot.time_slots.filter(
-                        (time_slot) => time_slot.key > filterTime
-                    );
+                    slot.time_slots = slot.time_slots.filter(time_slot => time_slot.key > filterTime);
                 }
             });
             setTodysSlotType(filteredSlots);
@@ -284,7 +262,7 @@ function PromocodePriceDetails({ deliveryDate }) {
         if (slot1) setTimeSlot(slot1.time_slots);
         else setTimeSlot([]);
         dispatch(addShipmentTypeAction(slot1.key));
-        dispatch(addShipmentPriceAction(slot1.key == 'standard' ? '' : slot1.charge));
+        dispatch(addShipmentPriceAction(slot1.key === 'standard' ? '' : slot1.charge));
         setValue(event.target.value);
         setTime(true);
         setSloat(false);

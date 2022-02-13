@@ -22,7 +22,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Loader from "../../components/Loader/Loader";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import SimpleSlider from "../../components/ProductSlider/SimpleSlider";
-import DataInstaFameSlider from "../../components/Data/DataInstaFameSlider";
 
 const useStyles = makeStyles((theme) => ({
     Product_description_main_title: {
@@ -209,12 +208,12 @@ function ProductDescription() {
     useEffect(() => {
         setTimeout(() => setLoader(() => true), 0);
         const cartItem = cartItems[0] && cartItems[0]['cart_items'].filter(prop => prop.product_id === +id);
-        setRating(() => (productDetail && productDetail.product_rating || 5));
-        setCount(() => cartItem && cartItem.length && cartItem[0]['quantity'] || 1);
-        updateCakeMsg(() => cartItem && cartItem.length && cartItem[0]['cake_message'] || '');
-        setWeight(() => cartItem && cartItem.length && cartItem[0]['cake_weight'] || productDetail.product_variants && productDetail.product_variants[0]['unit_value']);
-        setMrp(() => cartItem && cartItem.length && cartItem[0]['list_price'] || productDetail.product_variants && productDetail.product_variants[0]['list_price']);
-        setPrice(() => cartItem && cartItem.length && cartItem[0]['mrp'] || productDetail.product_variants && productDetail.product_variants[0]['mrp']);
+        setRating(() => (productDetail && productDetail.product_rating) || 5);
+        setCount(() => (cartItem && cartItem.length && cartItem[0]['quantity']) || 1);
+        updateCakeMsg(() => (cartItem && cartItem.length && cartItem[0]['cake_message']) || '');
+        setWeight(() => (cartItem && cartItem.length && cartItem[0]['cake_weight']) || (productDetail.product_variants && productDetail.product_variants[0]['unit_value']));
+        setMrp(() => (cartItem && cartItem.length && cartItem[0]['list_price']) || (productDetail.product_variants && productDetail.product_variants[0]['list_price']));
+        setPrice(() => (cartItem && cartItem.length && cartItem[0]['mrp']) || (productDetail.product_variants && productDetail.product_variants[0]['mrp']));
         if (loader) setTimeout(() => setLoader(() => false), 2000);
     }, [productDetail, id]);
 
@@ -260,7 +259,7 @@ function ProductDescription() {
     }
 
     const renderGallery = (images) => {
-        return images && images.length && images.map(img => ({ imagesrc: img.url, intafamSlider: true }) );
+        return images && images.length && images.map(img => ({ imagesrc: img.url, intafamSlider: true }));
     }
 
     const handleClosePincodeView = () => setPincodeView(false);
@@ -279,13 +278,6 @@ function ProductDescription() {
                                 />
                             </Box>
                         </CustomeContainer>
-                        {/* {productDetail && productDetail.product_gallery_images && productDetail.product_gallery_images.map(img => {
-                            return (
-                                <Box className={classes.Product_description_largerimage}>
-                                    <img src={img.url} />
-                                </Box>
-                            )
-                        })} */}
                     </Grid>
                     <Grid item sm={12} md={6}>
                         <Box className={classes.Product_description_details_wrapper}>
