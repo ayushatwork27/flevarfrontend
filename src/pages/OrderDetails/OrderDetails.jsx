@@ -8,7 +8,7 @@ import CmnButton from "../../components/CmnButton/CmnButton";
 import DeliveryDetails from "./DeliveryDetails";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import { getOrderDetailAction } from "../../shared/store/actions/order.actions";
 import OrderItemDetail from "../../components/Order/OrderItemDetail";
 const useStyles = makeStyles((theme) => ({
@@ -186,15 +186,22 @@ function OrderDetails() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const params = useParams();
-  const { orderDetail } = useSelector(state => {
-    const order = Object.keys(state.order.orderDetail).length ? state.order.orderDetail : null;
-    if (order) order.order_items = order.order_items.map(item => ({ ...item, delivery_date: order.delivery_date, delivery_time_range: order.delivery_time_range }));
+  const { orderDetail } = useSelector((state) => {
+    const order = Object.keys(state.order.orderDetail).length
+      ? state.order.orderDetail
+      : null;
+    if (order)
+      order.order_items = order.order_items.map((item) => ({
+        ...item,
+        delivery_date: order.delivery_date,
+        delivery_time_range: order.delivery_time_range,
+      }));
     return { orderDetail: order };
   });
 
   useEffect(() => {
     dispatch(getOrderDetailAction(params.id));
-  }, [])
+  }, []);
   return (
     <CustomeContainer>
       <Grid container>
@@ -222,7 +229,13 @@ function OrderDetails() {
                         variant="body1"
                         className={classes.order_box_smll_title_below_content}
                       >
-                        7D Akankha, AA IIC, Street 629, New Town, Kolkata 700135
+                        {orderDetail &&
+                          orderDetail.address &&
+                          orderDetail.address.line_1_address +
+                            ", " +
+                            orderDetail.address.landmark +
+                            ", " +
+                            orderDetail.address.pincode}
                       </Typography>
                     </Box>
                   </Grid>
@@ -239,7 +252,9 @@ function OrderDetails() {
                           variant="body1"
                           className={classes.order_box_smll_title_below_content}
                         >
-                          9876546736
+                          {orderDetail &&
+                            orderDetail.address &&
+                            orderDetail.address.receiver_contact}
                         </Typography>
                       </Box>
                       <Box mt={2}>
@@ -293,7 +308,10 @@ function OrderDetails() {
                 </Grid>
               </Box>
               <Box>
-                {orderDetail && orderDetail.order_items.map(orderItem => <OrderItemDetail isOrder={false} order={orderItem} />)}
+                {orderDetail &&
+                  orderDetail.order_items.map((orderItem) => (
+                    <OrderItemDetail isOrder={false} order={orderItem} />
+                  ))}
               </Box>
             </Box>
           </Grid>
@@ -312,29 +330,42 @@ function OrderDetails() {
                   className={` ${classes.cmn_flex} ${classes.single_summary_box} `}
                 >
                   <Typography variant="body1">Price</Typography>
-                  <Typography variant="h6">Rs. {orderDetail ? orderDetail['total_product_price'] : 0}</Typography>
+                  <Typography variant="h6">
+                    Rs. {orderDetail ? orderDetail["total_product_price"] : 0}
+                  </Typography>
                 </Box>
                 <Box
                   className={` ${classes.cmn_flex} ${classes.single_summary_box} `}
                 >
                   <Typography variant="body1">Shipment Price</Typography>
-                  <Typography variant="h6">Rs. {orderDetail && orderDetail['shipment_price'] || 0}</Typography>
+                  <Typography variant="h6">
+                    Rs. {(orderDetail && orderDetail["shipment_price"]) || 0}
+                  </Typography>
                 </Box>
                 <Box
                   className={` ${classes.cmn_flex} ${classes.single_summary_box} `}
                 >
                   <Typography variant="body1">Tax (5%)</Typography>
-                  <Typography variant="h6">Rs. {orderDetail ? 0.05 * orderDetail['total_product_price'] : 0}</Typography>
+                  <Typography variant="h6">
+                    Rs.{" "}
+                    {orderDetail
+                      ? 0.05 * orderDetail["total_product_price"]
+                      : 0}
+                  </Typography>
                 </Box>
                 <Box
                   className={` ${classes.cmn_flex} ${classes.single_summary_box} `}
                 >
                   <Typography variant="body1">Discount</Typography>
-                  <Typography variant="h6">Rs. {orderDetail ? 50 : 0} </Typography>
+                  <Typography variant="h6">
+                    Rs. {orderDetail ? 50 : 0}{" "}
+                  </Typography>
                 </Box>
                 <Box className={` ${classes.cmn_flex} ${classes.total_box} `}>
                   <Typography variant="body1">Total</Typography>
-                  <Typography variant="h6">Rs. {orderDetail ? orderDetail['final_price'] : 0}</Typography>
+                  <Typography variant="h6">
+                    Rs. {orderDetail ? orderDetail["final_price"] : 0}
+                  </Typography>
                 </Box>
               </Box>
             </Box>
