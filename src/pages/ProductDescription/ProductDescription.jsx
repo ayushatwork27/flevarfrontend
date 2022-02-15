@@ -422,7 +422,7 @@ function ProductDescription() {
                         ar ar-modes="webxr scene-viewer quick-look"
                         camera-controls environment-image="neutral"
                         shadow-intensity="1"
-                        src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
+                        src="https://flevar-product-images.s3.ap-south-1.amazonaws.com/productimages/1_s84fZcvuVQMhIKaOhO5XQU3Osz9968.glb"
                         alt="A 3D model of an astronaut"
                     >
                     </model-viewer>
