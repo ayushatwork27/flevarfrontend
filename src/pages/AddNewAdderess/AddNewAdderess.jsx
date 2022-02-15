@@ -81,19 +81,21 @@ function AddNewAdderess() {
         if (id) dispatch(getAddressAction(id));
     }, [id]);
 
-    if (user && user.id && !addressDetail) {
-        setAddressDetail(address && address.address_name ?
-            { customer_id: user.id, ...address } :
-            {
-                customer_id: user.id,
-                address_name: "",
-                pincode: "",
-                line_1_address: "",
-                line_2_address: "",
-                landmark: "",
-                receiver_contact: "",
-                receiver_name: ""
-            });
+    if (address && id && user && !addressDetail) {
+        setAddressDetail({ customer_id: user.id, ...address });
+    }
+
+    if (!address && !id && user && !addressDetail) {
+        setAddressDetail({
+            customer_id: user.id,
+            address_name: "",
+            pincode: "",
+            line_1_address: "",
+            line_2_address: "",
+            landmark: "",
+            receiver_contact: "",
+            receiver_name: ""
+        });
     }
 
     return (
@@ -109,7 +111,7 @@ function AddNewAdderess() {
                 </Grid>
                 <Grid sm={12} md={9} item>
                     <Box className={`cmn-left-profile-with-right-content  ${classes.add_new_address_container}`}>
-                        <Typography className={` ${classes.add_new_address_title}`}> ADD NEW ADDRESS</Typography>
+                        <Typography className={` ${classes.add_new_address_title}`}> {id ? 'EDIT' : 'ADD NEW'} ADDRESS</Typography>
                         <Grid container justifyContent="space-between">
                             <Grid xs={12} md={6} item>
                                 <TextField
@@ -117,7 +119,7 @@ function AddNewAdderess() {
                                     variant="filled"
                                     onChange={handleInputChange}
                                     name="address_name"
-                                    value={addressDetail && addressDetail.address_name}
+                                    value={addressDetail?.address_name || ''}
                                     className={`single-formbox cmn-form-box-mb  ${classes.w_50}`} />
                             </Grid>
                             <Grid xs={12} md={6} item>
@@ -126,7 +128,7 @@ function AddNewAdderess() {
                                     variant="filled"
                                     name="pincode"
                                     onChange={handleInputChange}
-                                    value={addressDetail && addressDetail.pincode}
+                                    value={addressDetail?.pincode || ''}
                                     className={`single-formbox cmn-form-box-mb  ${classes.w_50} ${classes.fl_right}`}
                                     type="number" />
                             </Grid>
@@ -136,14 +138,14 @@ function AddNewAdderess() {
                             variant="filled"
                             name="line_1_address"
                             onChange={handleInputChange}
-                            value={addressDetail && addressDetail.line_1_address}
+                            value={addressDetail?.line_1_address || ''}
                             className="single-formbox cmn-form-box-mb" />
                         <TextField
                             label="Line 2 Address"
                             variant="filled"
                             name="line_2_address"
                             onChange={handleInputChange}
-                            value={addressDetail && addressDetail.line_2_address}
+                            value={addressDetail?.line_2_address || ''}
                             className="single-formbox cmn-form-box-mb" />
                         <Grid container justifyContent="space-between">
                             <Grid xs={12} md={6} item>
@@ -152,7 +154,7 @@ function AddNewAdderess() {
                                     variant="filled"
                                     name="landmark"
                                     onChange={handleInputChange}
-                                    value={addressDetail && addressDetail.landmark}
+                                    value={addressDetail?.landmark || ''}
                                     className={`single-formbox cmn-form-box-mb  ${classes.w_50}`} />
                             </Grid>
                             <Grid xs={12} md={6} item>
@@ -161,7 +163,7 @@ function AddNewAdderess() {
                                     variant="filled"
                                     name="receiver_name"
                                     onChange={handleInputChange}
-                                    value={addressDetail && addressDetail.receiver_name}
+                                    value={addressDetail?.receiver_name || ''}
                                     className={`single-formbox cmn-form-box-mb  ${classes.w_50} ${classes.fl_right}`}
                                 />
                             </Grid>
@@ -174,12 +176,12 @@ function AddNewAdderess() {
                                     name="receiver_contact"
                                     type="number"
                                     onChange={handleInputChange}
-                                    value={addressDetail && addressDetail.receiver_contact}
+                                    value={addressDetail?.receiver_contact || ''}
                                     className={`single-formbox cmn-form-box-mb  ${classes.w_50}`} />
                             </Grid>
                         </Grid>
                         <Box className="cmn-tabs-black-btn-wrapper">
-                            <CmnButton btntitle={address ? 'Update' : 'Add'} className={`cmn-tabs-black-btn`} onClick={handleSubmit} />
+                            <CmnButton btntitle={id ? 'Update' : 'Add'} className={`cmn-tabs-black-btn`} onClick={handleSubmit} />
                         </Box>
                     </Box>
                 </Grid>

@@ -79,7 +79,7 @@ function PaymentButton() {
       coupon_code,
       total_discount: 50,
       payment_vendor: "razorpay",
-      pincode: 700001,
+      pincode: address_pincode,
     };
     if (+location_pincode === address_pincode) {
       const order_verification = await flevar.post(VERIFY_ORDER_API, payload);

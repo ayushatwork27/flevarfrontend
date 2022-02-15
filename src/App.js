@@ -22,7 +22,7 @@ import SpecialOrderRequest from "./pages/SpecialOrderRequest/Index";
 import SearchPage from "./pages/SearchPage/Index"
 import PageNotFound from "./pages/PageNotFound/Index";
 import { userProfile } from './shared/store/actions/app.actions';
-import { AUTH_TOKEN } from "./shared/constants/app.constants";
+import { AUTH_TOKEN, LOCATION_ID } from "./shared/constants/app.constants";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import ProductReview from "./pages/Review/ProductReview";
 import { getLocationAction } from './shared/store/actions/app.actions';
@@ -34,6 +34,7 @@ import {
 
 function App() {
     const token = localStorage.getItem(AUTH_TOKEN);
+    const defaultLocatioId = localStorage.getItem(LOCATION_ID);
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.app);
 
@@ -45,14 +46,14 @@ function App() {
     useEffect(() => {
         dispatch(getProductListAction({
             filterkey: '',
-            location_id: 2
+            location_id: defaultLocatioId
         }, { pageSize: 6 }));
         dispatch(getCategoryListAction({
             pageSize: 5
         }));
         dispatch(getProductsAction({
             filterkey: '',
-            location_id: 2
+            location_id: defaultLocatioId
         }));
     }, [dispatch]);
 
