@@ -1,0 +1,49 @@
+export const LOGIN = '[Auth] Login';
+export const LOGIN_SUCCESS = '[Auth] Login Success';
+export const LOGIN_FAILURE = '[Auth] Login Failure';
+
+export const SIGNUP = '[Auth] Signup';
+export const SIGNUP_SUCCESS = '[Auth] Signup Success';
+export const SIGNUP_FAILURE = '[Auth] Signup Failure';
+
+export const USER_PROFILE = '[User] User Profile';
+export const USER_PROFILE_SUCCESS = '[User] User Profile Success';
+export const USER_PROFILE_FAILURE = '[User] User Profile Failure';
+
+export const USER_PROFILE_UPDATE = '[User] User Profile Update';
+export const USER_PROFILE_UPDATE_SUCCESS = '[User] User Profile Update Success';
+export const USER_PROFILE_UPDATE_FAILURE = '[User] User Profile Update Failure';
+
+export const USER_REGISTER = '[User] User Register';
+export const USER_REGISTER_SUCCESS = '[User] User Register Success';
+export const USER_REGISTER_FAILURE = '[User] User Register Failure';
+
+export const GET_ADDRESS_LIST = '[Address] Get Address List';
+export const GET_ADDRESS_LIST_SUCCESS = '[Address] Get Address List Success';
+export const GET_ADDRESS_LIST_FAILURE = '[Address] Get Address List Failure';
+
+export const GET_ADDRESS = '[Address] Get Address';
+export const GET_ADDRESS_SUCCESS = '[Address] Get Address Success';
+export const GET_ADDRESS_FAILURE = '[Address] Get Address Failure';
+
+export const UPLOAD_IMAGE = '[Image] Upload Image';
+export const UPLOAD_IMAGE_SUCCESS = '[Image] Upload Image Success';
+export const UPLOAD_IMAGE_FAILURE = '[Image] Upload Image Failure';
+
+export const GET_LOCATION = '[Location] Location';
+export const GET_LOCATION_SUCCESS = '[Location] Location Success';
+export const GET_LOCATION_FAILURE = '[Location] Location Failure';
+
+export const ADD_ADDRESS = '[Address] Add Address';
+
+export const UPDATE_ADDRESS = '[Address] Update Address';
+
+export const ADD_PINCODE = '[Pincode] Add Pincode';
+
+export const VERIFY_OTP = '[Auth] Verify OTP';
+
+export const LOGOUT = '[Auth] Logout';
+
+export const USER_PROFILE_RESET = '[User] User Profile Reset'
+
+export const LOADING = '[APP] Loading';
