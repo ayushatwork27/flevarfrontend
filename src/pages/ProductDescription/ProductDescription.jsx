@@ -260,7 +260,7 @@ function ProductDescription() {
     }
 
     const renderGallery = (images) => {
-        return images && images.length && images.map(img => ({ imagesrc: img.url, intafamSlider: true }) );
+        return images && images.length && images.map(img => ({ imagesrc: img.url, intafamSlider: true }));
     }
 
     const handleClosePincodeView = () => setPincodeView(false);
