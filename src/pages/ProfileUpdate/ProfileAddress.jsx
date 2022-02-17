@@ -49,13 +49,24 @@ const useStyles = makeStyles((theme) => ({
 function ProfileAddress({ addressList }) {
     const classes = useStyles();
     const history = useHistory();
-    const EditAddress = id => {
+    const editAddress = id => {
         history.push(`/add_new_address/${id}`);
+    }
+    const addAddress = () => {
+        history.push(`/add_new_address`);
     }
 
     return (
         <div>
             <Grid container>
+                <Grid item xs={12} xl={10}>
+                    <Box className={classes.addressSingeBox}>
+                        <CmnButton
+                            onClick={() => addAddress()}
+                            btntitle={"+ Add address"}
+                        />
+                    </Box>
+                </Grid>
                 <Grid item xs={12} xl={10}>
                     {addressList && addressList.map((val, i) => {
                         return (
@@ -68,7 +79,7 @@ function ProfileAddress({ addressList }) {
                                 </Box>
                                 <Box>
                                     <CmnButton
-                                        onClick={() => EditAddress(val.id)}
+                                        onClick={() => editAddress(val.id)}
                                         btntitle={"Edit"}
                                         className={classes.selected_text}
                                     />
@@ -78,7 +89,6 @@ function ProfileAddress({ addressList }) {
                     })}
                 </Grid>
             </Grid>
-
         </div>
     )
 }

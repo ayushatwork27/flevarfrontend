@@ -13,7 +13,7 @@ import CakesItems from "../../components/CakeItemCard/CakesItems";
 import { useParams } from "react-router-dom";
 import { getProductDetailAction, getProductReviewsAction } from '../../shared/store/actions/product.actions';
 import { addPincodeAction } from "../../shared/store/actions/app.actions";
-import { addCakeMessageAction, addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
+import { addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
 import { useHistory } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -374,7 +374,7 @@ function ProductDescription() {
                                             variant="outlined"
                                             className={classes.send_btn}
                                             startIcon={<ArrowForwardIcon />}
-                                            onClick={() => dispatch(addCakeMessageAction(cakeMsg))}
+                                            onClick={() => updateCakeMsg(cakeMsg)}
                                         />
                                     </Box>
                                 </form>
@@ -414,7 +414,8 @@ function ProductDescription() {
                         ar ar-modes="webxr scene-viewer quick-look"
                         camera-controls environment-image="neutral"
                         shadow-intensity="1"
-                        src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
+                        //src="https://flevar-product-images.s3.ap-south-1.amazonaws.com/productimages/1_s84fZcvuVQMhIKaOhO5XQU3Osz9968.glb"
+                        src={productDetail && productDetail.product_glb_images && productDetail.product_glb_images[0] && productDetail.product_glb_images[0].url}
                         alt="A 3D model of an astronaut"
                     >
                     </model-viewer>

@@ -69,6 +69,14 @@ const useStyles = makeStyles((theme) => ({
         padding: "10px 0px",
         width: "100%",
     },
+    cartBirthdayMessage: {
+        backgroundColor: "#fff",
+        borderRadius: "20px",
+        padding: "8px 20px",
+        [theme.breakpoints.up("lg")]: {
+            marginLeft: "20px",
+        },
+    }
 }));
 
 const OrderItemDetail = (props) => {
@@ -146,6 +154,16 @@ const OrderItemDetail = (props) => {
                     >
                         Delivered on {getOrderDeliveryDate(orderDetail['delivery_date'])}
                     </Typography>
+                    {
+                        orderDetail && orderDetail['message'] && <Typography
+                            variant="body1"
+                            color="textSecondary"
+                            component="p"
+                            className={classes.cartBirthdayMessage}
+                        >
+                            {orderDetail['message'] || 'NA'}
+                        </Typography>
+                    }
                     {isOrder && <Box className={`flex-wraper ${classes.d_flex}`}>
                         <CmnButton
                             btntitle="Review"

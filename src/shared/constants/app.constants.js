@@ -11,4 +11,3 @@ export const SHIPMENT_PRICE = 'shipment_price';
 export const PINCODE = 'pincode';
 export const LOCATION_ID = 'location_id';
 export const CAKE_WEIGHT = 'cake_weight';
-export const CAKE_MSG = 'cake_msg';

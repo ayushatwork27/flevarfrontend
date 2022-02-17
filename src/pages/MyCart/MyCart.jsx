@@ -181,7 +181,7 @@ function MyCart() {
                     <Grid container>
                         {
                             cartItems && cartItems.length && cartItems[0]['cart_items'].map(cartItem => (
-                                cartItem['cart_items'] && !cartItem['cart_items'].length ? null :
+                                cartItem['cart_items'] && cartItem['cart_items'].length ? 'Loading...' :
                                     <Grid item key={cartItem.id} xs={12} sm={12} md={7}
                                         style={{ paddingBottom: '5px' }}>
                                         <Grid container className={classes.mycart_product}>

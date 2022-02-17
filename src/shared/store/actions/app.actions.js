@@ -12,6 +12,10 @@ import {
 import * as actionTypes from '../types/app.types';
 import { PINCODE, LOCATION_ID } from '../../constants/app.constants';
 import flevar from '../../../api/api';
+import {
+    getProductListAction,
+    getProductsAction
+} from '../../../shared/store/actions/product.actions';
 
 export const authenticateLogin = payload => dispatch => {
     dispatch({ type: actionTypes.LOGIN, payload: undefined });
@@ -50,7 +54,6 @@ export const userProfile = payload => async (dispatch) => {
         if (success) {
             dispatch({ type: actionTypes.USER_PROFILE_SUCCESS, payload: data['data'] });
             dispatch(getAddressListAction(data['data']['id']));
-            dispatch(getLocationAction());
         } else dispatch({ type: actionTypes.USER_PROFILE_FAILURE, payload: response });
     });
 };
@@ -132,4 +135,12 @@ export const addPincodeAction = ({ pincode, location_id }) => dispatch => {
     localStorage.setItem(PINCODE, pincode);
     localStorage.setItem(LOCATION_ID, location_id);
     dispatch({ type: actionTypes.ADD_PINCODE, payload: pincode });
+    dispatch(getProductListAction({
+        filterkey: '',
+        location_id: location_id
+    }, { pageSize: 6 }));
+    dispatch(getProductsAction({
+        filterkey: '',
+        location_id: location_id
+    }));
 }
