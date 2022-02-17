@@ -54,8 +54,8 @@ function Register() {
                                 className="cmn-profile-main-title-logo"
                             />
                         </Box>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} md={6}>
+                        <Grid container spacing={2} justifyContent="center">
+                            <Grid item xs={12} md={7}>
                                 <TextField
                                     label="Full Name"
                                     variant="filled"
@@ -65,7 +65,8 @@ function Register() {
                                     name="name"
                                 />
                             </Grid>
-                            <Grid item xs={12} md={6}>
+
+                            <Grid item xs={12} md={7}>
                                 <TextField
                                     label="Mobile Number"
                                     variant="filled"
@@ -74,7 +75,7 @@ function Register() {
                                     name="mobile"
                                 />
                             </Grid>
-                            <Grid item xs={12} md={6}>
+                            <Grid item xs={12} md={7}>
                                 <TextField
                                     label="Email Id"
                                     variant="filled"
