@@ -13,6 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { useParams } from "react-router-dom";
 import { getProductsAction } from '../../shared/store/actions/product.actions';
+import { LOCATION_ID } from "../../shared/constants/app.constants";
 
 const useStyles = makeStyles((theme) => ({
     categorydetails_header_btn_wrapper: {
@@ -49,6 +50,7 @@ function CategoriesDetails() {
     const { id } = useParams();
     const classes = useStyles();
     const [sortby, setSortBy] = useState("");
+    const defaultLocatioId = localStorage.getItem(LOCATION_ID);
     const handleChange = (event) => {
         setSortBy(event.target.value);
     };
@@ -56,7 +58,7 @@ function CategoriesDetails() {
     useEffect(() => {
         dispatch(getProductsAction({
             "filterkey": "",
-            "location_id": 2,
+            "location_id": defaultLocatioId,
             "category_id": id
         }));
     }, [dispatch]);

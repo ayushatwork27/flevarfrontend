@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import Box from "@material-ui/core/Box";
 import CakesItems from "../../components/CakeItemCard/CakesItems";
 import Grid from "@material-ui/core/Grid";
@@ -11,6 +12,8 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MenuItem from "@material-ui/core/MenuItem";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
+import { getProductsAction } from '../../shared/store/actions/product.actions';
+import { LOCATION_ID } from "../../shared/constants/app.constants";
 
 import Select from "@material-ui/core/Select";
 const useStyles = makeStyles((theme) => ({
@@ -62,16 +65,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 function SearchPage() {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const [sortby, setSortBy] = useState("");
+    const defaultLocatioId = localStorage.getItem(LOCATION_ID);
+    const { products } = useSelector(state => state.product);
 
     const handleChange = (event) => {
         setSortBy(event.target.value);
     };
+
+    const onValueChange = (e) => {
+        dispatch(getProductsAction({
+            filterkey: e.target.value || '',
+            location_id: defaultLocatioId
+        }));
+    };
     return (
         <CustomeContainer>
             <div className="searchpage-min-height-box">
-
-
                 <Box className={classes.searchpage} >
                     <Box className={classes.searchIcon} >
                         <SearchIcon className="search-icon-color" />
@@ -82,6 +93,7 @@ function SearchPage() {
                             root: classes.inputRoot,
                             input: classes.inputInput,
                         }}
+                        onChange={(e) => onValueChange(e)}
                         inputProps={{ "aria-label": "search" }}
                     />
                 </Box>
@@ -114,7 +126,7 @@ function SearchPage() {
                 </Grid>
                 <Box>
                     <Grid container spacing={3}>
-                        <CakesItems />
+                        <CakesItems products={products} />
                     </Grid>
                 </Box>
             </div>

@@ -497,16 +497,19 @@ export default function PrimarySearchAppBar() {
                             />
                         </Box>
                         <div className={classes.sectionDesktop}>
-                            <IconButton
-                                aria-label="show 4 new mails"
-                                color="inherit"
-                                component={Link}
-                                to="/mycart"
-                            >
-                                <Badge badgeContent={getTotalCartQuantity()} color="secondary">
-                                    <LocalMallIcon />
-                                </Badge>
-                            </IconButton>
+                            {
+                                user && user.name ?
+                                    <IconButton
+                                        aria-label="show 4 new mails"
+                                        color="inherit"
+                                        component={Link}
+                                        to="/mycart"
+                                    >
+                                        <Badge badgeContent={getTotalCartQuantity()} color="secondary">
+                                            <LocalMallIcon />
+                                        </Badge>
+                                    </IconButton> :
+                                    false}
 
                             <IconButton
                                 aria-label="account of current user"

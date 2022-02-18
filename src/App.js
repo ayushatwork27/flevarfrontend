@@ -39,8 +39,8 @@ function App() {
     const { user } = useSelector(state => state.app);
 
     useEffect(() => {
+        dispatch(getLocationAction());
         token && dispatch(userProfile(token));
-        token && dispatch(getLocationAction());
     }, [token, dispatch]);
 
     useEffect(() => {

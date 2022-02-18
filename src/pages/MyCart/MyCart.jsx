@@ -7,7 +7,7 @@ import { Rating } from "@material-ui/lab";
 import CmnButton from "../../components/CmnButton/CmnButton";
 import PromocodePriceDetails from "./PromocodePriceDetails";
 import { Link, useHistory } from "react-router-dom";
-import { getCartAction, deleteItemFromCartAction } from "../../shared/store/actions/cart.actions"
+import { deleteItemFromCartAction } from "../../shared/store/actions/cart.actions"
 import EmptyCart from "../../components/EmptyCart/EmptyCart";
 import { Modal } from "react-responsive-modal";
 import ValidationModal from "../../components/validationModal/validationModal";
@@ -129,10 +129,6 @@ function MyCart() {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getCartAction());
-    }, [dispatch]);
-
     const { products } = useSelector(state => state.product);
     const { cartItems, delivery_date, delivery_time_range } = useSelector(state => state.cart);
 
@@ -166,8 +162,8 @@ function MyCart() {
                 <Box>
                     <Grid container>
                         {
-                            cartItems && cartItems.length && cartItems[0]['cart_items'].map(cartItem => (
-                                cartItem['cart_items'] && cartItem['cart_items'].length ? 'Loading...' :
+                            cartItems && cartItems.length && cartItems[0]['cart_items'].length ?
+                                cartItems[0]['cart_items'].map(cartItem => (
                                     <Grid item key={cartItem.id} xs={12} sm={12} md={7}
                                         style={{ paddingBottom: '5px' }}>
                                         <Grid container className={classes.mycart_product}>
@@ -254,7 +250,7 @@ function MyCart() {
                                             </Grid>
                                         </Grid>
                                     </Grid>
-                            ))
+                                )) : false
                         }
                         {cartItems && cartItems.length && cartItems[0]['cart_items'].length ? <Grid item xs={12} sm={12} md={5}>
                             <Box className={classes.promo_code_price_details_wrapper}>
