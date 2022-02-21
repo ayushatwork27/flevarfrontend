@@ -92,6 +92,19 @@ const Delivering = () => {
                 <Box>
                     <Grid container>
                         <Grid item xs={12} sm={12} md={7}>
+                            <Box className={classes.addressSingeBox}>
+                                <Box className={classes.address}>
+                                    <Typography variant="h5">Add a new Address</Typography>
+                                </Box>
+                                <Box>
+                                    <CmnButton
+                                        btntitle="add new"
+                                        component={Link}
+                                        to="/add_new_address"
+                                        className={` ${classes.addnewBtn}`}
+                                    />
+                                </Box>
+                            </Box>
                             {addressList && addressList.map(address => (
                                 <Box className={classes.addressSingeBox}>
                                     <Box className={classes.address}>
@@ -109,19 +122,6 @@ const Delivering = () => {
                                     </Box>
                                 </Box>
                             ))}
-                            <Box className={classes.addressSingeBox}>
-                                <Box className={classes.address}>
-                                    <Typography variant="h5">Add a new Address</Typography>
-                                </Box>
-                                <Box>
-                                    <CmnButton
-                                        btntitle="add new"
-                                        component={Link}
-                                        to="/add_new_address"
-                                        className={` ${classes.addnewBtn}`}
-                                    />
-                                </Box>
-                            </Box>
                         </Grid>
                         <Grid item xs={12} sm={12} md={5}>
                             <Box className={classes.promo_code_price_details_wrapper}>

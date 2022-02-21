@@ -6,7 +6,6 @@ const cart_token = localStorage.getItem(CART_TOKEN);
 const coupon_code = localStorage.getItem(COUPON_CODE);
 const address_id = localStorage.getItem(ADDRESS_ID);
 const address_pincode = localStorage.getItem(ADDRESS_PINCODE);
-const location_pincode = localStorage.getItem(PINCODE);
 const delivery_date = localStorage.getItem(DELIVERY_DATE);
 const delivery_time_range = localStorage.getItem(DELIVERY_TIME_RANGE);
 const shipment_type = localStorage.getItem(SHIPMENT_TYPE);
@@ -20,7 +19,6 @@ const initialState = {
     coupon_code: coupon_code || '',
     address_id: address_id || '',
     address_pincode: address_pincode || '',
-    location_pincode: location_pincode || '',
     delivery_date: delivery_date || '',
     delivery_time_range: delivery_time_range || '',
     shipment_type: shipment_type || '',
