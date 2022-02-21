@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 /reactapp
+reactapp.zip
 
 # testing
 /coverage

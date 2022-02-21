@@ -13,7 +13,7 @@ import CakesItems from "../../components/CakeItemCard/CakesItems";
 import { useParams } from "react-router-dom";
 import { getProductDetailAction, getProductReviewsAction } from '../../shared/store/actions/product.actions';
 import { addPincodeAction } from "../../shared/store/actions/app.actions";
-import { addCakeMessageAction, addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
+import { addToCartAction, updateCartAction } from '../../shared/store/actions/cart.actions';
 import { useHistory } from "react-router-dom";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -22,7 +22,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Loader from "../../components/Loader/Loader";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import SimpleSlider from "../../components/ProductSlider/SimpleSlider";
-import DataInstaFameSlider from "../../components/Data/DataInstaFameSlider";
 
 const useStyles = makeStyles((theme) => ({
     Product_description_main_title: {
@@ -209,12 +208,12 @@ function ProductDescription() {
     useEffect(() => {
         setTimeout(() => setLoader(() => true), 0);
         const cartItem = cartItems[0] && cartItems[0]['cart_items'].filter(prop => prop.product_id === +id);
-        setRating(() => (productDetail && productDetail.product_rating || 5));
-        setCount(() => cartItem && cartItem.length && cartItem[0]['quantity'] || 1);
-        updateCakeMsg(() => cartItem && cartItem.length && cartItem[0]['cake_message'] || '');
-        setWeight(() => cartItem && cartItem.length && cartItem[0]['cake_weight'] || productDetail.product_variants && productDetail.product_variants[0]['unit_value']);
-        setMrp(() => cartItem && cartItem.length && cartItem[0]['list_price'] || productDetail.product_variants && productDetail.product_variants[0]['list_price']);
-        setPrice(() => cartItem && cartItem.length && cartItem[0]['mrp'] || productDetail.product_variants && productDetail.product_variants[0]['mrp']);
+        setRating(() => (productDetail && productDetail.product_rating) || 5);
+        setCount(() => (cartItem && cartItem.length && cartItem[0]['quantity']) || 1);
+        updateCakeMsg(() => (cartItem && cartItem.length && cartItem[0]['cake_message']) || '');
+        setWeight(() => (cartItem && cartItem.length && cartItem[0]['cake_weight']) || (productDetail.product_variants && productDetail.product_variants[0]['unit_value']));
+        setMrp(() => (cartItem && cartItem.length && cartItem[0]['list_price']) || (productDetail.product_variants && productDetail.product_variants[0]['list_price']));
+        setPrice(() => (cartItem && cartItem.length && cartItem[0]['mrp']) || (productDetail.product_variants && productDetail.product_variants[0]['mrp']));
         if (loader) setTimeout(() => setLoader(() => false), 2000);
     }, [productDetail, id]);
 
@@ -279,13 +278,6 @@ function ProductDescription() {
                                 />
                             </Box>
                         </CustomeContainer>
-                        {/* {productDetail && productDetail.product_gallery_images && productDetail.product_gallery_images.map(img => {
-                            return (
-                                <Box className={classes.Product_description_largerimage}>
-                                    <img src={img.url} />
-                                </Box>
-                            )
-                        })} */}
                     </Grid>
                     <Grid item sm={12} md={6}>
                         <Box className={classes.Product_description_details_wrapper}>
@@ -382,7 +374,7 @@ function ProductDescription() {
                                             variant="outlined"
                                             className={classes.send_btn}
                                             startIcon={<ArrowForwardIcon />}
-                                            onClick={() => dispatch(addCakeMessageAction(cakeMsg))}
+                                            onClick={() => updateCakeMsg(cakeMsg)}
                                         />
                                     </Box>
                                 </form>
@@ -412,7 +404,7 @@ function ProductDescription() {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle className={classes.dialog_title}>
-                    {"View In 4D "}
+                    {"View In 3D "}
                     <HighlightOffIcon onClick={handleCloseTDView} />
                 </DialogTitle>
                 <DialogContent className={classes.dialog_content}>

@@ -9,7 +9,6 @@ import {
 import { useHistory } from "react-router";
 import {
   ADDRESS_ID,
-  CAKE_MSG,
   CAKE_WEIGHT,
   CART_ID,
   CART_TOKEN,
@@ -56,7 +55,6 @@ function PaymentButton() {
   const {
     cartItems,
     cart_id,
-    message,
     location_pincode,
     address_pincode,
     address_id,
@@ -74,7 +72,6 @@ function PaymentButton() {
       delivery_time_range,
       shipment_type,
       shipment_price,
-      message,
       special_instruction: "No special Instructions",
       coupon_code,
       total_discount: 50,
@@ -88,14 +85,14 @@ function PaymentButton() {
   };
 
   const handleCloseAlertView = () => setAlertView(false);
-
+  console.log('cartItems', cartItems);
   const payNow = (payload) => {
     var options = {
       key: "rzp_test_hAVuEDTOKZ8ST0", // Key ID generated from the Dashboard
       amount:
         (cartItems[0]["total_amount"] +
           Number(shipment_price) +
-          0.05 * cartItems[0]["total_amount"] -
+          Math.trunc(0.05 * cartItems[0]["total_amount"]) -
           payload.total_discount) *
         100, // Amount is in currency sub units. Hence, 50000 refers to 50000 paise.
       currency: "INR", // Default currency is INR.
@@ -104,20 +101,19 @@ function PaymentButton() {
         // setPaymentToken(response.razorpay_payment_id);
         payload["online_payment_id"] = response.razorpay_payment_id;
         payload["cart_items"] = cartItems[0]["cart_items"].map(
-          ({ id, product_id, list_price, quantity, cake_weight, message }) => ({
+          ({ id, product_id, list_price, quantity, cake_weight, cake_message }) => ({
             cart_item_id: id,
             product_id,
             quantity,
             price: list_price,
             weight: cake_weight,
-            message: message || "",
+            message: cake_message || 'NA'
           })
         );
         flevar.post(PLACE_ORDER_API, payload).then((response) => {
           [
             CART_TOKEN,
             CART_ID,
-            CAKE_MSG,
             CAKE_WEIGHT,
             COUPON_CODE,
             ADDRESS_ID,
@@ -129,8 +125,6 @@ function PaymentButton() {
           dispatch(clearCartAction());
           if (response["data"]["success"]) history.push("/orders");
         });
-        // console.log(response.razorpay_order_id);
-        // console.log(response.razorpay_signature);
       },
       prefill: {
         name: user.name,

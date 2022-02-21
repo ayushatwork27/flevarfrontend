@@ -1,26 +1,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Box, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import { Link, useHistory } from "react-router-dom";
 import CmnButton from "../CmnButton/CmnButton";
 import { userRegister } from "../../shared/store/actions/app.actions";
-
-const useStyles = makeStyles((theme) => ({
-    margin: {
-        margin: theme.spacing(1),
-    },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
-}));
 
 const registerInitialValues = {
     name: "",

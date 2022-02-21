@@ -14,7 +14,6 @@ export const DELETE_ITEM_FROM_CART = '[Cart] Delete Item From Cart';
 export const DELETE_ITEM_FROM_CART_SUCCESS = '[Cart] Delete Item From Cart Success';
 export const DELETE_ITEM_FROM_CART_FAILURE = '[Cart] Delete Item From Cart Failure';
 
-export const ADD_CAKE_MESSAGE = '[Cart] Add Cake Message';
 export const ADD_COUPON_CODE = '[Cart] Add Coupon Code';
 export const ADD_ADDRESS_ID = '[Cart] Add Address ID';
 export const ADD_ADDRESS_PINCODE = '[Cart] Add Address Pincode';

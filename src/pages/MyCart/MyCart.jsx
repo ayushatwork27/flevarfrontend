@@ -9,10 +9,8 @@ import PromocodePriceDetails from "./PromocodePriceDetails";
 import { Link, useHistory } from "react-router-dom";
 import { getCartAction, deleteItemFromCartAction } from "../../shared/store/actions/cart.actions"
 import EmptyCart from "../../components/EmptyCart/EmptyCart";
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from "@material-ui/core/DialogTitle";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import DialogContent from "@material-ui/core/DialogContent";
+import { Modal } from "react-responsive-modal";
+import ValidationModal from "../../components/validationModal/validationModal";
 
 const useStyles = makeStyles((theme) => ({
     cart_main_title: {
@@ -50,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     sellingprice: {
-        marginRight: "5px",
         color: "#222",
         fontWeight: 600,
         fontSize: "40px",
@@ -122,22 +119,6 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "15px",
         marginLeft: "auto",
         display: "inherit",
-    },
-    dialog_title: {
-        padding: "10px 15px",
-        borderBottom: "1px solid #80808059",
-        "& h2": {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between"
-        },
-        "& svg": {
-            cursor: "pointer",
-            paddingLeft: "5px"
-        }
-    },
-    dialog_content: {
-        padding: "50px"
     }
 }));
 
@@ -147,11 +128,10 @@ function MyCart() {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
-    const [openAlertView, setAlertView] = useState(false);
 
     useEffect(() => {
         dispatch(getCartAction());
-    }, []);
+    }, [dispatch]);
 
     const { products } = useSelector(state => state.product);
     const { cartItems, delivery_date, delivery_time_range } = useSelector(state => state.cart);
@@ -167,10 +147,15 @@ function MyCart() {
 
     const proceedToCheckOut = () => {
         if (delivery_date && delivery_time_range) history.push('/delevering');
-        else setAlertView(true);
+        else onOpenValidationModal();
     }
 
-    const handleCloseAlertView = () => setAlertView(false);
+    const [openValidation, setValidationMessage] = useState(false);
+    const onOpenValidationModal = () => setValidationMessage(true);
+    const onCloseValidationModal = () => setValidationMessage(false);
+    const message = {
+        title: 'please select date and time slot type!'
+    }
 
     return (
         <CustomeContainer>
@@ -182,7 +167,7 @@ function MyCart() {
                     <Grid container>
                         {
                             cartItems && cartItems.length && cartItems[0]['cart_items'].map(cartItem => (
-                                cartItem['cart_items'] && !cartItem['cart_items'].length ? null :
+                                cartItem['cart_items'] && cartItem['cart_items'].length ? 'Loading...' :
                                     <Grid item key={cartItem.id} xs={12} sm={12} md={7}
                                         style={{ paddingBottom: '5px' }}>
                                         <Grid container className={classes.mycart_product}>
@@ -192,7 +177,10 @@ function MyCart() {
                                                     pathname: "/productdescription/" + cartItem.product_id
                                                 }}
                                             >
-                                                <img src="/assets/images/description.png" alt="description" />
+                                                <img 
+                                                src="/assets/images/description.png" 
+                                                src={cartItem && cartItem.url} 
+                                                alt="description" />
                                             </Grid>
                                             <Grid item xs={12} sm={8} md={8}>
                                                 <Box className={classes.price_title_message_wrapper}>
@@ -290,25 +278,10 @@ function MyCart() {
                         </Grid> : <EmptyCart />}
                     </Grid>
                 </Box>
-                <Dialog
-                    open={openAlertView}
-                    onClose={handleCloseAlertView}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle className={classes.dialog_title}>
-                        {"Date & Time Validation"}
-                        <HighlightOffIcon onClick={handleCloseAlertView} />
-                    </DialogTitle>
-                    <DialogContent className={classes.dialog_content}>
-                        <Box className="location-wrapperbox">
-                            <Grid container className="home-onhover-location-right-wrapper" >
-                                Please selct date & time.
-                            </Grid>
-                        </Box>
-                    </DialogContent>
-                </Dialog>
             </Box>
+            <Modal open={openValidation} onClose={onCloseValidationModal} center>
+                <ValidationModal message={message} />
+            </Modal>
         </CustomeContainer>
     );
 }
