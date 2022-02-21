@@ -404,7 +404,7 @@ function ProductDescription() {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle className={classes.dialog_title}>
-                    {"View In 4D "}
+                    {"View In 3D "}
                     <HighlightOffIcon onClick={handleCloseTDView} />
                 </DialogTitle>
                 <DialogContent className={classes.dialog_content}>

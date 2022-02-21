@@ -173,7 +173,10 @@ function MyCart() {
                                                     pathname: "/productdescription/" + cartItem.product_id
                                                 }}
                                             >
-                                                <img src="/assets/images/description.png" alt="description" />
+                                                <img 
+                                                src="/assets/images/description.png" 
+                                                src={cartItem && cartItem.url} 
+                                                alt="description" />
                                             </Grid>
                                             <Grid item xs={12} sm={8} md={8}>
                                                 <Box className={classes.price_title_message_wrapper}>
