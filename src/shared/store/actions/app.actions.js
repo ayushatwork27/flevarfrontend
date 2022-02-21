@@ -14,6 +14,7 @@ import { PINCODE, LOCATION_ID } from '../../constants/app.constants';
 import flevar from '../../../api/api';
 import {
     getProductListAction,
+    getCategoryListAction,
     getProductsAction
 } from '../../../shared/store/actions/product.actions';
 
@@ -38,8 +39,21 @@ export const authenticateLogOut = payload => dispatch => {
     return flevar.post(LOGOUT_API, payload, options).then(response => {
         const { success } = response['data'];
         if (success) {
+            const defaultLocatioId = localStorage.getItem(LOCATION_ID);
             dispatch(userProfileReset());
             localStorage.clear();
+            dispatch(getLocationAction());
+            dispatch(getProductListAction({
+                filterkey: '',
+                location_id: defaultLocatioId
+            }, { pageSize: 6 }));
+            dispatch(getCategoryListAction({
+                pageSize: 5
+            }));
+            dispatch(getProductsAction({
+                filterkey: '',
+                location_id: defaultLocatioId
+            }));
         }
     });
 };
@@ -99,7 +113,10 @@ export const getAddressListAction = payload => async (dispatch) => {
 
 export const addAddressAction = payload => async (dispatch) => {
     dispatch({ type: actionTypes.ADD_ADDRESS, payload });
-    return flevar.post(`${ADDRESS_API}`, payload).then(response => {
+    const options = {
+        headers: { 'Authorization': "Bearer " + localStorage.getItem('token') }
+    };
+    return flevar.post(`${ADDRESS_API}`, payload, options).then(response => {
         const { success, data } = response['data'];
         if (success) dispatch(getAddressListAction(data['data']['customer_id']));
     });
@@ -107,7 +124,10 @@ export const addAddressAction = payload => async (dispatch) => {
 
 export const updateAddressAction = (payload, id, customerId) => async (dispatch) => {
     dispatch({ type: actionTypes.UPDATE_ADDRESS, payload });
-    return flevar.post(`${ADDRESS_API}/${id}`, payload).then(response => {
+    const options = {
+        headers: { 'Authorization': "Bearer " + localStorage.getItem('token') }
+    };
+    return flevar.post(`${ADDRESS_API}/${id}`, payload, options).then(response => {
         const { success } = response['data'];
         if (success) dispatch(getAddressListAction(customerId));
     });

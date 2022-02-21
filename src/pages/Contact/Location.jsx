@@ -1,7 +1,8 @@
 import React from 'react'
 import { Box, Grid } from '@material-ui/core'
-import CmnButton from '../../components/CmnButton/CmnButton'
+import { useSelector } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
+import CmnButton from '../../components/CmnButton/CmnButton'
 const useStyles = makeStyles((theme) => ({
     location_single_box: {
         display: "inline-flex",
@@ -29,31 +30,19 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const locationData = [
-    {
-        imgsrc: "assets/images/cityimage4.jpg",
-        btnlable: "Calcutta"
-    },
-    {
-        imgsrc: "assets/images/cityimage4.jpg",
-        btnlable: "JAMSHEDPUR"
-    },
-    {
-        imgsrc: "assets/images/cityimage4.jpg",
-        btnlable: "RANCHI"
-    },
-]
+
 function Location() {
     const classes = useStyles();
+    const { locations } = useSelector(state => state.app);
     return (
         <div>
             <Box marginTop={5} padding={1}>
                 <Grid container spacing={2}>
                     {
-                        locationData.map((val, i) =>
+                        locations.map((val, i) =>
                             <Grid item sm={6} md={4} className={classes.location_single_box} key={i}>
-                                <img src={val.imgsrc} alt="cityimage" />
-                                <CmnButton btntitle={val.btnlable} />
+                                <img src={val.image_url} alt="cityimage"/>
+                                <CmnButton btntitle={val.name} />
                             </Grid>
                         )
                     }

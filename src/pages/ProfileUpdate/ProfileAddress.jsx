@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import CmnButton from "../../components/CmnButton/CmnButton"
 import { Grid, Typography } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -52,22 +53,24 @@ function ProfileAddress({ addressList }) {
     const editAddress = id => {
         history.push(`/add_new_address/${id}`);
     }
-    const addAddress = () => {
-        history.push(`/add_new_address`);
-    }
 
     return (
         <div>
             <Grid container>
                 <Grid item xs={12} xl={10}>
                     <Box className={classes.addressSingeBox}>
-                        <CmnButton
-                            onClick={() => addAddress()}
-                            btntitle={"+ Add address"}
-                        />
+                        <Box className={classes.address}>
+                            <Typography variant="h5">Add a new Address</Typography>
+                        </Box>
+                        <Box>
+                            <CmnButton
+                                btntitle="add new"
+                                component={Link}
+                                to="/add_new_address"
+                                className={` ${classes.addnewBtn}`}
+                            />
+                        </Box>
                     </Box>
-                </Grid>
-                <Grid item xs={12} xl={10}>
                     {addressList && addressList.map((val, i) => {
                         return (
                             <Box className={classes.addressSingeBox}>

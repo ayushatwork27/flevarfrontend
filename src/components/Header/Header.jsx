@@ -150,7 +150,8 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up("sm")]: {
             display: "none",
         },
-    }, location_single_box: {
+    },
+    location_single_box: {
         display: "inline-flex",
         justifyContent: "center",
         alignItems: "center",
@@ -163,6 +164,10 @@ const useStyles = makeStyles((theme) => ({
                 backgroundColor: "#fff",
             }
         }
+    },
+    location_img: {
+        width: "100%",
+        height: "100%"
     },
     content_box: {
         display: "flex",
@@ -310,7 +315,6 @@ export default function PrimarySearchAppBar() {
         >
             {
                 user && user.name ?
-
                     <div>
                         <MenuItem onClick={handleMenuClose}>
                             <h4>{user?.name}</h4>
@@ -410,7 +414,7 @@ export default function PrimarySearchAppBar() {
                                         locations && locations.map((val, i) => {
                                             return (
                                                 <Grid item sm={6} md={4} className={` home-onhover-location-singlebox ${classes.location_single_box}`} key={i}>
-                                                    <img src={val.image_url} alt="cityimage" />
+                                                    <img src={val.image_url} alt="cityimage" className="classes.location_img"/>
                                                     <CmnButton btntitle={val.name}
                                                         className={selectedLocation && selectedLocation.id === val.id ? classes.selectedLocation : null}
                                                         onClick={() => { locationSelection(val) }} />
@@ -497,16 +501,19 @@ export default function PrimarySearchAppBar() {
                             />
                         </Box>
                         <div className={classes.sectionDesktop}>
-                            <IconButton
-                                aria-label="show 4 new mails"
-                                color="inherit"
-                                component={Link}
-                                to="/mycart"
-                            >
-                                <Badge badgeContent={getTotalCartQuantity()} color="secondary">
-                                    <LocalMallIcon />
-                                </Badge>
-                            </IconButton>
+                            {
+                                user && user.name ?
+                                    <IconButton
+                                        aria-label="show 4 new mails"
+                                        color="inherit"
+                                        component={Link}
+                                        to="/mycart"
+                                    >
+                                        <Badge badgeContent={getTotalCartQuantity()} color="secondary">
+                                            <LocalMallIcon />
+                                        </Badge>
+                                    </IconButton> :
+                                    false}
 
                             <IconButton
                                 aria-label="account of current user"

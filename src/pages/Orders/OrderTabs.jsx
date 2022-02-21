@@ -4,15 +4,15 @@ import { getOrdersListAction } from "../../shared/store/actions/order.actions";
 import OrderItemDetail from "../../components/Order/OrderItemDetail";
 
 function OrderTabs() {
-  const dispatch = useDispatch();
-  const { orderList } = useSelector(state => state.order);
+    const dispatch = useDispatch();
+    const { orderList } = useSelector(state => state.order);
 
-  useEffect(() => {
-    dispatch(getOrdersListAction());
-  }, []);
-  return (
-    orderList && orderList.map((order, index) => order['order_items'].length ? <OrderItemDetail isOrder={true} order={order} key={index} /> : null)
-  );
+    useEffect(() => {
+        dispatch(getOrdersListAction());
+    }, [dispatch]);
+    return (
+        orderList && orderList.map((order, index) => order['order_items'].length ? <OrderItemDetail isOrder={true} order={order} key={index} /> : null)
+    );
 }
 
 export default OrderTabs;

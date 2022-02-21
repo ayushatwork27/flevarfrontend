@@ -7,7 +7,7 @@ import LogoutButton from "../../components/LogOutButton/LogoutButton";
 import Profile from '../../components/Pofile/Profile';
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { getAddressListAction, getAddressAction, updateAddressAction } from "../../shared/store/actions/app.actions";
+import { getAddressListAction, getAddressAction } from "../../shared/store/actions/app.actions";
 import { useParams } from "react-router-dom";
 import flevar from '../../api/api';
 import { useHistory } from "react-router-dom";
@@ -60,15 +60,18 @@ function AddNewAdderess() {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const options = {
+            headers: { 'Authorization': "Bearer " + localStorage.getItem('token') }
+        };
         if (id) {
-            const update_address = await flevar.post(`${ADDRESS_API}/${id}`, addressDetail);
+            const update_address = await flevar.post(`${ADDRESS_API}/${id}`, addressDetail, options);
             const { success } = update_address['data'];
             if (success) {
                 dispatch(getAddressListAction(user.id));
                 history.push('/profile_update');
             }
         } else {
-            const add_address = await flevar.post(ADDRESS_API, addressDetail);
+            const add_address = await flevar.post(ADDRESS_API, addressDetail, options);
             const { success, data } = add_address['data'];
             if (success) {
                 dispatch(getAddressListAction(data['data']['customer_id']));

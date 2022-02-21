@@ -1,5 +1,5 @@
 import { CART_API, CART_ITEM_SAVE_API } from '../../constants/api-routes.constants';
-import { ADDRESS_PINCODE, ADDRESS_ID, CAKE_MSG, CAKE_WEIGHT, CART_ID, CART_TOKEN, COUPON_CODE, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_PRICE, SHIPMENT_TYPE } from '../../constants/app.constants';
+import { ADDRESS_PINCODE, ADDRESS_ID, CAKE_WEIGHT, CART_ID, CART_TOKEN, COUPON_CODE, DELIVERY_DATE, DELIVERY_TIME_RANGE, SHIPMENT_PRICE, SHIPMENT_TYPE } from '../../constants/app.constants';
 import * as actionTypes from '../types/cart.types';
 import flevar from '../../../api/api';
 
@@ -46,14 +46,10 @@ export const updateCartAction = payload => dispatch => {
     const cart_token = window && localStorage.getItem(CART_TOKEN);
     const cart_id = window && localStorage.getItem(CART_ID);
     payload['cart_token'] = cart_token;
+
     return flevar.post(`${CART_ITEM_SAVE_API}/${cart_id}`, payload).then(response => {
         if (response['data']['success']) dispatch(getCartAction());
     });
-}
-
-export const addCakeMessageAction = payload => dispatch => {
-    localStorage.setItem(CAKE_MSG, payload);
-    dispatch({ type: actionTypes.ADD_CAKE_MESSAGE, payload });
 }
 
 export const addCouponCodeAction = payload => dispatch => {
