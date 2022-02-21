@@ -99,7 +99,7 @@ const initialData = {
     email: '',
     name: '',
     phone: '',
-    query: ''
+    message: ''
 }
 
 function Conact() {
@@ -175,7 +175,8 @@ function Conact() {
                                             type="number"
                                             name="phone"
                                             value={queryForm?.phone || ''}
-                                            onChange={handleInputChange}/>
+                                            onChange={handleInputChange}
+                                            maxLength={11}/>
                                     </Grid>
                                     <Grid xs={12} md={12} item>
                                         <TextField
@@ -183,9 +184,10 @@ function Conact() {
                                             variant="filled"
                                             className={`single-formbox cmn-form-box-mb `}
                                             multiline
+                                            type="text"
                                             rows={4}
-                                            name="query"
-                                            value={queryForm?.query || ''}
+                                            name="message"
+                                            value={queryForm?.message || ''}
                                             onChange={handleInputChange}/>
                                     </Grid>
                                 </Grid>
