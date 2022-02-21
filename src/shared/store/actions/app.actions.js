@@ -135,7 +135,10 @@ export const updateAddressAction = (payload, id, customerId) => async (dispatch)
 
 export const getAddressAction = payload => async (dispatch) => {
     dispatch({ type: actionTypes.GET_ADDRESS, payload: {} });
-    return flevar.get(`${ADDRESS_API}/${payload}`).then(response => {
+    const options = {
+        headers: { 'Authorization': "Bearer " + localStorage.getItem('token') }
+    };
+    return flevar.get(`${ADDRESS_API}/${payload}`, options).then(response => {
         const { success, data } = response['data'];
         if (success) dispatch({ type: actionTypes.GET_ADDRESS_SUCCESS, payload: data['data'] });
         else dispatch({ type: actionTypes.GET_ADDRESS_FAILURE, payload: response });

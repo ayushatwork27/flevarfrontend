@@ -1,4 +1,5 @@
 export const SEND_OTP_API = 'customer/sendotp';
+export const SEND_QUERY_API = 'customer/save_contactus';
 export const VERIFY_OTP_API = 'customer/verifyotp';
 export const REGISTER_API = 'customer/register';
 export const PROFILE_UPDATE_API = 'customer/profile_update';

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react'
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box"
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,6 +9,9 @@ import Circle from "../../components/CircularText/CircularText";
 import Location from "./Location";
 import CustomeContainer from "../../components/CustomeContainer/CustomeContainer";
 import ContactMapAddress from "./ContactMapAddress";
+import { SEND_QUERY_API } from '../../shared/constants/api-routes.constants';
+import flevar from '../../api/api';
+
 const useStyles = makeStyles((theme) => ({
     contactus_hero_section_image_box: {
         backgroundColor: "#E8656B",
@@ -91,8 +94,31 @@ const useStyles = makeStyles((theme) => ({
     }
 
 }));
+const initialData = {
+    name: '',
+    email: '',
+    name: '',
+    phone: '',
+    query: ''
+}
+
 function Conact() {
     const classes = useStyles();
+    const [queryForm, setQueyForm] = useState(initialData);
+    const handleInputChange = (e) => {
+        let { name, value } = e.target;
+        setQueyForm({ ...queryForm, [name]: value });
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const options = {
+            headers: { 'Authorization': "Bearer " + localStorage.getItem('token') }
+        };
+        const query = await flevar.post(`${SEND_QUERY_API}`, queryForm, options);
+        const { success } = query['data'];
+        if (success) setQueyForm(initialData);
+        console.log('success', success);
+    }
     return (
         <>
             <Box className={classes.contactus_hero_section_wrapper}>
@@ -128,21 +154,28 @@ function Conact() {
                                             variant="filled"
                                             className=
                                             {`single-formbox cmn-form-box-mb  ${classes.w_50}`}
-                                            name="name" />
+                                            name="name"
+                                            value={queryForm?.name || ''}
+                                            onChange={handleInputChange}/>
                                     </Grid>
                                     <Grid xs={12} md={6} item>
                                         <TextField
                                             label="Email"
                                             variant="filled"
                                             className={`single-formbox cmn-form-box-mb  ${classes.w_50} ${classes.fl_right}`}
-                                        />
+                                            name="email"
+                                            value={queryForm?.email || ''}
+                                            onChange={handleInputChange}/>
                                     </Grid>
                                     <Grid xs={12} md={12} item>
                                         <TextField
                                             label="Phone"
                                             variant="filled"
                                             className={`single-formbox cmn-form-box-mb `}
-                                            type="number" />
+                                            type="number"
+                                            name="phone"
+                                            value={queryForm?.phone || ''}
+                                            onChange={handleInputChange}/>
                                     </Grid>
                                     <Grid xs={12} md={12} item>
                                         <TextField
@@ -151,11 +184,13 @@ function Conact() {
                                             className={`single-formbox cmn-form-box-mb `}
                                             multiline
                                             rows={4}
-                                        />
+                                            name="query"
+                                            value={queryForm?.query || ''}
+                                            onChange={handleInputChange}/>
                                     </Grid>
                                 </Grid>
                                 <Box className="">
-                                    <CmnButton btntitle="Submit" type="submit" className={`cmn-tabs-black-btn `} />
+                                    <CmnButton btntitle="Submit" type="submit" className={`cmn-tabs-black-btn `}  onClick={handleSubmit} />
                                 </Box>
                             </form>
                         </Box>
